@@ -28,6 +28,7 @@
     "db:seed-test-users": "bun run scripts/seed-test-users.ts",
         "db:link-payments": "bun run scripts/link-payments-to-enrollments.ts",
         "db:backup": "bash scripts/backup-db.sh",
+        "db:restore": "bash scripts/restore-db.sh",
         "test:login": "bun run scripts/test-login.ts"
   },
   "dependencies": {

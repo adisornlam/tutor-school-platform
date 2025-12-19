@@ -8,7 +8,9 @@ DB_HOST="localhost"
 DB_PORT="3307"
 DB_USER="root"
 DB_NAME="tutordb"
-BACKUP_DIR="/Users/adisornl/Downloads"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+BACKUP_DIR="$PROJECT_ROOT/docs/backups"
 DATE=$(date +%Y%m%d_%H%M%S)
 BACKUP_FILE="$BACKUP_DIR/backup_tutordb_$DATE.sql"
 
@@ -51,6 +53,9 @@ if [ $? -eq 0 ]; then
     echo ""
     echo "💡 วิธี Restore:"
     echo "   mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p $DB_NAME < $BACKUP_FILE"
+    echo ""
+    echo "📝 หรือใช้ script restore:"
+    echo "   bun run db:restore $BACKUP_FILE"
 else
     echo ""
     echo "❌ Backup ล้มเหลว!"
