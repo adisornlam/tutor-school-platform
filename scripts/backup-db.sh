@@ -12,16 +12,33 @@ BACKUP_DIR="/Users/adisornl/Downloads"
 DATE=$(date +%Y%m%d_%H%M%S)
 BACKUP_FILE="$BACKUP_DIR/backup_tutordb_$DATE.sql"
 
+# หา mysqldump path
+MYSQLDUMP=""
+if command -v mysqldump &> /dev/null; then
+    MYSQLDUMP="mysqldump"
+elif [ -f "/Applications/XAMPP/xamppfiles/bin/mysqldump" ]; then
+    MYSQLDUMP="/Applications/XAMPP/xamppfiles/bin/mysqldump"
+elif [ -f "/usr/local/mysql/bin/mysqldump" ]; then
+    MYSQLDUMP="/usr/local/mysql/bin/mysqldump"
+elif [ -f "/opt/homebrew/bin/mysqldump" ]; then
+    MYSQLDUMP="/opt/homebrew/bin/mysqldump"
+else
+    echo "❌ ไม่พบ mysqldump!"
+    echo "กรุณาติดตั้ง MySQL หรือ XAMPP"
+    exit 1
+fi
+
 # สร้างโฟลเดอร์ backup (ถ้ายังไม่มี)
 mkdir -p "$BACKUP_DIR"
 
 echo "🔄 กำลัง backup database..."
 echo "Database: $DB_NAME"
 echo "Host: $DB_HOST:$DB_PORT"
+echo "mysqldump: $MYSQLDUMP"
 echo "Output: $BACKUP_FILE"
 
 # Backup database
-mysqldump -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" "$DB_NAME" > "$BACKUP_FILE"
+"$MYSQLDUMP" -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" "$DB_NAME" > "$BACKUP_FILE"
 
 # ตรวจสอบว่าสำเร็จหรือไม่
 if [ $? -eq 0 ]; then
