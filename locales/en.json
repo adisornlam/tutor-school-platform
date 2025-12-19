@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "KDC Tutor School"
+  },
+  "nav": {
+    "courses": "Courses",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard"
+  },
+  "home": {
+    "hero": {
+      "title": "Learn Online Anytime, Anywhere",
+      "subtitle": "With Live e-Learning and Video on Demand",
+      "viewCourses": "View All Courses",
+      "register": "Register"
+    },
+    "features": {
+      "title": "Why Choose Us",
+      "live": "Live e-Learning",
+      "liveDesc": "Learn live online with teachers",
+      "vod": "Video on Demand",
+      "vodDesc": "Watch recordings for 24 hours",
+      "materials": "Material Delivery",
+      "materialsDesc": "Materials delivered via Kerry Express"
+    }
+  },
+  "error": {
+    "goHome": "Go Home"
+  },
+  "footer": {
+    "allRightsReserved": "All Rights Reserved"
+  }
+}
+

@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "KDC Tutor School"
+  },
+  "nav": {
+    "courses": "คอร์สเรียน",
+    "login": "เข้าสู่ระบบ",
+    "register": "สมัครสมาชิก",
+    "dashboard": "แดชบอร์ด"
+  },
+  "home": {
+    "hero": {
+      "title": "เรียนออนไลน์ได้ทุกที่ ทุกเวลา",
+      "subtitle": "พร้อมทั้ง Live e-Learning และ Video on Demand",
+      "viewCourses": "ดูคอร์สทั้งหมด",
+      "register": "ลงทะเบียน"
+    },
+    "features": {
+      "title": "ทำไมต้องเลือกเรา",
+      "live": "Live e-Learning",
+      "liveDesc": "เรียนสดออนไลน์กับอาจารย์",
+      "vod": "Video on Demand",
+      "vodDesc": "เรียนย้อนหลังได้ 24 ชั่วโมง",
+      "materials": "ส่งเอกสาร",
+      "materialsDesc": "ส่งเอกสารผ่าน Kerry Express"
+    }
+  },
+  "error": {
+    "goHome": "กลับหน้าหลัก"
+  },
+  "footer": {
+    "allRightsReserved": "สงวนลิขสิทธิ์"
+  }
+}
+

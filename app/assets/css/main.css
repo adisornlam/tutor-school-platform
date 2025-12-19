@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --primary-blue: #2563eb;
+  --primary-blue-dark: #1e40af;
+  --primary-blue-light: #3b82f6;
+
+  /* Secondary Colors */
+  --secondary-green: #10b981;
+  --secondary-green-dark: #059669;
+
+  /* Accent Colors */
+  --accent-orange: #f97316;
+  --accent-orange-dark: #ea580c;
+
+  /* Status Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+}
+
+body {
+  font-family: 'Sarabun', 'Kanit', sans-serif;
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Timezone: Asia/Bangkok */
+* {
+  box-sizing: border-box;
+}
+
+/* Input fields - ensure white background */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea,
+select {
+  @apply bg-white text-gray-900;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  @apply bg-white;
+}
+
+/* Checkbox - ensure white background */
+input[type="checkbox"] {
+  @apply bg-white border-gray-300;
+}
+
+input[type="checkbox"]:checked {
+  @apply bg-green-600 border-green-600;
+}
+
+/* Light scrollbar styles */
+.scrollbar-light::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-light::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+  border-radius: 4px;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  border-radius: 4px;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Firefox scrollbar */
+.scrollbar-light {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(209 213 219) rgb(243 244 246);
+}
+
+input[type="checkbox"]:focus {
+  @apply ring-2 ring-green-500 ring-offset-2;
+}
+
