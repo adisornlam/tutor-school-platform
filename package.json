@@ -26,8 +26,9 @@
     "db:remove-master-data-menu": "bun run scripts/remove-master-data-menu.ts",
     "db:deactivate-old-users-menu": "bun run scripts/deactivate-old-users-menu.ts",
     "db:seed-test-users": "bun run scripts/seed-test-users.ts",
-    "db:link-payments": "bun run scripts/link-payments-to-enrollments.ts",
-    "test:login": "bun run scripts/test-login.ts"
+        "db:link-payments": "bun run scripts/link-payments-to-enrollments.ts",
+        "db:backup": "bash scripts/backup-db.sh",
+        "test:login": "bun run scripts/test-login.ts"
   },
   "dependencies": {
     "@nuxtjs/i18n": "^8.0.0",
