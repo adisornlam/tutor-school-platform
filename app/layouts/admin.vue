@@ -174,14 +174,14 @@
               >
                 <NuxtLink
                   to="/admin/profile"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  class="block px-4 py-2 text-sm text-green-600 hover:bg-gray-100 hover:text-green-700"
                   @click="showUserMenu = false"
                 >
                   โปรไฟล์
                 </NuxtLink>
                 <NuxtLink
                   to="/"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  class="block px-4 py-2 text-sm text-green-600 hover:bg-gray-100 hover:text-green-700"
                   @click="showUserMenu = false"
                 >
                   กลับไปหน้าแรก

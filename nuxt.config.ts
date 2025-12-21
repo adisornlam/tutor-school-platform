@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     dbPassword: process.env.DB_PASSWORD || '',
     jwtSecret: process.env.JWT_SECRET || 'your-secret-key-change-in-production',
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key-change-in-production',
-    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '15m',
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
     jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
     
     // Public (exposed to client)
@@ -87,6 +87,62 @@ export default defineNuxtConfig({
     // Timezone
     timing: {
       timezone: 'Asia/Bangkok'
+    },
+    // Alias for Nitro build - resolve at build time
+    alias: {
+      '#shared': resolve(__dirname, 'shared'),
+      '#server': resolve(__dirname, 'server')
+    },
+    // Inline shared directory to fix build resolution
+    externals: {
+      inline: ['#shared']
+    },
+    // Use Vite resolve for proper alias resolution
+    vite: {
+      resolve: {
+        alias: {
+          '#shared': resolve(__dirname, 'shared'),
+          '#server': resolve(__dirname, 'server')
+        }
+      }
+    },
+    // Configure Rollup to properly resolve shared imports
+    rollupConfig: {
+      plugins: [
+        {
+          name: 'resolve-shared-relative',
+          resolveId(source, importer) {
+            // Only fix paths that explicitly reference shared/types
+            if (source && (source.startsWith('../shared/types/') || source.startsWith('./shared/types/'))) {
+              const { existsSync } = require('fs')
+              const fixedPath = resolve(__dirname, 'shared', 'types', source.split('shared/types/')[1] || source.replace(/^.*shared\/types\//, ''))
+              if (existsSync(fixedPath)) {
+                return fixedPath
+              }
+            }
+            return null
+          }
+        }
+      ]
+    },
+    // Copy shared directory to output before Nitro build
+    hooks: {
+      'nitro:build:before': async (nitro) => {
+        const { existsSync, mkdirSync } = await import('fs')
+        const { copy } = await import('fs-extra')
+        const sharedSrc = resolve(__dirname, 'shared')
+        const sharedDest = resolve(__dirname, '.output', 'shared')
+        
+        try {
+          if (existsSync(sharedSrc)) {
+            mkdirSync(resolve(__dirname, '.output'), { recursive: true })
+            await copy(sharedSrc, sharedDest)
+            console.log('✅ Copied shared directory to .output/shared')
+          }
+        } catch (error) {
+          console.warn('⚠️ Could not copy shared directory:', error)
+        }
+      }
     }
   },
 

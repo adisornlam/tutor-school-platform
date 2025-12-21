@@ -1,5 +1,5 @@
-import type { UserWithRoles } from '../../shared/types/user.types'
-import { UserRole } from '../../shared/types/user.types'
+import type { UserWithRoles } from '#shared/types/user.types'
+import { UserRole } from '#shared/types/user.types'
 
 /**
  * Get redirect path based on user role
@@ -14,18 +14,14 @@ export function getRedirectPathByRole(user: UserWithRoles | null, redirect?: str
     return '/my-courses'
   }
 
-  // System Admin or Owner → Admin Dashboard
-  if (user.roles.includes(UserRole.SYSTEM_ADMIN) || user.roles.includes(UserRole.OWNER)) {
-    return '/admin'
-  }
-
-  // Branch Admin → Admin Dashboard (same layout, menu will be filtered by role)
-  if (user.roles.includes(UserRole.BRANCH_ADMIN)) {
-    return '/admin'
-  }
-
-  // Tutor → Admin Dashboard (same layout, menu will be filtered by role)
-  if (user.roles.includes(UserRole.TUTOR)) {
+  // System Admin, Owner, Admin (กลาง), Branch Admin, or Tutor → Admin Dashboard
+  if (
+    user.roles.includes(UserRole.SYSTEM_ADMIN) ||
+    user.roles.includes(UserRole.OWNER) ||
+    user.roles.includes(UserRole.ADMIN) ||
+    user.roles.includes(UserRole.BRANCH_ADMIN) ||
+    user.roles.includes(UserRole.TUTOR)
+  ) {
     return '/admin'
   }
 
@@ -34,11 +30,16 @@ export function getRedirectPathByRole(user: UserWithRoles | null, redirect?: str
 }
 
 /**
- * Check if user is admin (system_admin, owner, or branch_admin)
+ * Check if user is admin (system_admin, owner, admin, or branch_admin)
  */
 export function isAdmin(user: UserWithRoles | null): boolean {
   if (!user || !user.roles) return false
-  const adminRoles: UserRole[] = [UserRole.SYSTEM_ADMIN, UserRole.OWNER, UserRole.BRANCH_ADMIN]
+  const adminRoles: UserRole[] = [
+    UserRole.SYSTEM_ADMIN,
+    UserRole.OWNER,
+    UserRole.ADMIN,
+    UserRole.BRANCH_ADMIN
+  ]
   return user.roles.some((role: UserRole) => 
     adminRoles.includes(role)
   )

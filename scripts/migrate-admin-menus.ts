@@ -267,7 +267,7 @@ async function migrateAdminMenus() {
         name: 'สาขา',
         name_en: 'Branches',
         icon: 'BuildingOfficeIcon',
-        href: '/admin/branches',
+        href: '/admin/settings/branches',
         parent_code: 'SETTINGS',
         display_order: 3,
         is_active: true,

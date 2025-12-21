@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import { query, queryOne, execute } from '../utils/db'
 import { generateAccessToken, generateRefreshToken } from '../utils/jwt'
-import type { User, UserWithRoles, LoginCredentials, RegisterData, PublicUser } from '../../shared/types/user.types'
-import { UserRole, UserStatus } from '../../shared/types/user.types'
+import type { User, UserWithRoles, LoginCredentials, RegisterData, PublicUser } from '#shared/types/user.types'
+import { UserRole, UserStatus } from '#shared/types/user.types'
 
 export async function findUserByEmail(email: string): Promise<User | null> {
   return queryOne<User>(
@@ -48,7 +48,7 @@ export async function getUserWithRoles(userId: number): Promise<UserWithRoles | 
   return { ...publicUser, roles }
 }
 
-export async function createUser(data: RegisterData): Promise<User> {
+export async function createUser(data: RegisterData, defaultRole: UserRole = UserRole.STUDENT): Promise<User> {
   const passwordHash = await bcrypt.hash(data.password, 12)
   
   const result = await execute(
@@ -65,16 +65,16 @@ export async function createUser(data: RegisterData): Promise<User> {
     ]
   )
   
-  // Assign student role by default
-  const studentRole = await queryOne<{ id: number }>(
+  // Assign default role (will be overridden if role is specified in register endpoint)
+  const role = await queryOne<{ id: number }>(
     'SELECT id FROM roles WHERE name = ?',
-    [UserRole.STUDENT]
+    [defaultRole]
   )
   
-  if (studentRole) {
+  if (role) {
     await execute(
       'INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)',
-      [result.insertId, studentRole.id]
+      [result.insertId, role.id]
     )
   }
   

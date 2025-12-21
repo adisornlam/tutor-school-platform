@@ -3,7 +3,7 @@ import { getUserRoles, getUserWithRoles } from '../../../services/auth.service'
 import { findUserByIdentifier, findUserByEmail } from '../../../services/auth.service'
 import { query, execute } from '../../../utils/db'
 import bcrypt from 'bcryptjs'
-import type { UserRole } from '../../../../shared/types/user.types'
+import type { UserRole } from '#shared/types/user.types'
 
 interface UpdateUserBody {
   username?: string
@@ -18,9 +18,9 @@ interface UpdateUserBody {
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
   
-  // Check if user has admin role (system_admin, owner, branch_admin)
+  // Check if user has admin role (system_admin, owner, admin, branch_admin)
   const roles = await getUserRoles(auth.userId)
-  const adminRoles: UserRole[] = ['system_admin', 'owner', 'branch_admin']
+  const adminRoles: UserRole[] = ['system_admin', 'owner', 'admin', 'branch_admin']
   if (!roles.some(role => adminRoles.includes(role as UserRole))) {
     throw createError({
       statusCode: 403,

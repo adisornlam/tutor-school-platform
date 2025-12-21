@@ -1,6 +1,6 @@
 import { createUser, getUserWithRoles } from '../../services/auth.service'
 import { generateAccessToken, generateRefreshToken } from '../../utils/jwt'
-import type { RegisterData } from '../../../shared/types/user.types'
+import type { RegisterData } from '#shared/types/user.types'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<RegisterData>(event)
@@ -39,6 +39,30 @@ export default defineEventHandler(async (event) => {
   
   // Create user
   const user = await createUser(body)
+  
+  // Assign role if provided (parent or student)
+  if (body.role) {
+    const { queryOne, execute } = await import('../../utils/db')
+    const roleRecord = await queryOne<{ id: number }>(
+      'SELECT id FROM roles WHERE name = ?',
+      [body.role]
+    )
+    
+    if (roleRecord) {
+      // Remove default student role first
+      await execute(
+        'DELETE FROM user_roles WHERE user_id = ?',
+        [user.id]
+      )
+      
+      // Assign the specified role
+      await execute(
+        'INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)',
+        [user.id, roleRecord.id]
+      )
+    }
+  }
+  
   const userWithRoles = await getUserWithRoles(user.id)
   
   if (!userWithRoles) {

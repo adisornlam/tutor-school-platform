@@ -20,9 +20,13 @@
 
 ### 5. โครงสร้างโปรเจกต์
 - **[NUXT4_PROJECT_STRUCTURE.md](./NUXT4_PROJECT_STRUCTURE.md)** - โครงสร้างโปรเจกต์ Nuxt 4
+- **[NUXT_ROUTING_PATTERNS.md](./NUXT_ROUTING_PATTERNS.md)** - ⭐ **Best Practices สำหรับ Nuxt Routing Patterns** (Dynamic Routes, Child Routes)
 
 ### 6. แผนการพัฒนา
 - **[IMPLEMENTATION_ROADMAP.md](./IMPLEMENTATION_ROADMAP.md)** - แผนการพัฒนา 12 สัปดาห์
+
+### 7. การวิเคราะห์และแก้ไขปัญหา
+- **[COURSE_BRANCH_ANALYSIS.md](./COURSE_BRANCH_ANALYSIS.md)** - ⚠️ **การวิเคราะห์: ระบบสร้าง/แก้ไขคอร์สไม่รองรับสาขา**
 
 ---
 

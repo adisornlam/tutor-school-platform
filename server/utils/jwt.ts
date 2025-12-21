@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import type { UserWithRoles } from '../../shared/types/user.types'
+import type { UserWithRoles } from '#shared/types/user.types'
 
 const config = useRuntimeConfig()
 

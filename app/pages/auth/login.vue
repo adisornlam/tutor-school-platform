@@ -103,22 +103,25 @@ const handleLogin = async () => {
     console.log('[Login] Login response:', response)
     
     if (response.success) {
-      // Use user from response directly instead of waiting for state update
-      const loggedInUser = response.data.user
-      console.log('[Login] User from response:', loggedInUser)
-      console.log('[Login] User roles:', loggedInUser.roles)
-      
-      // Wait for state to update (optional, but good practice)
+      // Wait a bit for state to update
       await nextTick()
-      console.log('[Login] User state after nextTick:', user.value)
+      await new Promise(resolve => setTimeout(resolve, 100))
       
       const redirect = route.query.redirect as string
-      // Use user from response if state hasn't updated yet
+      console.log('[Login] Redirect query param:', redirect)
+      
+      // If redirect param exists, use it directly
+      if (redirect) {
+        console.log('[Login] Redirecting to requested path:', redirect)
+        await navigateTo(redirect)
+        return
+      }
+      
+      // Otherwise, use role-based redirect
+      const loggedInUser = response.data.user
       const userForRedirect = user.value || loggedInUser
       const redirectPath = getRedirectPathByRole(userForRedirect, redirect)
-      console.log('[Login] Redirecting to:', redirectPath)
-      
-      // Use navigateTo instead of router.push for better Nuxt integration
+      console.log('[Login] Redirecting to role-based path:', redirectPath)
       await navigateTo(redirectPath)
     }
   } catch (err: any) {

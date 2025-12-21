@@ -175,20 +175,11 @@
               <div class="flex items-center space-x-2">
                 <button
                   @click="editParent(parent)"
-                  class="px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  class="px-3 py-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                   title="แก้ไขผู้ปกครอง"
                 >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                </button>
-                <button
-                  @click="confirmRemoveParent(parent)"
-                  class="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  title="ลบผู้ปกครอง"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
               </div>
@@ -252,10 +243,13 @@
               <option value="other">อื่นๆ</option>
             </select>
           </div>
+          <div v-if="addParentError" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {{ addParentError }}
+          </div>
           <div class="flex justify-end space-x-3 pt-4">
             <button
               type="button"
-              @click="showAddParentModal = false"
+              @click="closeAddParentModal"
               class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
             >
               ยกเลิก
@@ -363,34 +357,6 @@
       </div>
     </div>
 
-    <!-- Remove Parent Confirmation Modal -->
-    <div
-      v-if="parentToRemove"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      @click.self="parentToRemove = null"
-    >
-      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold mb-4">ยืนยันการลบผู้ปกครอง</h3>
-        <p class="text-gray-600 mb-6">
-          คุณแน่ใจหรือไม่ว่าต้องการลบผู้ปกครอง 
-          <strong>{{ parentToRemove.first_name }} {{ parentToRemove.last_name }}</strong>?
-        </p>
-        <div class="flex justify-end space-x-3">
-          <button
-            @click="parentToRemove = null"
-            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
-          >
-            ยกเลิก
-          </button>
-          <button
-            @click="handleRemoveParent"
-            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-          >
-            ลบ
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -420,7 +386,7 @@ const parentSearchResults = ref<any[]>([])
 const selectedParentToAdd = ref<any>(null)
 const parentRelationship = ref('guardian')
 const addingParent = ref(false)
-const parentToRemove = ref<any>(null)
+const addParentError = ref('')
 const parentToEdit = ref<any>(null)
 const editingParent = ref(false)
 const editParentError = ref('')
@@ -549,12 +515,23 @@ const selectParent = (user: any) => {
   selectedParentToAdd.value = user
   parentSearch.value = `${user.first_name} ${user.last_name} (${user.username})`
   parentSearchResults.value = []
+  addParentError.value = ''
+}
+
+const closeAddParentModal = () => {
+  showAddParentModal.value = false
+  selectedParentToAdd.value = null
+  parentSearch.value = ''
+  parentRelationship.value = 'guardian'
+  addParentError.value = ''
+  parentSearchResults.value = []
 }
 
 const handleAddParent = async () => {
   if (!selectedParentToAdd.value) return
 
   addingParent.value = true
+  addParentError.value = ''
   try {
     // TODO: Create API endpoint for adding parent-student relationship
     // For now, we'll need to create this endpoint
@@ -571,42 +548,15 @@ const handleAddParent = async () => {
 
     // Reload student data
     await loadStudent()
-    showAddParentModal.value = false
-    selectedParentToAdd.value = null
-    parentSearch.value = ''
-    parentRelationship.value = 'guardian'
+    closeAddParentModal()
   } catch (err: any) {
     console.error('Error adding parent:', err)
-    alert(err.data?.message || 'เกิดข้อผิดพลาดในการเพิ่มผู้ปกครอง')
+    addParentError.value = err.data?.message || 'เกิดข้อผิดพลาดในการเพิ่มผู้ปกครอง'
   } finally {
     addingParent.value = false
   }
 }
 
-const confirmRemoveParent = (parent: any) => {
-  parentToRemove.value = parent
-}
-
-const handleRemoveParent = async () => {
-  if (!parentToRemove.value) return
-
-  try {
-    // TODO: Create API endpoint for removing parent-student relationship
-    await $fetch(`${config.public.apiBase}/admin/students/${studentId}/parents/${parentToRemove.value.id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken.value}`
-      }
-    })
-
-    // Reload student data
-    await loadStudent()
-    parentToRemove.value = null
-  } catch (err: any) {
-    console.error('Error removing parent:', err)
-    alert(err.data?.message || 'เกิดข้อผิดพลาดในการลบผู้ปกครอง')
-  }
-}
 
 const editParent = (parent: any) => {
   parentToEdit.value = parent

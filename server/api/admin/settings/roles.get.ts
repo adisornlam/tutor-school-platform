@@ -1,0 +1,59 @@
+import { requireAuth } from '../../../utils/auth.middleware'
+import { query } from '../../../utils/db'
+import { getUserRoles } from '../../../services/auth.service'
+import type { UserRole } from '#shared/types/user.types'
+
+export default defineEventHandler(async (event) => {
+  const auth = await requireAuth(event)
+  
+  const roles = await getUserRoles(auth.userId)
+  const allowedRoles: UserRole[] = ['system_admin', 'owner']
+  if (!roles.some(role => allowedRoles.includes(role as UserRole))) {
+    throw createError({
+      statusCode: 403,
+      message: 'Access denied. System Admin or Owner role required.'
+    })
+  }
+
+  const queryParams = getQuery(event)
+  const search = queryParams.search as string | undefined
+
+  let whereConditions: string[] = []
+  const queryValues: any[] = []
+
+  if (search) {
+    whereConditions.push(`(name LIKE ? OR description LIKE ?)`)
+    const searchPattern = `%${search}%`
+    queryValues.push(searchPattern, searchPattern)
+  }
+
+  const whereClause = whereConditions.length > 0 
+    ? `WHERE ${whereConditions.join(' AND ')}`
+    : ''
+
+  try {
+    const roles = await query(
+      `SELECT 
+        id,
+        name,
+        description,
+        created_at
+      FROM roles
+      ${whereClause}
+      ORDER BY name ASC`,
+      queryValues
+    )
+
+    return {
+      success: true,
+      data: roles
+    }
+  } catch (error: any) {
+    console.error('Error fetching roles:', error)
+    throw createError({
+      statusCode: 500,
+      message: 'Failed to fetch roles'
+    })
+  }
+})
+

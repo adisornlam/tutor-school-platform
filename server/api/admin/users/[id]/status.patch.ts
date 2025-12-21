@@ -1,8 +1,8 @@
 import { requireAuth } from '../../../../utils/auth.middleware'
 import { getUserRoles, findUserById, getUserWithRoles } from '../../../../services/auth.service'
 import { execute } from '../../../../utils/db'
-import { UserStatus } from '../../../../../shared/types/user.types'
-import type { UserRole } from '../../../../../shared/types/user.types'
+import { UserStatus } from '#shared/types/user.types'
+import type { UserRole } from '#shared/types/user.types'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)

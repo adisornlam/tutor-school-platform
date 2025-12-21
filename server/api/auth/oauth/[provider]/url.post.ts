@@ -1,0 +1,48 @@
+import { queryOne } from '#server/utils/db'
+
+export default defineEventHandler(async (event) => {
+  const provider = getRouterParam(event, 'provider')
+  const body = await readBody(event)
+  const { redirect_uri, state } = body
+
+  if (!['google', 'facebook', 'line'].includes(provider || '')) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid OAuth provider'
+    })
+  }
+
+  const config = useRuntimeConfig()
+  
+  // Get OAuth credentials from environment
+  const clientId = process.env[`OAUTH_${provider.toUpperCase()}_CLIENT_ID`]
+  const clientSecret = process.env[`OAUTH_${provider.toUpperCase()}_CLIENT_SECRET`]
+  const baseUrl = process.env[`OAUTH_${provider.toUpperCase()}_BASE_URL`]
+
+  if (!clientId) {
+    throw createError({
+      statusCode: 500,
+      message: `${provider} OAuth is not configured`
+    })
+  }
+
+  // Store state in session or database for verification
+  // For now, we'll encode it in the callback URL
+  const callbackUrl = `${config.public.apiBase}/auth/callback/${provider}?state=${encodeURIComponent(state || '')}`
+  
+  let authUrl = ''
+  
+  if (provider === 'google') {
+    const scopes = 'openid email profile'
+    authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirect_uri || callbackUrl)}&response_type=code&scope=${encodeURIComponent(scopes)}&state=${encodeURIComponent(state || '')}`
+  } else if (provider === 'facebook') {
+    const scopes = 'email,public_profile'
+    authUrl = `https://www.facebook.com/v18.0/dialog/oauth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirect_uri || callbackUrl)}&scope=${encodeURIComponent(scopes)}&state=${encodeURIComponent(state || '')}`
+  } else if (provider === 'line') {
+    const scopes = 'profile openid email'
+    authUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirect_uri || callbackUrl)}&state=${encodeURIComponent(state || '')}&scope=${encodeURIComponent(scopes)}`
+  }
+
+  return authUrl
+})
+

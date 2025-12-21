@@ -1,5 +1,5 @@
 import { query } from '../utils/db'
-import { UserRole } from '../../../shared/types/user.types'
+import { UserRole } from '#shared/types/user.types'
 
 export interface AdminMenu {
   id: number

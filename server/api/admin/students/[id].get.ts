@@ -1,14 +1,14 @@
 import { requireAuth } from '../../../utils/auth.middleware'
 import { query } from '../../../utils/db'
 import { getUserRoles, findUserById } from '../../../services/auth.service'
-import type { UserRole } from '../../../../shared/types/user.types'
+import type { UserRole } from '#shared/types/user.types'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
   
   // Check if user has admin role (including tutor)
   const roles = await getUserRoles(auth.userId)
-  const allowedRoles: UserRole[] = ['system_admin', 'owner', 'branch_admin', 'tutor']
+  const allowedRoles: UserRole[] = ['system_admin', 'owner', 'admin', 'branch_admin', 'tutor']
   if (!roles.some(role => allowedRoles.includes(role as UserRole))) {
     throw createError({
       statusCode: 403,
@@ -26,11 +26,13 @@ export default defineEventHandler(async (event) => {
 
   // Check access permission based on role
   const isSystemAdmin = roles.includes('system_admin' as UserRole) || roles.includes('owner' as UserRole)
+  const isAdmin = roles.includes('admin' as UserRole) // Admin กลาง - จัดการได้ทุกสาขา
   const isBranchAdmin = roles.includes('branch_admin' as UserRole)
   const isTutor = roles.includes('tutor' as UserRole)
 
   // For Branch Admin: Check if student has enrollment in their branch
-  if (isBranchAdmin && !isSystemAdmin) {
+  // Admin กลาง สามารถดูได้ทุกสาขา ไม่ต้อง filter
+  if (isBranchAdmin && !isSystemAdmin && !isAdmin) {
     const { query } = await import('../../../utils/db')
     const branchAdmins = await query<{ branch_id: number }>(
       'SELECT branch_id FROM branch_admins WHERE user_id = ?',

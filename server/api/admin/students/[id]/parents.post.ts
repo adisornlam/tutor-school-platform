@@ -1,14 +1,14 @@
 import { requireAuth } from '../../../../utils/auth.middleware'
 import { query, execute } from '../../../../utils/db'
 import { getUserRoles, findUserById } from '../../../../services/auth.service'
-import type { UserRole } from '../../../../../shared/types/user.types'
+import type { UserRole } from '#shared/types/user.types'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
   
-  // Check if user has admin role (system_admin, owner, branch_admin)
+  // Check if user has admin role (system_admin, owner, admin, branch_admin)
   const roles = await getUserRoles(auth.userId)
-  const allowedRoles: UserRole[] = ['system_admin', 'owner', 'branch_admin']
+  const allowedRoles: UserRole[] = ['system_admin', 'owner', 'admin', 'branch_admin']
   if (!roles.some(role => allowedRoles.includes(role as UserRole))) {
     throw createError({
       statusCode: 403,

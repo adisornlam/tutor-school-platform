@@ -3,7 +3,7 @@ import { getUserRoles } from '../../services/auth.service'
 import { createUser, findUserByIdentifier, findUserByEmail } from '../../services/auth.service'
 import { query, execute } from '../../utils/db'
 import bcrypt from 'bcryptjs'
-import type { UserRole } from '../../../shared/types/user.types'
+import type { UserRole } from '#shared/types/user.types'
 
 interface CreateUserBody {
   username: string

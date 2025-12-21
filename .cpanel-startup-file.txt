@@ -1,0 +1,5 @@
+.output/server/index.mjs
+
+✅ Verified: Build successful!
+This is the correct startup file for cPanel Node.js Application.
+

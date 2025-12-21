@@ -1,5 +1,5 @@
-import type { UserWithRoles } from '../../shared/types/user.types'
-import { UserRole } from '../../shared/types/user.types'
+import type { UserWithRoles } from '#shared/types/user.types'
+import { UserRole } from '#shared/types/user.types'
 
 export const useAuth = () => {
   const user = useState<UserWithRoles | null>('auth.user', () => null)
@@ -28,9 +28,12 @@ export const useAuth = () => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        maxAge: 15 * 60 // 15 minutes
+        maxAge: 2 * 60 * 60 // 2 hours
       })
       tokenCookie.value = response.data.accessToken
+      
+      // Wait a bit for cookie to be set
+      await new Promise(resolve => setTimeout(resolve, 50))
     }
 
     return response

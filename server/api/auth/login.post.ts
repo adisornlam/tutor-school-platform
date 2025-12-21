@@ -1,5 +1,5 @@
 import { login } from '../../services/auth.service'
-import type { LoginCredentials } from '../../../shared/types/user.types'
+import type { LoginCredentials } from '#shared/types/user.types'
 
 export default defineEventHandler(async (event) => {
   try {

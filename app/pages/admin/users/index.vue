@@ -36,6 +36,7 @@
             <option value="">ทั้งหมด</option>
             <option value="system_admin">System Admin</option>
             <option value="owner">Owner</option>
+            <option value="admin">Admin กลาง</option>
             <option value="branch_admin">Branch Admin</option>
             <option value="tutor">Tutor</option>
             <option value="parent">Parent</option>
@@ -384,6 +385,7 @@ const getRoleDisplayName = (role: string) => {
   const roleNames: Record<string, string> = {
     system_admin: 'System Admin',
     owner: 'Owner',
+    admin: 'Admin กลาง',
     branch_admin: 'Branch Admin',
     tutor: 'อาจารย์',
     parent: 'ผู้ปกครอง',
@@ -396,6 +398,7 @@ const getRoleBadgeClass = (role: string) => {
   const classes: Record<string, string> = {
     system_admin: 'bg-purple-100 text-purple-800',
     owner: 'bg-indigo-100 text-indigo-800',
+    admin: 'bg-teal-100 text-teal-800',
     branch_admin: 'bg-blue-100 text-blue-800',
     tutor: 'bg-green-100 text-green-800',
     parent: 'bg-yellow-100 text-yellow-800',

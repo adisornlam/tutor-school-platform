@@ -1,14 +1,14 @@
 import { requireAuth } from '../../utils/auth.middleware'
 import { query } from '../../utils/db'
 import { getUserRoles } from '../../services/auth.service'
-import type { UserRole } from '../../../shared/types/user.types'
+import type { UserRole } from '#shared/types/user.types'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
   
   // Check if user has admin role (including tutor)
   const roles = await getUserRoles(auth.userId)
-  const allowedRoles: UserRole[] = ['system_admin', 'owner', 'branch_admin', 'tutor']
+  const allowedRoles: UserRole[] = ['system_admin', 'owner', 'admin', 'branch_admin', 'tutor']
   if (!roles.some(role => allowedRoles.includes(role as UserRole))) {
     throw createError({
       statusCode: 403,
@@ -24,12 +24,14 @@ export default defineEventHandler(async (event) => {
 
   // Determine user type and get filter conditions
   const isSystemAdmin = roles.includes('system_admin' as UserRole) || roles.includes('owner' as UserRole)
+  const isAdmin = roles.includes('admin' as UserRole) // Admin กลาง - จัดการได้ทุกสาขา
   const isBranchAdmin = roles.includes('branch_admin' as UserRole)
   const isTutor = roles.includes('tutor' as UserRole)
 
   // Get branch_id for Branch Admin
+  // Admin กลาง สามารถดูได้ทุกสาขา ไม่ต้อง filter
   let branchIds: number[] = []
-  if (isBranchAdmin && !isSystemAdmin) {
+  if (isBranchAdmin && !isSystemAdmin && !isAdmin) {
     const branchAdmins = await query<{ branch_id: number }>(
       'SELECT branch_id FROM branch_admins WHERE user_id = ?',
       [auth.userId]

@@ -92,27 +92,30 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             >
           </div>
-        </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            บทบาท <span class="text-red-500">*</span>
-          </label>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-            <label
-              v-for="role in availableRoles"
-              :key="role.value"
-              class="flex items-center space-x-2 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"
-              :class="form.roles.includes(role.value) ? 'border-green-500 bg-green-50' : 'border-gray-300'"
-            >
-              <input
-                type="checkbox"
-                :value="role.value"
-                v-model="form.roles"
-                class="rounded border-gray-300 text-green-600 focus:ring-green-500"
-              >
-              <span class="text-sm">{{ role.label }}</span>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              บทบาท <span class="text-red-500">*</span>
             </label>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <label
+                v-for="role in availableRoles"
+                :key="role.value"
+                class="flex items-center space-x-2 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+                :class="{ 'bg-green-50 border-green-500': form.roles.includes(role.value) }"
+              >
+                <input
+                  type="checkbox"
+                  :value="role.value"
+                  v-model="form.roles"
+                  class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                >
+                <span class="text-sm font-medium">{{ role.label }}</span>
+              </label>
+            </div>
+            <p v-if="form.roles.length === 0" class="mt-2 text-sm text-red-600">
+              กรุณาเลือกอย่างน้อย 1 บทบาท
+            </p>
           </div>
         </div>
 
@@ -130,7 +133,7 @@
           </button>
           <button
             type="submit"
-            :disabled="loading"
+            :disabled="loading || form.roles.length === 0"
             class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span v-if="loading">กำลังบันทึก...</span>
@@ -143,6 +146,8 @@
 </template>
 
 <script setup lang="ts">
+import { UserRole } from '#shared/types/user.types'
+
 interface User {
   id: number
   username: string
@@ -150,6 +155,7 @@ interface User {
   first_name: string
   last_name: string
   phone?: string | null
+  status: string
   roles: string[]
 }
 
@@ -170,6 +176,15 @@ const emit = defineEmits<{
 const config = useRuntimeConfig()
 const { accessToken } = useAuth()
 
+// Available roles (excluding parent and student)
+const availableRoles = [
+  { value: UserRole.SYSTEM_ADMIN, label: 'System Admin' },
+  { value: UserRole.OWNER, label: 'Owner' },
+  { value: UserRole.ADMIN, label: 'Admin กลาง' },
+  { value: UserRole.BRANCH_ADMIN, label: 'Admin สาขา' },
+  { value: UserRole.TUTOR, label: 'Tutor' }
+]
+
 const form = reactive({
   username: '',
   email: '',
@@ -183,15 +198,6 @@ const form = reactive({
 const loading = ref(false)
 const error = ref('')
 
-const availableRoles = [
-  { value: 'system_admin', label: 'System Admin' },
-  { value: 'owner', label: 'Owner' },
-  { value: 'branch_admin', label: 'Branch Admin' },
-  { value: 'tutor', label: 'อาจารย์' },
-  { value: 'parent', label: 'ผู้ปกครอง' },
-  { value: 'student', label: 'นักเรียน' }
-]
-
 // Initialize form when user prop changes
 watch(() => props.user, (user) => {
   if (user) {
@@ -201,7 +207,10 @@ watch(() => props.user, (user) => {
     form.last_name = user.last_name
     form.phone = user.phone || ''
     form.password = ''
-    form.roles = [...user.roles]
+    // Filter out parent and student roles, keep only valid roles
+    form.roles = user.roles.filter(role => 
+      availableRoles.some(r => r.value === role)
+    )
   } else {
     // Reset form for new user
     form.username = ''
@@ -216,16 +225,15 @@ watch(() => props.user, (user) => {
 }, { immediate: true })
 
 const handleSubmit = async () => {
+  if (form.roles.length === 0) {
+    error.value = 'กรุณาเลือกอย่างน้อย 1 บทบาท'
+    return
+  }
+
   loading.value = true
   error.value = ''
 
   try {
-    if (form.roles.length === 0) {
-      error.value = 'กรุณาเลือกบทบาทอย่างน้อย 1 บทบาท'
-      loading.value = false
-      return
-    }
-
     const body: any = {
       username: form.username,
       email: form.email || null,
@@ -235,11 +243,15 @@ const handleSubmit = async () => {
       roles: form.roles
     }
 
-    if (props.user) {
-      // Update user
+    // Only include password if it's provided (for create) or if user is editing and wants to change it
+    if (!props.user || form.password) {
       if (form.password) {
         body.password = form.password
       }
+    }
+
+    if (props.user) {
+      // Update user
       await $fetch(`${config.public.apiBase}/admin/users/${props.user.id}`, {
         method: 'PUT',
         headers: {
@@ -249,12 +261,6 @@ const handleSubmit = async () => {
       })
     } else {
       // Create user
-      if (!form.password) {
-        error.value = 'กรุณากรอกรหัสผ่าน'
-        loading.value = false
-        return
-      }
-      body.password = form.password
       await $fetch(`${config.public.apiBase}/admin/users`, {
         method: 'POST',
         headers: {
@@ -265,6 +271,7 @@ const handleSubmit = async () => {
     }
 
     emit('saved')
+    emit('close')
   } catch (err: any) {
     console.error('Error saving user:', err)
     error.value = err.data?.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล'
@@ -273,4 +280,3 @@ const handleSubmit = async () => {
   }
 }
 </script>
-

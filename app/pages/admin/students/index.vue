@@ -69,9 +69,12 @@
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="student in students" :key="student.id" class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td 
+              class="px-6 py-4 whitespace-nowrap cursor-pointer"
+              @click="router.push(`/admin/students/${student.id}`)"
+            >
               <div>
-                <div class="text-sm font-medium text-gray-900">
+                <div class="text-sm font-medium text-green-600 hover:text-green-700 cursor-pointer">
                   {{ student.first_name }} {{ student.last_name }}
                 </div>
                 <div class="text-sm text-gray-500">{{ student.username }}</div>
@@ -104,18 +107,8 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
               <div class="flex items-center justify-end space-x-2">
-                <NuxtLink
-                  :to="`/admin/students/${student.id}`"
-                  class="text-blue-600 hover:text-blue-900"
-                  title="ดูรายละเอียด"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                </NuxtLink>
                 <button
-                  @click="editStudent(student)"
+                  @click.stop="editStudent(student)"
                   class="text-blue-600 hover:text-blue-900"
                   title="แก้ไข"
                 >
@@ -125,7 +118,7 @@
                 </button>
                 <button
                   v-if="student.status === 'active'"
-                  @click="updateStatus(student.id, 'inactive')"
+                  @click.stop="confirmUpdateStatus(student.id, 'inactive', 'ปิดใช้งาน')"
                   class="text-yellow-600 hover:text-yellow-900"
                   title="ปิดใช้งาน"
                 >
@@ -135,7 +128,7 @@
                 </button>
                 <button
                   v-else
-                  @click="updateStatus(student.id, 'active')"
+                  @click.stop="confirmUpdateStatus(student.id, 'active', 'เปิดใช้งาน')"
                   class="text-green-600 hover:text-green-900"
                   title="เปิดใช้งาน"
                 >
@@ -144,7 +137,7 @@
                   </svg>
                 </button>
                 <button
-                  @click="confirmDelete(student)"
+                  @click.stop="confirmDelete(student)"
                   class="text-red-600 hover:text-red-900"
                   title="ลบ"
                 >
@@ -194,36 +187,6 @@
       @saved="handleStudentSaved"
     />
 
-    <!-- Delete Confirmation Modal -->
-    <div
-      v-if="studentToDelete"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      @click.self="studentToDelete = null"
-    >
-      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold mb-4">ยืนยันการลบ</h3>
-        <p class="text-gray-600 mb-6">
-          คุณแน่ใจหรือไม่ว่าต้องการลบผู้เรียน 
-          <strong>{{ studentToDelete.first_name }} {{ studentToDelete.last_name }}</strong>?
-          <br>
-          <span class="text-sm text-red-600">การกระทำนี้ไม่สามารถยกเลิกได้</span>
-        </p>
-        <div class="flex justify-end space-x-3">
-          <button
-            @click="studentToDelete = null"
-            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
-          >
-            ยกเลิก
-          </button>
-          <button
-            @click="deleteStudent"
-            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-          >
-            ลบ
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -238,6 +201,7 @@ definePageMeta({
 
 const config = useRuntimeConfig()
 const { accessToken } = useAuth()
+const router = useRouter()
 
 interface Parent {
   id: number
@@ -292,7 +256,6 @@ const loading = ref(false)
 const error = ref('')
 const showCreateModal = ref(false)
 const editingStudent = ref<Student | null>(null)
-const studentToDelete = ref<Student | null>(null)
 
 const filters = reactive({
   search: '',
@@ -372,14 +335,28 @@ const handleStudentSaved = () => {
   loadStudents()
 }
 
-const updateStatus = async (studentId: number, status: string) => {
+const confirmUpdateStatus = async (studentId: number, newStatus: string, actionName: string) => {
+  const student = students.value.find(s => s.id === studentId)
+  if (!student) return
+  
+  const { confirm } = useConfirm()
+  const confirmed = await confirm({
+    title: `ยืนยัน${actionName}`,
+    message: `คุณแน่ใจหรือไม่ว่าต้องการ${actionName}ผู้เรียน ${student.first_name} ${student.last_name}?`,
+    confirmText: actionName,
+    cancelText: 'ยกเลิก',
+    type: newStatus === 'active' ? 'info' : 'warning'
+  })
+  
+  if (!confirmed) return
+  
   try {
     await $fetch(`${config.public.apiBase}/admin/users/${studentId}/status`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${accessToken.value}`
       },
-      body: { status }
+      body: { status: newStatus }
     })
     await loadStudents()
   } catch (err: any) {
@@ -388,21 +365,25 @@ const updateStatus = async (studentId: number, status: string) => {
   }
 }
 
-const confirmDelete = (student: Student) => {
-  studentToDelete.value = student
-}
-
-const deleteStudent = async () => {
-  if (!studentToDelete.value) return
+const confirmDelete = async (student: Student) => {
+  const { confirm } = useConfirm()
+  const confirmed = await confirm({
+    title: 'ยืนยันการลบ',
+    message: `คุณแน่ใจหรือไม่ว่าต้องการลบผู้เรียน ${student.first_name} ${student.last_name}?\nการกระทำนี้ไม่สามารถยกเลิกได้`,
+    confirmText: 'ลบ',
+    cancelText: 'ยกเลิก',
+    type: 'danger'
+  })
+  
+  if (!confirmed) return
 
   try {
-    await $fetch(`${config.public.apiBase}/admin/users/${studentToDelete.value.id}`, {
+    await $fetch(`${config.public.apiBase}/admin/users/${student.id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${accessToken.value}`
       }
     })
-    studentToDelete.value = null
     await loadStudents()
   } catch (err: any) {
     console.error('Error deleting student:', err)
@@ -440,6 +421,7 @@ const getRelationshipName = (relationship: string) => {
 const formatDate = (date: string) => {
   return format(new Date(date), 'dd MMM yyyy', { locale: th })
 }
+
 
 onMounted(() => {
   loadStudents()

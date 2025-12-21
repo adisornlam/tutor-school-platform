@@ -1,0 +1,196 @@
+import { requireAuth } from '../../utils/auth.middleware'
+import { query, execute } from '../../utils/db'
+
+export default defineEventHandler(async (event) => {
+  const auth = await requireAuth(event)
+  
+  const body = await readBody(event)
+  
+  // Validation
+  if (!body.title || !body.type || body.price === undefined) {
+    throw createError({
+      statusCode: 400,
+      message: 'Title, type, and price are required'
+    })
+  }
+
+  // Validate type
+  const validTypes = ['live_online', 'vod', 'hybrid']
+  if (!validTypes.includes(body.type)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid course type'
+    })
+  }
+
+  // Validate status
+  const validStatuses = ['draft', 'published', 'archived']
+  if (body.status && !validStatuses.includes(body.status)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid course status'
+    })
+  }
+
+  // Check if code already exists (if provided)
+  if (body.code) {
+    const existing = await query(
+      'SELECT id FROM courses WHERE code = ?',
+      [body.code]
+    )
+    
+    if (existing.length > 0) {
+      throw createError({
+        statusCode: 409,
+        message: 'Course code already exists'
+      })
+    }
+  }
+
+  // Validate branches array (if provided)
+  if (body.branches && !Array.isArray(body.branches)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Branches must be an array'
+    })
+  }
+
+  // Validate branch_ids if provided
+  if (body.branches && body.branches.length > 0) {
+    const branchIds = body.branches.map((b: any) => 
+      typeof b === 'object' ? b.branch_id : b
+    ).filter(Boolean)
+    
+    if (branchIds.length > 0) {
+      const existingBranches = await query(
+        'SELECT id FROM branches WHERE id IN (?) AND status = "active"',
+        [branchIds]
+      )
+      
+      if (existingBranches.length !== branchIds.length) {
+        throw createError({
+          statusCode: 400,
+          message: 'One or more branch IDs are invalid or inactive'
+        })
+      }
+    }
+  }
+
+  try {
+    // Insert course
+    const result = await execute(
+      `INSERT INTO courses (
+        title, description, thumbnail_url, type, price, duration_hours, level, status, code, created_by
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        body.title,
+        body.description || null,
+        body.thumbnail_url || null,
+        body.type,
+        body.price,
+        body.duration_hours || null,
+        body.level || null,
+        body.status || 'draft',
+        body.code || null,
+        auth.userId
+      ]
+    )
+
+    const courseId = result.insertId
+
+    // Insert course_images if images are provided
+    if (body.images && Array.isArray(body.images) && body.images.length > 0) {
+      for (const image of body.images) {
+        await execute(
+          `INSERT INTO course_images (course_id, image_url, image_type, display_order, alt_text)
+           VALUES (?, ?, ?, ?, ?)`,
+          [
+            courseId,
+            image.image_url,
+            image.image_type || 'gallery',
+            image.display_order || 0,
+            image.alt_text || null
+          ]
+        )
+      }
+    }
+
+    // Insert course_branches if branches are provided
+    if (body.branches && Array.isArray(body.branches) && body.branches.length > 0) {
+      for (const branch of body.branches) {
+        const branchId = typeof branch === 'object' ? branch.branch_id : branch
+        const seatLimit = typeof branch === 'object' ? (branch.seat_limit || null) : null
+        const isAvailable = typeof branch === 'object' ? (branch.is_available !== undefined ? branch.is_available : true) : true
+
+        await execute(
+          `INSERT INTO course_branches (course_id, branch_id, seat_limit, is_available)
+           VALUES (?, ?, ?, ?)`,
+          [courseId, branchId, seatLimit, isAvailable]
+        )
+      }
+    }
+
+    // Get course with branches
+    const course = await query(
+      'SELECT * FROM courses WHERE id = ?',
+      [courseId]
+    )
+
+    // Get branches for this course
+    const courseBranches = await query(
+      `SELECT 
+        cb.id,
+        cb.course_id,
+        cb.branch_id,
+        cb.seat_limit,
+        cb.current_enrollments,
+        cb.is_available,
+        b.name as branch_name,
+        b.code as branch_code
+      FROM course_branches cb
+      INNER JOIN branches b ON cb.branch_id = b.id
+      WHERE cb.course_id = ?`,
+      [courseId]
+    )
+
+    // Get images for this course
+    const courseImages = await query(
+      `SELECT 
+        id,
+        course_id,
+        image_url,
+        image_type,
+        display_order,
+        alt_text,
+        created_at
+      FROM course_images
+      WHERE course_id = ?
+      ORDER BY display_order ASC, created_at ASC`,
+      [courseId]
+    )
+
+    return {
+      success: true,
+      data: {
+        ...course[0],
+        branches: courseBranches.map((cb: any) => ({
+          id: cb.id,
+          branch_id: cb.branch_id,
+          branch_name: cb.branch_name,
+          branch_code: cb.branch_code,
+          seat_limit: cb.seat_limit,
+          current_enrollments: cb.current_enrollments,
+          is_available: cb.is_available
+        })),
+        images: courseImages
+      }
+    }
+  } catch (error: any) {
+    console.error('Error creating course:', error)
+    throw createError({
+      statusCode: 500,
+      message: 'Failed to create course'
+    })
+  }
+})
+

@@ -17,7 +17,7 @@
         <button
           v-if="canEdit"
           @click="editStudent"
-          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+          class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -80,7 +80,19 @@
 
       <!-- Parents Info -->
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold mb-4">ผู้ปกครอง</h2>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">ผู้ปกครอง</h2>
+          <button
+            v-if="canEdit"
+            @click="showAddParentModal = true"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>เพิ่มผู้ปกครอง</span>
+          </button>
+        </div>
         <div v-if="studentDetail.parents && studentDetail.parents.length > 0" class="space-y-4">
           <div
             v-for="parent in studentDetail.parents"
@@ -88,12 +100,25 @@
             class="border border-gray-200 rounded-lg p-4"
           >
             <div class="flex items-center justify-between mb-3">
-              <h3 class="text-lg font-medium text-gray-900">
-                {{ parent.first_name }} {{ parent.last_name }}
-              </h3>
-              <span class="px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-800">
-                {{ getRelationshipName(parent.relationship) }}
-              </span>
+              <div class="flex items-center space-x-3">
+                <h3 class="text-lg font-medium text-gray-900">
+                  {{ parent.first_name }} {{ parent.last_name }}
+                </h3>
+                <span class="px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-800">
+                  {{ getRelationshipName(parent.relationship) }}
+                </span>
+              </div>
+              <div v-if="canEdit" class="flex items-center space-x-2">
+                <button
+                  @click="editParent(parent)"
+                  class="px-3 py-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                  title="แก้ไขผู้ปกครอง"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+              </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -165,7 +190,7 @@
               </div>
               <NuxtLink
                 :to="`/admin/enrollments/${enrollment.id}`"
-                class="ml-4 px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                class="ml-4 px-4 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 ดูรายละเอียด
               </NuxtLink>
@@ -237,7 +262,7 @@
                   {{ payment.payment_method_name }}
                 </td>
                 <td class="px-4 py-3 text-sm text-gray-900">
-                  <span v-if="payment.enrollment" class="font-medium text-blue-600">
+                  <span v-if="payment.enrollment" class="font-medium text-green-600">
                     {{ payment.enrollment.course.code }}
                   </span>
                   <span v-else class="text-gray-400">-</span>
@@ -268,6 +293,177 @@
         </div>
       </div>
     </div>
+
+    <!-- Add Parent Modal -->
+    <div
+      v-if="showAddParentModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      @click.self="showAddParentModal = false"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <h3 class="text-lg font-semibold mb-4">เพิ่มผู้ปกครอง</h3>
+        <form @submit.prevent="handleAddParent" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              ค้นหาผู้ปกครอง (Username หรือ Email)
+            </label>
+            <input
+              v-model="parentSearch"
+              type="text"
+              placeholder="กรอก username หรือ email"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              @input="searchParent"
+            >
+            <div v-if="parentSearchResults.length > 0" class="mt-2 max-h-40 overflow-y-auto border border-gray-200 rounded-lg">
+              <button
+                v-for="user in parentSearchResults"
+                :key="user.id"
+                type="button"
+                @click="selectParent(user)"
+                class="w-full text-left px-4 py-2 hover:bg-gray-100 border-b border-gray-100 last:border-b-0"
+              >
+                <div class="font-medium">{{ user.first_name }} {{ user.last_name }}</div>
+                <div class="text-sm text-gray-500">{{ user.username }} - {{ user.email || '-' }}</div>
+              </button>
+            </div>
+          </div>
+          <div v-if="selectedParentToAdd">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              ความสัมพันธ์ <span class="text-red-500">*</span>
+            </label>
+            <select
+              v-model="parentRelationship"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="father">บิดา</option>
+              <option value="mother">มารดา</option>
+              <option value="guardian">ผู้ปกครอง</option>
+              <option value="other">อื่นๆ</option>
+            </select>
+          </div>
+          <div v-if="addParentError" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {{ addParentError }}
+          </div>
+          <div class="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              @click="closeAddParentModal"
+              class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
+            >
+              ยกเลิก
+            </button>
+            <button
+              type="submit"
+              :disabled="!selectedParentToAdd || addingParent"
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span v-if="addingParent">กำลังเพิ่ม...</span>
+              <span v-else>เพิ่ม</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Parent Modal -->
+    <div
+      v-if="parentToEdit"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      @click.self="parentToEdit = null"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <h3 class="text-lg font-semibold mb-4">แก้ไขผู้ปกครอง</h3>
+        <form @submit.prevent="handleEditParent" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              ชื่อ <span class="text-red-500">*</span>
+            </label>
+            <input
+              v-model="editParentForm.first_name"
+              type="text"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              นามสกุล <span class="text-red-500">*</span>
+            </label>
+            <input
+              v-model="editParentForm.last_name"
+              type="text"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
+            <input
+              v-model="editParentForm.email"
+              type="email"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              เบอร์โทรศัพท์
+            </label>
+            <input
+              v-model="editParentForm.phone"
+              type="tel"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              ความสัมพันธ์ <span class="text-red-500">*</span>
+            </label>
+            <select
+              v-model="editParentForm.relationship"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="father">บิดา</option>
+              <option value="mother">มารดา</option>
+              <option value="guardian">ผู้ปกครอง</option>
+              <option value="other">อื่นๆ</option>
+            </select>
+          </div>
+          <div v-if="editParentError" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {{ editParentError }}
+          </div>
+          <div class="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              @click="parentToEdit = null"
+              class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
+            >
+              ยกเลิก
+            </button>
+            <button
+              type="submit"
+              :disabled="editingParent"
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span v-if="editingParent">กำลังบันทึก...</span>
+              <span v-else>บันทึก</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Student Modal -->
+    <StudentModal
+      v-if="showEditStudentModal"
+      :show="showEditStudentModal"
+      :student="editingStudent"
+      @close="closeEditStudentModal"
+      @saved="handleStudentSaved"
+    />
   </div>
 </template>
 
@@ -293,17 +489,40 @@ const learningProgress = ref<any[]>([])
 const payments = ref<any[]>([])
 const loadingPayments = ref(false)
 
-// Check if user can edit (System Admin, Owner, Branch Admin only)
+// Edit student modal
+const showEditStudentModal = ref(false)
+const editingStudent = ref<any>(null)
+
+// Parent management
+const showAddParentModal = ref(false)
+const parentSearch = ref('')
+const parentSearchResults = ref<any[]>([])
+const selectedParentToAdd = ref<any>(null)
+const parentRelationship = ref('guardian')
+const addingParent = ref(false)
+const addParentError = ref('')
+const parentToEdit = ref<any>(null)
+const editingParent = ref(false)
+const editParentError = ref('')
+const editParentForm = reactive({
+  first_name: '',
+  last_name: '',
+  email: '',
+  phone: '',
+  relationship: 'guardian'
+})
+
+// Check if user can edit (System Admin, Owner, Admin กลาง, Branch Admin only)
 const canEdit = computed(() => {
   if (!user.value || !user.value.roles) return false
-  const allowedRoles = ['system_admin', 'owner', 'branch_admin']
+  const allowedRoles = ['system_admin', 'owner', 'admin', 'branch_admin']
   return user.value.roles.some((role: string) => allowedRoles.includes(role))
 })
 
-// Check if user can view payments (System Admin, Owner, Branch Admin only)
+// Check if user can view payments (System Admin, Owner, Admin กลาง, Branch Admin only)
 const canViewPayments = computed(() => {
   if (!user.value || !user.value.roles) return false
-  const allowedRoles = ['system_admin', 'owner', 'branch_admin']
+  const allowedRoles = ['system_admin', 'owner', 'admin', 'branch_admin']
   return user.value.roles.some((role: string) => allowedRoles.includes(role))
 })
 
@@ -377,7 +596,29 @@ const loadPayments = async () => {
 }
 
 const editStudent = () => {
-  router.push(`/admin/students/${studentId}/edit`)
+  if (studentDetail.value && studentDetail.value.student) {
+    editingStudent.value = {
+      id: studentDetail.value.student.id,
+      username: studentDetail.value.student.username,
+      email: studentDetail.value.student.email,
+      first_name: studentDetail.value.student.first_name,
+      last_name: studentDetail.value.student.last_name,
+      phone: studentDetail.value.student.phone,
+      status: studentDetail.value.student.status,
+      parents: []
+    }
+    showEditStudentModal.value = true
+  }
+}
+
+const closeEditStudentModal = () => {
+  showEditStudentModal.value = false
+  editingStudent.value = null
+}
+
+const handleStudentSaved = async () => {
+  closeEditStudentModal()
+  await loadStudentDetail()
 }
 
 const getStatusDisplayName = (status: string) => {
@@ -447,6 +688,141 @@ const formatCurrency = (amount: number) => {
     style: 'currency',
     currency: 'THB'
   }).format(amount)
+}
+
+// Parent management functions
+const searchParent = async () => {
+  if (!parentSearch.value || parentSearch.value.length < 2) {
+    parentSearchResults.value = []
+    return
+  }
+
+  try {
+    const response = await $fetch<{
+      success: boolean
+      data: any[]
+    }>(`${config.public.apiBase}/admin/users?search=${encodeURIComponent(parentSearch.value)}&role=parent&limit=10`, {
+      headers: {
+        Authorization: `Bearer ${accessToken.value}`
+      }
+    })
+
+    if (response.success) {
+      // Filter out parents that are already linked
+      const existingParentIds = (studentDetail.value?.parents || []).map((p: any) => p.id)
+      parentSearchResults.value = response.data.filter(user => 
+        !existingParentIds.includes(user.id)
+      )
+    }
+  } catch (err) {
+    console.error('Error searching parent:', err)
+    parentSearchResults.value = []
+  }
+}
+
+const selectParent = (user: any) => {
+  selectedParentToAdd.value = user
+  parentSearch.value = `${user.first_name} ${user.last_name} (${user.username})`
+  parentSearchResults.value = []
+}
+
+const closeAddParentModal = () => {
+  showAddParentModal.value = false
+  selectedParentToAdd.value = null
+  parentSearch.value = ''
+  parentRelationship.value = 'guardian'
+  addParentError.value = ''
+  parentSearchResults.value = []
+}
+
+const handleAddParent = async () => {
+  if (!selectedParentToAdd.value) return
+
+  addingParent.value = true
+  addParentError.value = ''
+  try {
+    const response = await $fetch<{
+      success: boolean
+      data?: any
+      message?: string
+    }>(`${config.public.apiBase}/admin/students/${studentId}/parents`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken.value}`
+      },
+      body: {
+        parent_id: selectedParentToAdd.value.id,
+        relationship: parentRelationship.value
+      }
+    })
+
+    if (response.success) {
+      // Reload student data
+      await loadStudentDetail()
+      closeAddParentModal()
+    }
+  } catch (err: any) {
+    console.error('Error adding parent:', err)
+    addParentError.value = err.data?.message || 'เกิดข้อผิดพลาดในการเพิ่มผู้ปกครอง'
+  } finally {
+    addingParent.value = false
+  }
+}
+
+
+const editParent = (parent: any) => {
+  parentToEdit.value = parent
+  editParentForm.first_name = parent.first_name
+  editParentForm.last_name = parent.last_name
+  editParentForm.email = parent.email || ''
+  editParentForm.phone = parent.phone || ''
+  editParentForm.relationship = parent.relationship || 'guardian'
+  editParentError.value = ''
+}
+
+const handleEditParent = async () => {
+  if (!parentToEdit.value) return
+
+  editingParent.value = true
+  editParentError.value = ''
+
+  try {
+    // Update parent user info
+    await $fetch(`${config.public.apiBase}/admin/users/${parentToEdit.value.id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${accessToken.value}`
+      },
+      body: {
+        email: editParentForm.email || null,
+        first_name: editParentForm.first_name,
+        last_name: editParentForm.last_name,
+        phone: editParentForm.phone || null
+      }
+    })
+
+    // Update relationship if changed
+    if (editParentForm.relationship !== parentToEdit.value.relationship) {
+      await $fetch(`${config.public.apiBase}/admin/students/${studentId}/parents/${parentToEdit.value.id}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${accessToken.value}`
+        },
+        body: {
+          relationship: editParentForm.relationship
+        }
+      })
+    }
+
+    // Reload student data
+    await loadStudentDetail()
+    parentToEdit.value = null
+  } catch (err: any) {
+    console.error('Error editing parent:', err)
+    editParentError.value = err.data?.message || 'เกิดข้อผิดพลาดในการแก้ไขข้อมูลผู้ปกครอง'
+  } finally {
+    editingParent.value = false
+  }
 }
 
 onMounted(() => {

@@ -124,6 +124,7 @@ const getRoleDisplayName = (role?: string) => {
   const roleNames: Record<string, string> = {
     system_admin: 'ผู้ดูแลระบบ',
     owner: 'เจ้าของ',
+    admin: 'Admin กลาง',
     branch_admin: 'ผู้ดูแลสาขา',
     tutor: 'อาจารย์',
     student: 'นักเรียน',
