@@ -19,7 +19,7 @@ export async function requireAuth(event: H3Event) {
   } catch (error) {
     throw createError({
       statusCode: 401,
-      message: 'Invalid or expired token'
+      message: 'Session expired due to inactivity'
     })
   }
 }

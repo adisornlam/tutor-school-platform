@@ -30,7 +30,14 @@ export function generateRefreshToken(userId: number): string {
 export function verifyAccessToken(token: string): JWTPayload {
   try {
     return jwt.verify(token, config.jwtSecret) as JWTPayload
-  } catch (error) {
+  } catch (error: any) {
+    // Check if token is expired specifically
+    if (error.name === 'TokenExpiredError') {
+      throw createError({
+        statusCode: 401,
+        message: 'Session expired due to inactivity'
+      })
+    }
     throw createError({
       statusCode: 401,
       message: 'Invalid or expired token'

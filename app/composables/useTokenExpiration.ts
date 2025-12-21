@@ -3,7 +3,8 @@ export const useTokenExpiration = () => {
   const expirationMessage = useState<string>('tokenExpiration:message', () => '')
 
   const handleTokenExpiration = (message?: string) => {
-    expirationMessage.value = message || 'เซสชันของคุณหมดอายุแล้ว กรุณาเข้าสู่ระบบอีกครั้ง'
+    // Default message for session timeout (not login failure)
+    expirationMessage.value = message || 'เซสชันของคุณหมดอายุแล้ว เนื่องจากไม่ได้ใช้งานตามเวลาที่กำหนด\nกรุณาเข้าสู่ระบบอีกครั้ง'
     showExpirationDialog.value = true
   }
 

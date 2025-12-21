@@ -174,34 +174,44 @@
 
         <div class="md:col-span-2">
           <label class="block text-sm font-medium text-gray-700 mb-2">
-            รูปภาพปก
+            รูปภาพปก <span class="text-red-500">*</span>
           </label>
-          <div class="space-y-2">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-3">
+            <p class="text-sm font-semibold text-blue-900 mb-2">📐 ขนาดที่แนะนำ:</p>
+            <ul class="text-sm text-blue-800 space-y-1 list-disc list-inside">
+              <li><strong>ขนาด:</strong> 1280 x 720 pixels</li>
+              <li><strong>สัดส่วน:</strong> 16:9 (แนวนอน)</li>
+              <li><strong>รูปแบบ:</strong> JPG, PNG, WebP</li>
+              <li><strong>ขนาดไฟล์:</strong> ไม่เกิน 2 MB (แนะนำ < 500 KB)</li>
+            </ul>
+          </div>
+          <div class="space-y-3">
             <div v-if="uploadingThumbnail" class="text-sm text-gray-600 py-2">
               กำลังอัปโหลด...
             </div>
-            <div v-else-if="form.thumbnail_url" class="flex items-start space-x-4">
-              <img
-                :src="form.thumbnail_url"
-                alt="Thumbnail preview"
-                class="w-32 h-32 object-cover rounded-lg border border-gray-300"
-                @error="handleImageError"
-              >
-              <div class="flex-1">
-                <button
-                  type="button"
-                  @click="form.thumbnail_url = ''"
-                  class="px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg border border-red-200"
+            <div v-else-if="form.thumbnail_url" class="space-y-3">
+              <p class="text-sm text-gray-600">ตัวอย่าง (สัดส่วน 16:9):</p>
+              <div class="aspect-video bg-gray-200 rounded-lg overflow-hidden max-w-2xl">
+                <img
+                  :src="form.thumbnail_url"
+                  alt="Thumbnail preview"
+                  class="w-full h-full object-cover"
+                  @error="handleImageError"
                 >
-                  ลบรูปภาพ
-                </button>
               </div>
+              <button
+                type="button"
+                @click="form.thumbnail_url = ''"
+                class="px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg border border-red-200"
+              >
+                ลบรูปภาพ
+              </button>
             </div>
             <div v-else class="border-2 border-dashed border-gray-300 rounded-lg p-4">
               <input
                 ref="thumbnailInput"
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp"
                 @change="handleThumbnailUpload"
                 class="hidden"
               >
@@ -215,9 +225,10 @@
                 </svg>
                 อัปโหลดรูปภาพปก
               </button>
-              <p class="text-xs text-gray-500 mt-2 text-center">รองรับไฟล์: JPG, PNG, GIF, WebP (สูงสุด 5MB)</p>
+              <p class="text-xs text-gray-500 mt-2 text-center">รองรับไฟล์: JPG, PNG, WebP (สูงสุด 2 MB)</p>
             </div>
           </div>
+          <p v-if="submitError && (submitError.includes('รูป') || submitError.includes('สัดส่วน'))" class="mt-2 text-sm text-red-600">{{ submitError }}</p>
         </div>
 
         <div class="md:col-span-2">
@@ -226,6 +237,8 @@
           </label>
           <RichTextEditor
             v-model="form.description"
+            entity-type="courses"
+            :entity-id="courseId"
             class="w-full"
           />
         </div>
@@ -485,48 +498,85 @@ const handleThumbnailUpload = async (event: Event) => {
   if (!file) return
   
   // Validate file type
-  if (!file.type.startsWith('image/')) {
-    submitError.value = 'กรุณาเลือกรูปภาพเท่านั้น'
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if (!allowedTypes.includes(file.type)) {
+    submitError.value = 'กรุณาเลือกไฟล์รูปภาพ (JPG, PNG, WebP เท่านั้น)'
     return
   }
   
-  // Validate file size (5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    submitError.value = 'ขนาดไฟล์เกิน 5MB'
+  // Validate file size (max 2MB)
+  if (file.size > 2 * 1024 * 1024) {
+    submitError.value = 'ขนาดไฟล์ไม่ควรเกิน 2 MB (แนะนำ < 500 KB)'
     return
   }
   
-  uploadingThumbnail.value = true
-  submitError.value = ''
+  // Validate image dimensions
+  const img = new Image()
+  const imgUrl = URL.createObjectURL(file)
   
-  try {
-    const formData = new FormData()
-    formData.append('file', file)
+  img.onload = async () => {
+    URL.revokeObjectURL(imgUrl)
     
-    const response = await $fetch<{ success: boolean; data: { url: string } }>(
-      `${config.public.apiBase}/admin/upload`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken.value}`
-        },
-        body: formData
+    const width = img.width
+    const height = img.height
+    const aspectRatio = width / height
+    const recommendedRatio = 16 / 9
+    const ratioTolerance = 0.1 // Allow 10% tolerance
+    
+    // Check aspect ratio (16:9 = 1.777...)
+    let aspectWarning = ''
+    if (Math.abs(aspectRatio - recommendedRatio) > ratioTolerance) {
+      aspectWarning = `สัดส่วนภาพไม่เหมาะสม (ปัจจุบัน ${width}x${height}) แนะนำ 1280x720 pixels (16:9)`
+      console.warn(`Image aspect ratio: ${aspectRatio.toFixed(2)}, recommended: ${recommendedRatio.toFixed(2)}`)
+    }
+    
+    // Continue with upload even if aspect ratio is off (warning only)
+    uploadingThumbnail.value = true
+    submitError.value = ''
+    
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      
+      // Get course ID for organizing files
+      const id = courseId.value
+      
+      const response = await $fetch<{ success: boolean; data: { url: string } }>(
+        `${config.public.apiBase}/admin/upload?entityType=courses&fileType=thumbnail${id ? `&entityId=${id}` : ''}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken.value}`
+          },
+          body: formData
+        }
+      )
+      
+      if (response.success && response.data.url) {
+        form.thumbnail_url = response.data.url
+        // Show warning if aspect ratio was off
+        if (aspectWarning) {
+          submitError.value = aspectWarning
+        }
       }
-    )
-    
-    if (response.success && response.data.url) {
-      form.thumbnail_url = response.data.url
-    }
-  } catch (err: any) {
-    console.error('Error uploading thumbnail:', err)
-    submitError.value = err.data?.message || 'เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ'
-  } finally {
-    uploadingThumbnail.value = false
-    // Reset input
-    if (target) {
-      target.value = ''
+    } catch (err: any) {
+      console.error('Error uploading thumbnail:', err)
+      submitError.value = err.data?.message || 'เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ'
+    } finally {
+      uploadingThumbnail.value = false
+      // Reset input
+      if (target) {
+        target.value = ''
+      }
     }
   }
+  
+  img.onerror = () => {
+    URL.revokeObjectURL(imgUrl)
+    submitError.value = 'ไม่สามารถอ่านไฟล์รูปภาพได้'
+  }
+  
+  img.src = imgUrl
 }
 
 const handleImageError = (event: Event) => {

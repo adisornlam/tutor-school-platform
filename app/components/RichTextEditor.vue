@@ -271,6 +271,8 @@ import TextAlign from '@tiptap/extension-text-align'
 
 const props = defineProps<{
   modelValue: string
+  entityType?: string // 'courses', 'articles', 'testimonials', 'users'
+  entityId?: number | null // Entity ID for organizing files
 }>()
 
 const emit = defineEmits<{
@@ -348,8 +350,20 @@ const handleImageFileSelect = async (event: Event) => {
     const formData = new FormData()
     formData.append('file', file)
     
+    // Build query string for upload API
+    const queryParams = new URLSearchParams()
+    if (props.entityType) {
+      queryParams.append('entityType', props.entityType)
+    }
+    if (props.entityId) {
+      queryParams.append('entityId', props.entityId.toString())
+    }
+    queryParams.append('fileType', 'content')
+    
+    const uploadUrl = `${config.public.apiBase}/admin/upload?${queryParams.toString()}`
+    
     const response = await $fetch<{ success: boolean; data: { url: string } }>(
-      `${config.public.apiBase}/admin/upload`,
+      uploadUrl,
       {
         method: 'POST',
         headers: {

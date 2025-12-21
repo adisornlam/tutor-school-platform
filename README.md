@@ -71,6 +71,8 @@ Tutor-School-Platform/
 
 ดูเอกสารทั้งหมดใน [docs/](./docs/) directory
 
+- [Course Thumbnail Specifications](./docs/COURSE_THUMBNAIL_SPECS.md) - ขนาดและรูปแบบรูปปกคอร์ส
+
 ## 🌐 Languages
 
 - **Default**: ไทย (TH)

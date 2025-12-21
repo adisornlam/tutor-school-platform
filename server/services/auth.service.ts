@@ -96,7 +96,7 @@ export async function login(credentials: LoginCredentials) {
     console.log('[Auth Service] User not found:', credentials.username)
     throw createError({
       statusCode: 401,
-      message: 'Invalid username or password'
+      message: 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง'
     })
   }
   
@@ -121,7 +121,7 @@ export async function login(credentials: LoginCredentials) {
     console.log('[Auth Service] Password hash not found for user:', user.id)
     throw createError({
       statusCode: 401,
-      message: 'Invalid username or password'
+      message: 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง'
     })
   }
   
@@ -132,7 +132,7 @@ export async function login(credentials: LoginCredentials) {
     console.log('[Auth Service] Password verification failed')
     throw createError({
       statusCode: 401,
-      message: 'Invalid username or password'
+      message: 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง'
     })
   }
   

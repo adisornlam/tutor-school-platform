@@ -98,7 +98,7 @@ async function migrateAdminMenus() {
         href: '/admin',
         display_order: 1,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin', 'tutor']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin', 'tutor']
       },
       
       // Level 1: ผู้เรียน (เปลี่ยนจาก "จัดการผู้ใช้งาน")
@@ -110,7 +110,7 @@ async function migrateAdminMenus() {
         href: '/admin/students',
         display_order: 2,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       
       
@@ -123,7 +123,7 @@ async function migrateAdminMenus() {
         href: '/admin/courses',
         display_order: 3,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       
       // Level 1: จัดการการลงทะเบียน
@@ -135,8 +135,43 @@ async function migrateAdminMenus() {
         href: '/admin/enrollments',
         display_order: 4,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
+      
+      // Level 1: จัดการเนื้อหา (Parent)
+      {
+        code: 'CONTENT',
+        name: 'จัดการเนื้อหา',
+        name_en: 'Content Management',
+        icon: 'DocumentTextIcon',
+        display_order: 5,
+        is_active: true,
+        roles: ['system_admin', 'owner', 'admin']
+      },
+      // Level 2: Submenus under CONTENT
+      {
+        code: 'CONTENT_ARTICLES',
+        name: 'บทความ',
+        name_en: 'Articles',
+        icon: 'NewspaperIcon',
+        href: '/admin/content/articles',
+        parent_code: 'CONTENT',
+        display_order: 1,
+        is_active: true,
+        roles: ['system_admin', 'owner', 'admin']
+      },
+      {
+        code: 'CONTENT_TESTIMONIALS',
+        name: 'รีวิว',
+        name_en: 'Testimonials',
+        icon: 'ChatBubbleLeftRightIcon',
+        href: '/admin/content/testimonials',
+        parent_code: 'CONTENT',
+        display_order: 2,
+        is_active: true,
+        roles: ['system_admin', 'owner', 'admin']
+      },
+      
       
       // Level 1: จัดการการชำระเงิน
       {
@@ -147,7 +182,7 @@ async function migrateAdminMenus() {
         href: '/admin/payments',
         display_order: 5,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       
       // Level 1: จัดการโปรโมชั่น
@@ -157,9 +192,9 @@ async function migrateAdminMenus() {
         name_en: 'Promotions',
         icon: 'TagIcon',
         href: '/admin/promotions',
-        display_order: 6,
+        display_order: 7,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       
       // Level 1: รายงาน (Parent)
@@ -168,9 +203,9 @@ async function migrateAdminMenus() {
         name: 'รายงาน',
         name_en: 'Reports',
         icon: 'ChartBarIcon',
-        display_order: 7,
+        display_order: 8,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       // Level 2: Submenus under REPORTS
       {
@@ -193,7 +228,7 @@ async function migrateAdminMenus() {
         parent_code: 'REPORTS',
         display_order: 2,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       {
         code: 'REPORTS_ENROLLMENTS',
@@ -204,7 +239,7 @@ async function migrateAdminMenus() {
         parent_code: 'REPORTS',
         display_order: 3,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       {
         code: 'REPORTS_PAYMENTS',
@@ -215,7 +250,7 @@ async function migrateAdminMenus() {
         parent_code: 'REPORTS',
         display_order: 4,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       {
         code: 'REPORTS_REVENUE',
@@ -226,7 +261,7 @@ async function migrateAdminMenus() {
         parent_code: 'REPORTS',
         display_order: 5,
         is_active: true,
-        roles: ['system_admin', 'owner', 'branch_admin']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       
       // Level 1: ตั้งค่า (Parent)
@@ -235,7 +270,7 @@ async function migrateAdminMenus() {
         name: 'ตั้งค่า',
         name_en: 'Settings',
         icon: 'CogIcon',
-        display_order: 8,
+        display_order: 9,
         is_active: true,
         roles: ['system_admin', 'owner']
       },

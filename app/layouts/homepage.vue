@@ -18,22 +18,22 @@
               คอร์สเรียนทั้งหมด
             </NuxtLink>
             <NuxtLink 
-              to="/courses?category=master" 
+              to="/courses?level=elementary" 
               class="text-gray-700 hover:text-green-600 transition-colors"
             >
-              ปริญญาโท
+              ประถมศึกษา
             </NuxtLink>
             <NuxtLink 
-              to="/for-organization" 
+              to="/courses?level=secondary" 
               class="text-gray-700 hover:text-green-600 transition-colors"
             >
-              สำหรับองค์กร
+              มัธยมศึกษา
             </NuxtLink>
             <NuxtLink 
-              to="/teach-with-us" 
+              to="/about" 
               class="text-gray-700 hover:text-green-600 transition-colors"
             >
-              สอนกับเรา
+              เกี่ยวกับเรา
             </NuxtLink>
           </div>
 

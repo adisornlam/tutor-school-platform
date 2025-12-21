@@ -80,14 +80,18 @@ export default defineEventHandler(async (event) => {
 
     // Validate branch_ids if provided
     if (body.branches.length > 0) {
-      const branchIds = body.branches.map((b: any) => 
-        typeof b === 'object' ? b.branch_id : b
-      ).filter(Boolean)
+      const branchIds = body.branches
+        .map((b: any) => {
+          const id = typeof b === 'object' ? b.branch_id : b
+          return id ? parseInt(id, 10) : null
+        })
+        .filter((id: number | null): id is number => id !== null && !isNaN(id))
       
       if (branchIds.length > 0) {
+        const placeholders = branchIds.map(() => '?').join(',')
         const existingBranches = await query(
-          'SELECT id FROM branches WHERE id IN (?) AND status = "active"',
-          [branchIds]
+          `SELECT id FROM branches WHERE id IN (${placeholders}) AND status = "active"`,
+          branchIds
         )
         
         if (existingBranches.length !== branchIds.length) {
@@ -162,9 +166,10 @@ export default defineEventHandler(async (event) => {
 
       // Delete removed branches
       if (branchesToDelete.length > 0) {
+        const deletePlaceholders = branchesToDelete.map(() => '?').join(',')
         await execute(
-          'DELETE FROM course_branches WHERE course_id = ? AND branch_id IN (?)',
-          [courseId, branchesToDelete]
+          `DELETE FROM course_branches WHERE course_id = ? AND branch_id IN (${deletePlaceholders})`,
+          [courseId, ...branchesToDelete]
         )
       }
 
@@ -196,29 +201,34 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    // Update course_images if images are provided
+    // Update course_images if images are provided (if course_images table exists)
     if (body.images !== undefined) {
-      // Delete all existing images
-      await execute(
-        'DELETE FROM course_images WHERE course_id = ?',
-        [courseId]
-      )
+      try {
+        // Delete all existing images
+        await execute(
+          'DELETE FROM course_images WHERE course_id = ?',
+          [courseId]
+        )
 
-      // Insert new images
-      if (Array.isArray(body.images) && body.images.length > 0) {
-        for (const image of body.images) {
-          await execute(
-            `INSERT INTO course_images (course_id, image_url, image_type, display_order, alt_text)
-             VALUES (?, ?, ?, ?, ?)`,
-            [
-              courseId,
-              image.image_url,
-              image.image_type || 'gallery',
-              image.display_order || 0,
-              image.alt_text || null
-            ]
-          )
+        // Insert new images
+        if (Array.isArray(body.images) && body.images.length > 0) {
+          for (const image of body.images) {
+            await execute(
+              `INSERT INTO course_images (course_id, image_url, image_type, display_order, alt_text)
+               VALUES (?, ?, ?, ?, ?)`,
+              [
+                courseId,
+                image.image_url,
+                image.image_type || 'gallery',
+                image.display_order || 0,
+                image.alt_text || null
+              ]
+            )
+          }
         }
+      } catch (error: any) {
+        // course_images table might not exist, skip image updates
+        console.warn('course_images table not found, skipping image updates:', error.message)
       }
     }
 
@@ -245,21 +255,28 @@ export default defineEventHandler(async (event) => {
       [courseId]
     )
 
-    // Get images for this course
-    const courseImages = await query(
-      `SELECT 
-        id,
-        course_id,
-        image_url,
-        image_type,
-        display_order,
-        alt_text,
-        created_at
-      FROM course_images
-      WHERE course_id = ?
-      ORDER BY display_order ASC, created_at ASC`,
-      [courseId]
-    )
+    // Get images for this course (if course_images table exists)
+    let courseImages: any[] = []
+    try {
+      courseImages = await query(
+        `SELECT 
+          id,
+          course_id,
+          image_url,
+          image_type,
+          display_order,
+          alt_text,
+          created_at
+        FROM course_images
+        WHERE course_id = ?
+        ORDER BY display_order ASC, created_at ASC`,
+        [courseId]
+      )
+    } catch (error: any) {
+      // course_images table might not exist, return empty array
+      console.warn('course_images table not found, skipping:', error.message)
+      courseImages = []
+    }
 
     return {
       success: true,
@@ -279,9 +296,17 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error: any) {
     console.error('Error updating course:', error)
+    console.error('Error stack:', error.stack)
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      errno: error.errno,
+      sqlState: error.sqlState,
+      sqlMessage: error.sqlMessage
+    })
     throw createError({
       statusCode: 500,
-      message: 'Failed to update course'
+      message: error.sqlMessage || error.message || 'Failed to update course'
     })
   }
 })

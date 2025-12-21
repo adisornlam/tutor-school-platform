@@ -57,14 +57,17 @@ export default defineEventHandler(async (event) => {
 
   // Validate branch_ids if provided
   if (body.branches && body.branches.length > 0) {
-    const branchIds = body.branches.map((b: any) => 
-      typeof b === 'object' ? b.branch_id : b
-    ).filter(Boolean)
+    const branchIds = body.branches
+      .map((b: any) => {
+        const id = typeof b === 'object' ? b.branch_id : b
+        return id ? parseInt(id, 10) : null
+      })
+      .filter((id: number | null): id is number => id !== null && !isNaN(id))
     
     if (branchIds.length > 0) {
       const existingBranches = await query(
-        'SELECT id FROM branches WHERE id IN (?) AND status = "active"',
-        [branchIds]
+        `SELECT id FROM branches WHERE id IN (${branchIds.map(() => '?').join(',')}) AND status = "active"`,
+        branchIds
       )
       
       if (existingBranches.length !== branchIds.length) {
