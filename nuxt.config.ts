@@ -36,6 +36,10 @@ export default defineNuxtConfig({
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key-change-in-production',
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
     jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+    redisHost: process.env.REDIS_HOST || 'localhost',
+    redisPort: parseInt(process.env.REDIS_PORT || '6379'),
+    redisPassword: process.env.REDIS_PASSWORD || '',
+    redisDb: parseInt(process.env.REDIS_DB || '0'),
     
     // Public (exposed to client)
     public: {

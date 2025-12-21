@@ -21,7 +21,9 @@ import {
   Cog6ToothIcon,
   AcademicCapIcon,
   CalendarIcon,
-  MegaphoneIcon
+  MegaphoneIcon,
+  ChatBubbleLeftRightIcon,
+  NewspaperIcon
 } from '@heroicons/vue/24/outline'
 
 // Create aliases after import (ES2015 doesn't support destructuring in import)
@@ -64,7 +66,9 @@ const iconMap: Record<string, any> = {
   Cog6ToothIcon,
   AcademicCapIcon,
   CalendarIcon,
-  MegaphoneIcon
+  MegaphoneIcon,
+  ChatBubbleLeftRightIcon,
+  NewspaperIcon
 }
 
 const iconComponent = computed(() => {

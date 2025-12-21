@@ -1,0 +1,67 @@
+<template>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <NuxtLink to="/my-courses" class="text-xl font-bold text-green-600">
+            KDC School
+          </NuxtLink>
+          <div class="flex items-center space-x-4">
+            <NuxtLink
+              to="/my-courses"
+              class="text-gray-700 hover:text-green-600 font-medium"
+            >
+              คอร์สเรียน
+            </NuxtLink>
+            <div class="relative">
+              <button 
+                @click="showUserMenu = !showUserMenu"
+                class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100"
+              >
+                <div class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center text-white font-semibold">
+                  {{ user?.first_name?.[0] || 'U' }}
+                </div>
+                <span class="hidden md:block text-gray-700">{{ user?.first_name }} {{ user?.last_name }}</span>
+              </button>
+              <div 
+                v-if="showUserMenu"
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+              >
+                <NuxtLink 
+                  to="/profile" 
+                  class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  @click="showUserMenu = false"
+                >
+                  โปรไฟล์ของฉัน
+                </NuxtLink>
+                <button 
+                  @click="handleLogout"
+                  class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  ออกจากระบบ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="h-[calc(100vh-4rem)]">
+      <slot />
+    </main>
+  </div>
+</template>
+
+<script setup lang="ts">
+const { user, logout } = useAuth()
+const showUserMenu = ref(false)
+
+const handleLogout = async () => {
+  showUserMenu.value = false
+  await logout()
+}
+</script>
+

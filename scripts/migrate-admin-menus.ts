@@ -138,13 +138,25 @@ async function migrateAdminMenus() {
         roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
       
+      // Level 1: แชท (สำหรับ system_admin, owner, admin, tutor)
+      {
+        code: 'CHAT',
+        name: 'แชท',
+        name_en: 'Chat',
+        icon: 'ChatBubbleLeftRightIcon',
+        href: '/chat',
+        display_order: 5,
+        is_active: true,
+        roles: ['system_admin', 'owner', 'admin', 'tutor']
+      },
+      
       // Level 1: จัดการเนื้อหา (Parent)
       {
         code: 'CONTENT',
         name: 'จัดการเนื้อหา',
         name_en: 'Content Management',
         icon: 'DocumentTextIcon',
-        display_order: 5,
+        display_order: 6,
         is_active: true,
         roles: ['system_admin', 'owner', 'admin']
       },
@@ -172,7 +184,6 @@ async function migrateAdminMenus() {
         roles: ['system_admin', 'owner', 'admin']
       },
       
-      
       // Level 1: จัดการการชำระเงิน
       {
         code: 'PAYMENTS',
@@ -180,7 +191,7 @@ async function migrateAdminMenus() {
         name_en: 'Payments',
         icon: 'CurrencyDollarIcon',
         href: '/admin/payments',
-        display_order: 5,
+        display_order: 7,
         is_active: true,
         roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
@@ -192,7 +203,7 @@ async function migrateAdminMenus() {
         name_en: 'Promotions',
         icon: 'TagIcon',
         href: '/admin/promotions',
-        display_order: 7,
+        display_order: 8,
         is_active: true,
         roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
@@ -203,7 +214,7 @@ async function migrateAdminMenus() {
         name: 'รายงาน',
         name_en: 'Reports',
         icon: 'ChartBarIcon',
-        display_order: 8,
+        display_order: 9,
         is_active: true,
         roles: ['system_admin', 'owner', 'admin', 'branch_admin']
       },
@@ -270,7 +281,7 @@ async function migrateAdminMenus() {
         name: 'ตั้งค่า',
         name_en: 'Settings',
         icon: 'CogIcon',
-        display_order: 9,
+        display_order: 10,
         is_active: true,
         roles: ['system_admin', 'owner']
       },

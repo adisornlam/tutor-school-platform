@@ -69,25 +69,14 @@
               </li>
               <li>
                 <NuxtLink 
-                  to="/my-degrees" 
-                  class="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                  to="/chat" 
+                  class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors"
+                  :class="$route.path.startsWith('/chat') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-100'"
                 >
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  <span>หลักสูตรปริญญาของฉัน</span>
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink 
-                  to="/certificates" 
-                  class="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span>ประกาศนียบัตร</span>
+                  <span>แชท</span>
                 </NuxtLink>
               </li>
             </ul>
@@ -99,7 +88,8 @@
               <li>
                 <NuxtLink 
                   to="/profile" 
-                  class="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors"
+                  :class="$route.path === '/profile' ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-100'"
                 >
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -109,19 +99,9 @@
               </li>
               <li>
                 <NuxtLink 
-                  to="/liked-courses" 
-                  class="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                  <span>คอร์สที่ถูกใจ</span>
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink 
                   to="/payment-history" 
-                  class="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors"
+                  :class="$route.path === '/payment-history' ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-100'"
                 >
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
