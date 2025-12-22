@@ -214,11 +214,12 @@ export async function saveMessage(data: {
   file_name?: string | null
   file_size?: number | null
   file_type?: string | null
+  reply_to_id?: number | null
 }): Promise<ChatMessage> {
   const result = await execute(
     `INSERT INTO chat_messages 
-     (room_id, sender_id, message_type, content, file_url, file_name, file_size, file_type, is_read)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, FALSE)`,
+     (room_id, sender_id, message_type, content, file_url, file_name, file_size, file_type, reply_to_id, is_read)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE)`,
     [
       data.room_id,
       data.sender_id,
@@ -227,7 +228,8 @@ export async function saveMessage(data: {
       data.file_url || null,
       data.file_name || null,
       data.file_size || null,
-      data.file_type || null
+      data.file_type || null,
+      data.reply_to_id || null
     ]
   )
 
@@ -241,9 +243,17 @@ export async function saveMessage(data: {
     SELECT cm.*,
            u.first_name as sender_first_name,
            u.last_name as sender_last_name,
-           u.avatar_url as sender_avatar_url
+           u.avatar_url as sender_avatar_url,
+           reply_to.id as reply_to_id_exists,
+           reply_to.content as reply_to_content,
+           reply_to.file_name as reply_to_file_name,
+           reply_to.message_type as reply_to_message_type,
+           reply_user.first_name as reply_to_sender_first_name,
+           reply_user.last_name as reply_to_sender_last_name
     FROM chat_messages cm
     INNER JOIN users u ON cm.sender_id = u.id
+    LEFT JOIN chat_messages reply_to ON cm.reply_to_id = reply_to.id
+    LEFT JOIN users reply_user ON reply_to.sender_id = reply_user.id
     WHERE cm.id = ?
   `, [result.insertId])
 
@@ -251,7 +261,7 @@ export async function saveMessage(data: {
 
   const message = messages[0]
 
-  return {
+  const formattedMessage: ChatMessage = {
     id: message.id,
     room_id: message.room_id,
     sender_id: message.sender_id,
@@ -264,6 +274,8 @@ export async function saveMessage(data: {
     is_read: message.is_read,
     read_at: message.read_at,
     created_at: message.created_at,
+    reply_to_id: message.reply_to_id || null,
+    is_pinned: message.is_pinned || false,
     sender: {
       id: message.sender_id,
       first_name: message.sender_first_name,
@@ -271,6 +283,28 @@ export async function saveMessage(data: {
       avatar_url: message.sender_avatar_url
     }
   }
+
+  // Add reply_to if exists
+  if (message.reply_to_id_exists) {
+    formattedMessage.reply_to = {
+      id: message.reply_to_id_exists,
+      room_id: message.room_id,
+      sender_id: 0, // Will be filled if needed
+      message_type: message.reply_to_message_type,
+      content: message.reply_to_content,
+      file_name: message.reply_to_file_name,
+      is_read: false,
+      read_at: null,
+      created_at: '',
+      sender: {
+        id: 0,
+        first_name: message.reply_to_sender_first_name || '',
+        last_name: message.reply_to_sender_last_name || ''
+      }
+    }
+  }
+
+  return formattedMessage
 }
 
 /**
@@ -281,38 +315,95 @@ export async function getChatMessages(
   limit: number = 50,
   offset: number = 0
 ): Promise<ChatMessage[]> {
-  const messages = await query<ChatMessage>(`
-    SELECT cm.*,
-           u.first_name as sender_first_name,
-           u.last_name as sender_last_name,
-           u.avatar_url as sender_avatar_url
-    FROM chat_messages cm
-    INNER JOIN users u ON cm.sender_id = u.id
-    WHERE cm.room_id = ?
-    ORDER BY cm.created_at DESC
-    LIMIT ? OFFSET ?
-  `, [roomId, limit, offset])
+  try {
+    // MySQL doesn't support placeholders for LIMIT and OFFSET in prepared statements
+    // So we need to use string interpolation for these values (they're already numbers, so safe)
+    const limitValue = Math.max(1, Math.min(limit, 100)) // Sanitize: between 1 and 100
+    const offsetValue = Math.max(0, offset) // Sanitize: must be >= 0
+    
+    const messages = await query<any>(`
+      SELECT cm.*,
+             u.first_name as sender_first_name,
+             u.last_name as sender_last_name,
+             u.avatar_url as sender_avatar_url,
+             reply_to.id as reply_to_id_exists,
+             reply_to.content as reply_to_content,
+             reply_to.file_name as reply_to_file_name,
+             reply_to.message_type as reply_to_message_type,
+             reply_user.first_name as reply_to_sender_first_name,
+             reply_user.last_name as reply_to_sender_last_name
+      FROM chat_messages cm
+      INNER JOIN users u ON cm.sender_id = u.id
+      LEFT JOIN chat_messages reply_to ON cm.reply_to_id = reply_to.id
+      LEFT JOIN users reply_user ON reply_to.sender_id = reply_user.id
+      WHERE cm.room_id = ?
+      ORDER BY cm.created_at DESC
+      LIMIT ${limitValue} OFFSET ${offsetValue}
+    `, [roomId])
 
-  return messages.reverse().map((msg: any) => ({
-    id: msg.id,
-    room_id: msg.room_id,
-    sender_id: msg.sender_id,
-    message_type: msg.message_type,
-    content: msg.content,
-    file_name: msg.file_name,
-    file_size: msg.file_size,
-    file_type: msg.file_type,
-    file_url: msg.file_url,
-    is_read: msg.is_read,
-    read_at: msg.read_at,
-    created_at: msg.created_at,
-    sender: {
-      id: msg.sender_id,
-      first_name: msg.sender_first_name,
-      last_name: msg.sender_last_name,
-      avatar_url: msg.sender_avatar_url
+    if (!messages || messages.length === 0) {
+      return []
     }
-  }))
+
+    return messages.reverse().map((msg: any) => {
+      const formatted: ChatMessage = {
+        id: msg.id,
+        room_id: msg.room_id,
+        sender_id: msg.sender_id,
+        message_type: msg.message_type,
+        content: msg.content,
+        file_name: msg.file_name,
+        file_size: msg.file_size,
+        file_type: msg.file_type,
+        file_url: msg.file_url,
+        is_read: msg.is_read === 1 || msg.is_read === true,
+        read_at: msg.read_at,
+        created_at: msg.created_at,
+        reply_to_id: msg.reply_to_id || null,
+        is_pinned: msg.is_pinned === 1 || msg.is_pinned === true || false,
+        sender: {
+          id: msg.sender_id,
+          first_name: msg.sender_first_name || '',
+          last_name: msg.sender_last_name || '',
+          avatar_url: msg.sender_avatar_url
+        }
+      }
+
+      // Add reply_to if exists
+      if (msg.reply_to_id_exists) {
+        formatted.reply_to = {
+          id: msg.reply_to_id_exists,
+          room_id: msg.room_id,
+          sender_id: 0,
+          message_type: msg.reply_to_message_type,
+          content: msg.reply_to_content,
+          file_name: msg.reply_to_file_name,
+          is_read: false,
+          read_at: null,
+          created_at: '',
+          sender: {
+            id: 0,
+            first_name: msg.reply_to_sender_first_name || '',
+            last_name: msg.reply_to_sender_last_name || ''
+          }
+        }
+      }
+
+      return formatted
+    })
+  } catch (error: any) {
+    console.error('[Chat Service] Error in getChatMessages:', error)
+    console.error('[Chat Service] Error details:', {
+      message: error.message,
+      code: error.code,
+      sqlState: error.sqlState,
+      sqlMessage: error.sqlMessage,
+      roomId,
+      limit,
+      offset
+    })
+    throw error
+  }
 }
 
 /**
@@ -342,6 +433,34 @@ export async function markMessagesAsRead(
     'UPDATE chat_room_participants SET last_read_at = NOW() WHERE room_id = ? AND user_id = ?',
     [roomId, userId]
   )
+}
+
+/**
+ * Get courses that a tutor teaches
+ */
+export async function getTutorCourses(userId: number): Promise<number[]> {
+  const courses = await query<{ course_id: number }>(`
+    SELECT DISTINCT tc.course_id
+    FROM tutor_courses tc
+    INNER JOIN tutors t ON tc.tutor_id = t.id
+    WHERE t.user_id = ?
+  `, [userId])
+  
+  return courses.map(c => c.course_id)
+}
+
+/**
+ * Get courses that a student is enrolled in
+ */
+export async function getStudentCourses(userId: number): Promise<number[]> {
+  const courses = await query<{ course_id: number }>(`
+    SELECT DISTINCT course_id
+    FROM enrollments
+    WHERE student_id = ? 
+    AND status IN ('active', 'completed')
+  `, [userId])
+  
+  return courses.map(c => c.course_id)
 }
 
 /**
@@ -392,7 +511,10 @@ export async function getAllChatRooms(
   const total = totalResults[0]?.count || 0
 
   // Get rooms
-  params.push(limit, offset)
+  // MySQL doesn't support placeholders for LIMIT and OFFSET in prepared statements
+  // So we use string interpolation (values are sanitized to prevent SQL injection)
+  const limitValue = Math.max(1, Math.min(limit, 100)) // Sanitize: between 1 and 100
+  const offsetValue = Math.max(0, offset) // Sanitize: must be >= 0
   const rooms = await query<ChatRoom>(`
     SELECT 
       cr.*,
@@ -410,7 +532,7 @@ export async function getAllChatRooms(
     INNER JOIN users t ON cr.tutor_id = t.id
     ${whereClause}
     ORDER BY cr.last_message_at DESC, cr.created_at DESC
-    LIMIT ? OFFSET ?
+    LIMIT ${limitValue} OFFSET ${offsetValue}
   `, params)
 
   return {

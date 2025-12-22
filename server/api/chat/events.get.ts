@@ -50,12 +50,13 @@ export default defineEventHandler(async (event) => {
   // Subscribe to user's chat rooms
   try {
     const rooms = await getUserChatRooms(userId)
+    console.log(`[SSE] User ${userId} has ${rooms.length} rooms:`, rooms.map(r => ({ id: r.id, course_id: r.course_id, student_id: r.student_id, tutor_id: r.tutor_id })))
     for (const room of rooms) {
       subscribeToRoom(room.id, userId)
     }
-    console.log(`[SSE] User ${userId} subscribed to ${rooms.length} rooms`)
+    console.log(`[SSE] ✅ User ${userId} subscribed to ${rooms.length} rooms`)
   } catch (error) {
-    console.error(`[SSE] Error loading rooms for user ${userId}:`, error)
+    console.error(`[SSE] ❌ Error loading rooms for user ${userId}:`, error)
   }
 
   // Send initial connection event

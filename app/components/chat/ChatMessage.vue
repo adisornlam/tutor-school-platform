@@ -5,7 +5,7 @@
       isOwnMessage ? 'justify-end' : 'justify-start'
     ]"
   >
-    <div :class="['flex space-x-2 max-w-[70%]', isOwnMessage ? 'flex-row-reverse space-x-reverse' : '']">
+    <div :class="['flex space-x-2 max-w-[70%]', isOwnMessage ? 'flex-row-reverse space-x-reverse' : '']" @mouseenter="showMenu = true" @mouseleave="showMenu = false">
       <!-- Avatar -->
       <div v-if="!isOwnMessage" class="flex-shrink-0">
         <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
@@ -22,21 +22,44 @@
       </div>
 
       <!-- Message Content -->
-      <div :class="['flex flex-col', isOwnMessage ? 'items-end' : 'items-start']">
+      <div 
+        :class="['flex flex-col group relative', isOwnMessage ? 'items-end' : 'items-start']"
+      >
         <!-- Sender Name (for received messages) -->
         <span v-if="!isOwnMessage" class="text-xs text-gray-500 mb-1 px-1">
           {{ message.sender?.first_name }} {{ message.sender?.last_name }}
         </span>
 
-        <!-- Message Bubble -->
-        <div
-          :class="[
-            'rounded-lg px-4 py-2',
-            isOwnMessage
-              ? 'bg-green-600 text-white'
-              : 'bg-gray-100 text-gray-900'
-          ]"
-        >
+        <!-- Message Bubble Container -->
+        <div class="flex items-center space-x-2">
+          <!-- Message Bubble -->
+          <div
+            :class="[
+              'rounded-lg px-4 py-2 relative',
+              isOwnMessage
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-100 text-gray-900'
+            ]"
+          >
+
+          <!-- Reply Preview (if this message is a reply) -->
+          <div
+            v-if="message.reply_to"
+            @click="$emit('scroll-to-message', message.reply_to_id)"
+            :class="[
+              'mb-2 pb-2 border-l-4 pl-2 cursor-pointer hover:opacity-90 transition-opacity',
+              isOwnMessage
+                ? 'border-white text-white bg-white bg-opacity-20 rounded'
+                : 'border-gray-500 text-gray-700 bg-gray-50 rounded'
+            ]"
+          >
+            <div :class="['font-semibold mb-0.5', isOwnMessage ? 'text-white' : 'text-gray-800']">
+              {{ message.reply_to.sender?.first_name }} {{ message.reply_to.sender?.last_name }}
+            </div>
+            <div :class="['truncate', isOwnMessage ? 'text-white' : 'text-gray-700']">
+              {{ message.reply_to.content || (message.reply_to.file_name || 'ไฟล์') }}
+            </div>
+          </div>
           <!-- Text Message -->
           <p v-if="message.message_type === 'text'" class="whitespace-pre-wrap break-words">
             {{ message.content }}
@@ -76,6 +99,49 @@
             </div>
           </div>
         </div>
+          
+          <!-- Three Dots Menu Button (shown on hover) -->
+          <button
+            v-if="showMenu"
+            @click.stop="showContextMenu = !showContextMenu"
+            class="p-1 text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
+            type="button"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Context Menu -->
+        <div
+          v-if="showContextMenu"
+          :class="[
+            'absolute z-50 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[150px]',
+            isOwnMessage ? 'right-0' : 'left-0'
+          ]"
+          style="top: 100%; margin-top: 4px;"
+          @click.stop
+        >
+          <button
+            @click="handleReply"
+            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            ตอบกลับ
+          </button>
+          <button
+            @click="handleCopyLink"
+            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            คัดลอกลิงก์
+          </button>
+          <button
+            @click="handlePin"
+            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            {{ message.is_pinned ? 'ยกเลิกปักหมุด' : 'ปักหมุด' }}
+          </button>
+        </div>
 
         <!-- Timestamp -->
         <span class="text-xs text-gray-400 mt-1 px-1">
@@ -100,9 +166,50 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'image-click': [url: string]
+  'reply': [message: ChatMessage]
+  'pin': [messageId: number, pin: boolean]
+  'scroll-to-message': [messageId: number]
 }>()
 
 const isOwnMessage = computed(() => props.message.sender_id === props.currentUserId)
+const showMenu = ref(false)
+const showContextMenu = ref(false)
+
+const handleReply = () => {
+  emit('reply', props.message)
+  showContextMenu.value = false
+}
+
+const handleCopyLink = async () => {
+  const messageLink = `${window.location.origin}/chat?roomId=${props.message.room_id}&messageId=${props.message.id}`
+  try {
+    await navigator.clipboard.writeText(messageLink)
+    // Show toast or notification
+    console.log('Copied link:', messageLink)
+    showContextMenu.value = false
+  } catch (error) {
+    console.error('Failed to copy link:', error)
+  }
+}
+
+const handlePin = () => {
+  emit('pin', props.message.id, !props.message.is_pinned)
+  showContextMenu.value = false
+}
+
+// Close context menu when clicking outside
+onMounted(() => {
+  const handleClickOutside = () => {
+    if (showContextMenu.value) {
+      showContextMenu.value = false
+    }
+  }
+  document.addEventListener('click', handleClickOutside)
+  
+  onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside)
+  })
+})
 
 const formatTime = (dateString: string) => {
   try {

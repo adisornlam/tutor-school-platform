@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   
+  // Enable WebSockets for Socket.IO
+  nitro: {
+    experimental: {
+      websocket: true
+    }
+  },
+  
   // Alias configuration for server and shared files
   alias: {
     '#server': resolve(__dirname, 'server'),

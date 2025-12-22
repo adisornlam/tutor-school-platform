@@ -5,6 +5,7 @@
         <h2 class="text-lg font-semibold">แชท</h2>
       </div>
       <button
+        v-if="canCreateRoom"
         @click="$emit('create-room')"
         class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium flex items-center justify-center space-x-2"
       >
@@ -100,7 +101,12 @@ const emit = defineEmits<{
   'create-room': []
 }>()
 
-const { user } = useAuth()
+const { user, hasAnyRole } = useAuth()
+
+// Check if user can create chat rooms (only students and parents)
+const canCreateRoom = computed(() => {
+  return hasAnyRole(['student', 'parent'])
+})
 
 const getOtherUser = (room: ChatRoom) => {
   if (!user.value) return null

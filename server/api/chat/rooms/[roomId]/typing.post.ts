@@ -1,6 +1,5 @@
 import { requireAuth } from '#server/utils/auth.middleware'
 import { verifyRoomAccess } from '#server/services/chat.service'
-import { emitToRoom } from '#server/utils/sse'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
@@ -23,22 +22,38 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Emit typing event via SSE
-    await emitToRoom(roomId, 'typing', {
-      userId: auth.userId,
-      roomId,
-      timestamp: new Date().toISOString()
-    })
+    // Emit typing event via Socket.IO
+    const nitroApp = useNitroApp()
+    const io = (nitroApp as any).io
+    
+    if (io) {
+      try {
+        io.to(`room:${roomId}`).emit('user_typing', {
+          userId: auth.userId,
+          roomId,
+          timestamp: new Date().toISOString()
+        })
+      } catch (emitError: any) {
+        // Ignore ECONNRESET errors (client disconnected)
+        if (emitError.code !== 'ECONNRESET' && emitError.message !== 'read ECONNRESET') {
+          console.error('[API] Error emitting typing event:', emitError)
+        }
+      }
+    }
 
     return {
       success: true
     }
   } catch (error: any) {
-    console.error('[API] Error emitting typing event:', error)
-    throw createError({
-      statusCode: 500,
-      message: error.message || 'Failed to emit typing event'
-    })
+    // Ignore ECONNRESET errors
+    if (error.code !== 'ECONNRESET' && error.message !== 'read ECONNRESET') {
+      console.error('[API] Error emitting typing event:', error)
+      throw createError({
+        statusCode: 500,
+        message: error.message || 'Failed to emit typing event'
+      })
+    }
+    return { success: true }
   }
 })
 

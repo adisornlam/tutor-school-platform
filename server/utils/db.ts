@@ -13,10 +13,14 @@ export function getDatabase() {
       user: config.dbUser,
       password: config.dbPassword,
       waitForConnections: true,
-      connectionLimit: 10,
+      connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT || '50'), // ✅ Increased from 10 to 50 for better concurrency
       queueLimit: 0,
+      acquireTimeout: 60000, // ✅ 60 seconds timeout
+      timeout: 60000, // ✅ 60 seconds query timeout
       timezone: '+07:00', // Asia/Bangkok
-      dateStrings: false
+      dateStrings: false,
+      enableKeepAlive: true, // ✅ Keep connections alive
+      keepAliveInitialDelay: 0
     })
   }
   
@@ -27,9 +31,21 @@ export async function query<T = any>(
   sql: string,
   params?: any[]
 ): Promise<T[]> {
-  const db = getDatabase()
-  const [rows] = await db.execute(sql, params)
-  return rows as T[]
+  try {
+    const db = getDatabase()
+    const [rows] = await db.execute(sql, params || [])
+    return rows as T[]
+  } catch (error: any) {
+    console.error('[Database] Query error:', {
+      sql,
+      params,
+      message: error.message,
+      code: error.code,
+      sqlState: error.sqlState,
+      sqlMessage: error.sqlMessage
+    })
+    throw error
+  }
 }
 
 export async function queryOne<T = any>(

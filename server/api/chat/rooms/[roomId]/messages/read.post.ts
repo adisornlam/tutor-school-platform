@@ -1,6 +1,5 @@
 import { requireAuth } from '#server/utils/auth.middleware'
 import { verifyRoomAccess, markMessagesAsRead } from '#server/services/chat.service'
-import { emitToRoom } from '#server/utils/sse'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
@@ -27,13 +26,25 @@ export default defineEventHandler(async (event) => {
     // Mark messages as read in database
     await markMessagesAsRead(roomId, auth.userId, body.messageId)
 
-    // Emit messages_read event via SSE
-    await emitToRoom(roomId, 'messages_read', {
-      roomId,
-      userId: auth.userId,
-      messageId: body.messageId,
-      timestamp: new Date().toISOString()
-    })
+    // Emit messages_read event via Socket.IO
+    const nitroApp = useNitroApp()
+    const io = (nitroApp as any).io
+    
+    if (io) {
+      try {
+        io.to(`room:${roomId}`).emit('messages_read', {
+          roomId,
+          userId: auth.userId,
+          messageId: body.messageId,
+          timestamp: new Date().toISOString()
+        })
+      } catch (emitError: any) {
+        // Ignore ECONNRESET errors (client disconnected)
+        if (emitError.code !== 'ECONNRESET' && emitError.message !== 'read ECONNRESET') {
+          console.error('[API] Error emitting messages_read event:', emitError)
+        }
+      }
+    }
 
     return {
       success: true

@@ -4,15 +4,36 @@
     <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
       <div class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16">
-          <NuxtLink to="/my-courses" class="text-xl font-bold text-green-600">
-            KDC School
-          </NuxtLink>
+          <div class="flex items-center space-x-4">
+            <!-- Back Button -->
+            <NuxtLink
+              :to="backUrl"
+              class="flex items-center space-x-2 text-gray-700 hover:text-green-600 transition-colors"
+              :title="backUrl === '/admin' ? 'กลับไปที่ Admin Dashboard' : 'กลับไปที่คอร์สเรียน'"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span class="font-medium">กลับ</span>
+            </NuxtLink>
+            <NuxtLink :to="backUrl" class="text-xl font-bold text-green-600">
+              KDC School
+            </NuxtLink>
+          </div>
           <div class="flex items-center space-x-4">
             <NuxtLink
+              v-if="backUrl === '/my-courses'"
               to="/my-courses"
               class="text-gray-700 hover:text-green-600 font-medium"
             >
               คอร์สเรียน
+            </NuxtLink>
+            <NuxtLink
+              v-else
+              to="/admin"
+              class="text-gray-700 hover:text-green-600 font-medium"
+            >
+              Dashboard
             </NuxtLink>
             <div class="relative">
               <button 
@@ -49,15 +70,27 @@
     </header>
 
     <!-- Main Content -->
-    <main class="h-[calc(100vh-4rem)]">
+    <main class="h-[calc(100vh-4rem)] overflow-hidden">
       <slot />
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-const { user, logout } = useAuth()
+import { getRedirectPathByRole } from '~/utils/auth'
+
+const { user, logout, hasAnyRole } = useAuth()
 const showUserMenu = ref(false)
+
+// Get back URL based on user role
+const backUrl = computed(() => {
+  // Tutor and admin roles → /admin
+  if (hasAnyRole(['tutor', 'system_admin', 'owner', 'admin', 'branch_admin'])) {
+    return '/admin'
+  }
+  // Student and parent → /my-courses
+  return '/my-courses'
+})
 
 const handleLogout = async () => {
   showUserMenu.value = false

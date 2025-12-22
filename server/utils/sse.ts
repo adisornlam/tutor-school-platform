@@ -7,6 +7,9 @@ const userConnections = new Map<number, H3Event[]>()
 // Map<roomId, Set<userId>>
 const roomSubscriptions = new Map<number, Set<number>>()
 
+// Export for use in API routes
+export { userConnections, roomSubscriptions }
+
 /**
  * Send SSE event to client
  */
@@ -77,19 +80,40 @@ export function unsubscribeFromRoom(roomId: number, userId: number) {
  */
 export async function emitToUser(userId: number, eventName: string, data: any) {
   const connections = userConnections.get(userId)
-  if (connections) {
-    for (const connection of connections) {
-      try {
-        await sendSSE(connection, eventName, data)
-      } catch (error) {
-        console.error(`[SSE] Error emitting to user ${userId}:`, error)
-        // Remove dead connection
+  if (!connections || connections.length === 0) {
+    console.log(`[SSE] ⚠️  No active connections for user ${userId}, event: ${eventName}`)
+    return
+  }
+  
+  console.log(`[SSE] 📨 Sending ${eventName} to user ${userId}, connections: ${connections.length}`)
+  
+  for (const connection of connections) {
+    try {
+      // Check if connection is still alive
+      if (connection.node.res.closed || connection.node.res.destroyed) {
+        console.log(`[SSE] ⚠️  Connection for user ${userId} is closed, removing`)
         const index = connections.indexOf(connection)
         if (index > -1) {
           connections.splice(index, 1)
         }
+        continue
+      }
+      
+      await sendSSE(connection, eventName, data)
+      console.log(`[SSE] ✅ Sent ${eventName} to user ${userId}`)
+    } catch (error) {
+      console.error(`[SSE] ❌ Error emitting to user ${userId}:`, error)
+      // Remove dead connection
+      const index = connections.indexOf(connection)
+      if (index > -1) {
+        connections.splice(index, 1)
       }
     }
+  }
+  
+  // Clean up if no connections left
+  if (connections.length === 0) {
+    userConnections.delete(userId)
   }
 }
 
@@ -104,14 +128,39 @@ export async function emitToRoom(
   excludeUserId?: number
 ) {
   const subscribers = roomSubscriptions.get(roomId)
-  if (!subscribers) return
+  if (!subscribers || subscribers.size === 0) {
+    console.log(`[SSE] ⚠️  No subscribers for room ${roomId}, event: ${eventName}`)
+    console.log(`[SSE] Current room subscriptions:`, Array.from(roomSubscriptions.entries()).map(([rId, users]) => ({ roomId: rId, userIds: Array.from(users) })))
+    console.log(`[SSE] Active user connections:`, Array.from(userConnections.keys()))
+    return
+  }
 
+  console.log(`[SSE] 📤 Emitting ${eventName} to room ${roomId}, subscribers:`, Array.from(subscribers), `exclude: ${excludeUserId}`)
+  
+  let sentCount = 0
+  let skippedCount = 0
   for (const userId of subscribers) {
     // Skip sender - they already have the message from REST API response
     if (excludeUserId && userId === excludeUserId) {
+      console.log(`[SSE] ⏭️  Skipping sender ${userId}`)
+      skippedCount++
       continue
     }
+    
+    const hasConnection = userConnections.has(userId)
+    if (!hasConnection) {
+      console.log(`[SSE] ⚠️  User ${userId} subscribed but no active connection`)
+      continue
+    }
+    
     await emitToUser(userId, eventName, data)
+    sentCount++
+  }
+  
+  console.log(`[SSE] ✅ Sent ${eventName} to ${sentCount} user(s) in room ${roomId} (skipped: ${skippedCount})`)
+  
+  if (sentCount === 0 && subscribers.size > skippedCount) {
+    console.log(`[SSE] ⚠️  WARNING: No messages sent but ${subscribers.size - skippedCount} subscribers exist!`)
   }
 }
 

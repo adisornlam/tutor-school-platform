@@ -90,20 +90,35 @@ export const useChatSSE = () => {
     }
   }
 
-  const subscribeToRoom = (roomId: number) => {
+  const subscribeToRoom = async (roomId: number) => {
     if (subscribedRooms.value.has(roomId)) {
       console.log(`[Chat SSE] Already subscribed to room ${roomId}`)
       return
     }
     
     subscribedRooms.value.add(roomId)
-    console.log(`[Chat SSE] Subscribed to room ${roomId}`)
+    console.log(`[Chat SSE] Subscribing to room ${roomId}`)
     
-    // For SSE, room subscription is handled by the server when the client connects
-    // The server will send a 'room_subscribed' event back
-    // We can trigger a re-connection with a roomId query param if needed for specific rooms
-    // For now, assume server handles initial room subscriptions based on user's rooms
-    // Don't reconnect unnecessarily - SSE connection is already established
+    // Send request to server to subscribe to room
+    if (!accessToken.value) {
+      console.warn('[Chat SSE] No access token, cannot subscribe to room')
+      return
+    }
+
+    try {
+      await $fetch(`${config.public.apiBase}/chat/events/subscribe`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken.value}`
+        },
+        body: { roomId }
+      })
+      console.log(`[Chat SSE] ✅ Successfully subscribed to room ${roomId}`)
+    } catch (error) {
+      console.error(`[Chat SSE] ❌ Error subscribing to room ${roomId}:`, error)
+      // Remove from local state if subscription failed
+      subscribedRooms.value.delete(roomId)
+    }
   }
 
   const unsubscribeFromRoom = (roomId: number) => {

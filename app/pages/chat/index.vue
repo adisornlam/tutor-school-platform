@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen flex">
+  <div class="h-full flex overflow-hidden">
     <!-- Sidebar: Room List -->
-    <div class="w-80 border-r bg-white">
+    <div class="w-80 border-r bg-white flex-shrink-0 overflow-y-auto">
       <ChatRoomList
         :rooms="chatRooms"
         :active-room="activeRoom"
@@ -12,8 +12,8 @@
     </div>
 
     <!-- Main: Chat Window -->
-    <div class="flex-1">
-      <div v-if="!activeRoom" class="h-full flex items-center justify-center bg-gray-50">
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div v-if="!activeRoom" class="flex-1 flex items-center justify-center bg-gray-50">
         <div class="text-center text-gray-500">
           <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -22,14 +22,19 @@
         </div>
       </div>
 
-      <ChatWindow
-        v-else
-        :room="activeRoom"
-        :messages="currentMessages"
-        :loading="loadingMessages"
-        @send-message="handleSendMessage"
-        @load-more="handleLoadMore"
-      />
+      <div v-else class="flex-1 flex min-w-0 overflow-hidden">
+        <ChatWindow
+          class="flex-1 min-w-0"
+          :room="activeRoom"
+          :messages="currentMessages"
+          :loading="loadingMessages"
+          @send-message="handleSendMessage"
+          @load-more="handleLoadMore"
+        />
+        
+        <!-- Right Sidebar: Tags and Notes -->
+        <ChatRoomSidebar class="flex-shrink-0" :room="activeRoom" />
+      </div>
     </div>
 
     <!-- Create Chat Room Modal -->
@@ -44,6 +49,7 @@
 <script setup lang="ts">
 import ChatRoomList from '~/components/chat/ChatRoomList.vue'
 import ChatWindow from '~/components/chat/ChatWindow.vue'
+import ChatRoomSidebar from '~/components/chat/ChatRoomSidebar.vue'
 import CreateChatRoomModal from '~/components/chat/CreateChatRoomModal.vue'
 import type { ChatRoom, ChatMessage, SendMessageData } from '#shared/types/chat.types'
 
@@ -63,12 +69,15 @@ const {
   loadMessages, 
   sendMessage,
   markAsRead,
-  messages: chatMessages
+  sortedMessages, // ✅ Change: Use sortedMessages computed property
+  setupChatEventListeners,
+  connect,
+  connected,
+  socket
 } = useChat()
 
 const loadingRooms = ref(false)
 const loadingMessages = ref(false)
-const currentMessages = ref<ChatMessage[]>([])
 const messageOffset = ref(0)
 const hasMoreMessages = ref(true)
 const showCreateModal = ref(false)
@@ -76,25 +85,73 @@ const uploading = ref(false)
 
 const chatRooms = computed(() => [...rooms.value])
 
-// Load rooms on mount and setup SSE
+// Load rooms on mount and setup Socket.IO
 onMounted(async () => {
   loadingRooms.value = true
   try {
-    // Setup SSE connection first
-    const { setupChatEventListeners, connect, connected } = useChat()
+    console.log('[Chat Page] 🚀 Mounting chat page, setting up Socket.IO...')
     
     // Only connect if not already connected
     if (!connected.value) {
-      connect() // Connect SSE
+      console.log('[Chat Page] 🔌 Connecting Socket.IO...')
+      connect() // Connect Socket.IO
+      
+      // Wait for connection to establish
+      let attempts = 0
+      while (!connected.value && attempts < 20) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
+      
+      if (!connected.value) {
+        console.warn('[Chat Page] ⚠️ Socket.IO connection timeout')
+      }
+    } else {
+      console.log('[Chat Page] ✅ Socket.IO already connected')
     }
     
-    // Setup event listeners immediately (they will attach when connection is ready)
-    setupChatEventListeners()
+    // Setup event listeners - wait for socket to be available
+    console.log('[Chat Page] 👂 Setting up event listeners...')
+    
+    // Wait for socket to be available
+    let socketAttempts = 0
+    while (!socket.value && socketAttempts < 20) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      socketAttempts++
+    }
+    
+    if (socket.value) {
+      console.log('[Chat Page] ✅ Socket available, setting up event listeners, socket ID:', socket.value.id)
+      setupChatEventListeners()
+    } else {
+      console.warn('[Chat Page] ⚠️ Socket not available after waiting, will retry in setupChatEventListeners')
+      setupChatEventListeners() // Will retry internally
+    }
     
     // Load rooms after connection is established
+    console.log('[Chat Page] 📋 Loading rooms...')
     await loadRooms()
+    
+    // Restore active room from URL query parameter
+    const route = useRoute()
+    const roomIdFromUrl = route.query.roomId ? parseInt(route.query.roomId as string) : null
+    if (roomIdFromUrl) {
+      const roomToRestore = rooms.value.find(r => r.id === roomIdFromUrl)
+      if (roomToRestore) {
+        console.log('[Chat Page] 🔄 Restoring active room from URL:', roomIdFromUrl)
+        await handleSelectRoom(roomToRestore)
+        // Mark as read immediately when restoring room
+        markAsRead(roomIdFromUrl)
+      }
+    } else if (rooms.value.length > 0 && activeRoom.value) {
+      // If there's an active room (from previous session or default), mark as read
+      console.log('[Chat Page] 📋 Marking active room as read on page entry:', activeRoom.value.id)
+      markAsRead(activeRoom.value.id)
+    }
+    
+    console.log('[Chat Page] ✅ Chat page setup complete')
   } catch (error) {
-    console.error('[Chat] Error loading rooms:', error)
+    console.error('[Chat Page] ❌ Error loading rooms:', error)
   } finally {
     loadingRooms.value = false
   }
@@ -113,148 +170,32 @@ watch(() => activeRoom.value?.id, async (roomId) => {
     // Mark messages as read
     markAsRead(roomId)
   } else {
-    currentMessages.value = []
     messageOffset.value = 0
     hasMoreMessages.value = true
   }
 }, { immediate: true })
 
-// Watch messages.value directly to catch new messages even when activeRoom is not set
-// This ensures messages appear immediately when they arrive via SSE
-watch(() => {
-  if (!activeRoom.value) return null
-  const roomMessages = chatMessages.value.get(activeRoom.value.id)
-  return roomMessages ? roomMessages.length : 0
-}, (newCount, oldCount) => {
-  if (!activeRoom.value) return
-  
-  // If count increased, trigger the main watch to update UI
-  if (newCount && newCount > (oldCount || 0)) {
-    console.log('[Chat] 🔔 Message count changed for active room:', {
-      roomId: activeRoom.value.id,
-      oldCount,
-      newCount
-    })
-    // The main watch below will handle the actual update
-  }
-})
+// ✅ Change: Use sortedMessages from composable (already computed and sorted)
+const currentMessages = sortedMessages
 
-// Watch for new messages from composable (via SSE) and update currentMessages
-// Note: SSE events should only contain messages from other users (server excludes sender)
-// This watch also handles when REST API replaces optimistic messages with real messages
-watch(() => {
-  if (!activeRoom.value) return []
-  return chatMessages.value.get(activeRoom.value.id) || []
-}, (newMessages, oldMessages) => {
-  if (!activeRoom.value) {
-    console.log('[Chat] ⚠️ No active room, skipping message update')
-    return
-  }
-  
-  if (!newMessages || newMessages.length === 0) {
-    console.log('[Chat] ⚠️ No new messages in watch, skipping')
-    return
-  }
-  
-  // Get existing real message IDs
-  const existingIds = new Set<number>()
-  currentMessages.value.forEach(m => {
-    const id = m.id as any
-    if (typeof id === 'number') {
-      existingIds.add(id)
-    }
+// Auto-scroll when messages change (following article approach)
+watch(() => currentMessages.value.length, (newLength, oldLength) => {
+  console.log('[Chat] 📏 Message count changed:', {
+    oldLength,
+    newLength,
+    willScroll: newLength > (oldLength || 0)
   })
-  
-  // Find messages to add (real messages that don't exist yet)
-  const messagesToAdd = newMessages.filter(m => {
-    const id = m.id as any
-    return typeof id === 'number' && !existingIds.has(id)
-  })
-  
-  console.log('[Chat] 🔍 Messages analysis:', {
-    totalNew: newMessages.length,
-    existingIds: existingIds.size,
-    messagesToAdd: messagesToAdd.length,
-    messagesToAddIds: messagesToAdd.map(m => m.id)
-  })
-  
-  // Find temp messages in currentMessages that should be replaced
-  // (when a real message with same content from same sender exists in newMessages)
-  const tempMessagesToRemove: number[] = []
-  currentMessages.value.forEach((currentMsg, index) => {
-    const currentId = currentMsg.id as any
-    if (typeof currentId === 'string' && currentId.startsWith('temp-')) {
-      // Check if newMessages has a real message with same content from same sender
-      const hasRealReplacement = newMessages.some(newMsg => {
-        const newId = newMsg.id as any
-        return typeof newId === 'number' &&
-               newMsg.content === currentMsg.content &&
-               newMsg.sender_id === currentMsg.sender_id
-      })
-      if (hasRealReplacement) {
-        tempMessagesToRemove.push(index)
-      }
-    }
-  })
-  
-  if (messagesToAdd.length > 0 || tempMessagesToRemove.length > 0) {
-    // Remove temp messages that have been replaced
-    const filteredMessages = currentMessages.value.filter((_, index) => 
-      !tempMessagesToRemove.includes(index)
-    )
-    
-    // Merge new messages
-    const allMessages = [...filteredMessages, ...messagesToAdd]
-    
-    // Sort by created_at
-    allMessages.sort((a, b) => {
-      const timeA = new Date(a.created_at).getTime()
-      const timeB = new Date(b.created_at).getTime()
-      return timeA - timeB
-    })
-    
-    // Final deduplication by ID (only for real messages)
-    const seen = new Set<number>()
-    const uniqueMessages = allMessages.filter(m => {
-      const id = m.id as any
-      if (typeof id === 'number') {
-        if (seen.has(id)) return false
-        seen.add(id)
-        return true
-      }
-      // Keep temp messages (optimistic updates that haven't been replaced yet)
-      return true
-    })
-    
-    console.log('[Chat] ✅ Updating currentMessages:', {
-      before: currentMessages.value.length,
-      after: uniqueMessages.length,
-      added: messagesToAdd.length,
-      removed: tempMessagesToRemove.length,
-      isFirstLoad
-    })
-    
-    currentMessages.value = uniqueMessages
-    
-    if (isFirstLoad || messagesToAdd.length > 0 || tempMessagesToRemove.length > 0) {
-      console.log('[Chat] 📨 New messages detected, updating UI:', {
-        added: messagesToAdd.length,
-        removed: tempMessagesToRemove.length,
-        isFirstLoad
-      })
-      
-      // Auto mark as read
-      markAsRead(activeRoom.value.id)
-    }
-  } else {
-    console.log('[Chat] ⚠️ No messages to add or remove, skipping update')
-  }
-}, { deep: true })
+  // ChatWindow component has its own scroll handler
+  // Vue reactivity will automatically update the UI
+})
 
 const loadRoomMessages = async (roomId: number, append: boolean = false) => {
   loadingMessages.value = true
   try {
     const offset = append ? messageOffset.value : 0
+    
+    // Use loadMessages from composable - it handles Map updates internally
+    // Don't try to update chatMessages.value directly (it's readonly)
     const apiMessages = await loadMessages(roomId, 50, offset)
     
     if (!apiMessages) {
@@ -262,55 +203,9 @@ const loadRoomMessages = async (roomId: number, append: boolean = false) => {
       return
     }
     
-    // Get cached messages from composable (may include optimistic updates)
-    const cachedMessages = getRoomMessages(roomId) || []
-    
-    // Merge: prioritize cached messages (they may have optimistic updates)
-    const allMessages = [...apiMessages, ...cachedMessages]
-    
-    // Simple deduplication: use message ID as unique key
-    const seen = new Set<number>()
-    const uniqueMessages = allMessages.filter(m => {
-      const id = m.id as any
-      
-      // For real messages (number ID), deduplicate by ID
-      if (typeof id === 'number') {
-        if (seen.has(id)) return false
-        seen.add(id)
-        return true
-      }
-      
-      // Keep temp messages (optimistic updates)
-      return typeof id === 'string' && id.startsWith('temp-')
-    })
-    
-    // Sort by created_at
-    uniqueMessages.sort((a, b) => {
-      const timeA = new Date(a.created_at).getTime()
-      const timeB = new Date(b.created_at).getTime()
-      return timeA - timeB
-    })
-    
-    if (append) {
-      // Prepend older messages, remove duplicates from currentMessages
-      const currentIds = new Set(
-        currentMessages.value
-          .map(m => {
-            const id = m.id as any
-            return typeof id === 'number' ? id : null
-          })
-          .filter(id => id !== null) as number[]
-      )
-      const newMessages = uniqueMessages.filter(m => {
-        const id = m.id as any
-        return typeof id === 'number' ? !currentIds.has(id) : true
-      })
-      currentMessages.value = [...newMessages, ...currentMessages.value]
-    } else {
-      // Replace messages
-      currentMessages.value = uniqueMessages
-      messageOffset.value = 0
-    }
+    // The loadMessages function already updates the messages Map in the composable
+    // The computed property (currentMessages) will automatically update when messages.value changes
+    // No need to manually update chatMessages.value here
     
     // Update offset for next load
     if (apiMessages.length < 50) {
@@ -331,22 +226,44 @@ const handleSelectRoom = async (room: ChatRoom) => {
   setActiveRoom(room)
   messageOffset.value = 0
   hasMoreMessages.value = true
+  
+  // Update URL query parameter to persist active room
+  const route = useRoute()
+  const router = useRouter()
+  if (route.query.roomId !== room.id.toString()) {
+    await router.replace({
+      query: { ...route.query, roomId: room.id.toString() }
+    })
+  }
 }
 
 const sending = ref(false)
 
 const handleSendMessage = async (data: any) => {
-  if (!activeRoom.value) return
+  console.log('[Chat Page] 🎯 handleSendMessage called:', {
+    hasActiveRoom: !!activeRoom.value,
+    roomId: activeRoom.value?.id,
+    content: data.content?.substring(0, 50),
+    messageType: data.messageType,
+    isSending: sending.value
+  })
+  
+  if (!activeRoom.value) {
+    console.error('[Chat Page] ❌ No active room')
+    return
+  }
   
   // Prevent duplicate sends
   if (sending.value) {
-    console.log('[Chat] ⚠️ Already sending a message, skipping duplicate')
+    console.log('[Chat Page] ⚠️ Already sending a message, skipping duplicate')
     return
   }
   
   sending.value = true
+  console.log('[Chat Page] ✅ Sending state set to true')
   
   try {
+    console.log('[Chat Page] 📤 Calling sendMessage composable...')
     await sendMessage({
       room_id: activeRoom.value.id,
       content: data.content,
@@ -354,17 +271,25 @@ const handleSendMessage = async (data: any) => {
       file_url: data.fileUrl,
       file_name: data.fileName,
       file_size: data.fileSize,
-      file_type: data.fileType
+      file_type: data.fileType,
+      reply_to_id: data.replyToId || null
     })
+    
+    console.log('[Chat Page] ✅ sendMessage completed successfully')
     
     // Mark as read after sending
     markAsRead(activeRoom.value.id)
-  } catch (error) {
-    console.error('[Chat] Error in handleSendMessage:', error)
+  } catch (error: any) {
+    console.error('[Chat Page] ❌ Error in handleSendMessage:', {
+      error: error.message,
+      stack: error.stack,
+      response: error.response
+    })
   } finally {
     // Reset sending state after a short delay
     setTimeout(() => {
       sending.value = false
+      console.log('[Chat Page] 🔄 Sending state reset to false')
     }, 500)
   }
 }

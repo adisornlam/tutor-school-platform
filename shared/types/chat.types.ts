@@ -42,6 +42,9 @@ export interface ChatMessage {
   is_read: boolean
   read_at: string | null
   created_at: string
+  reply_to_id?: number | null
+  reply_to?: ChatMessage | null
+  is_pinned?: boolean
   // Joined data
   sender?: {
     id: number
@@ -65,6 +68,7 @@ export interface SendMessageData {
   file_name?: string
   file_size?: number
   file_type?: string
+  reply_to_id?: number | null
 }
 
 export interface ChatRoomParticipant {
@@ -74,5 +78,50 @@ export interface ChatRoomParticipant {
   role: 'student' | 'tutor' | 'admin'
   joined_at: string
   last_read_at: string | null
+}
+
+export interface ChatRoomTag {
+  id: number
+  room_id: number
+  tag_name: string
+  color: string
+  created_by: number
+  created_at: string
+  creator?: {
+    id: number
+    first_name: string
+    last_name: string
+  }
+}
+
+export interface ChatRoomNote {
+  id: number
+  room_id: number
+  content: string
+  created_by: number
+  updated_by: number | null
+  created_at: string
+  updated_at: string
+  creator?: {
+    id: number
+    first_name: string
+    last_name: string
+  }
+  updater?: {
+    id: number
+    first_name: string
+    last_name: string
+  } | null
+}
+
+export interface CreateChatRoomTagData {
+  room_id: number
+  tag_name: string
+  color?: string
+}
+
+export interface CreateChatRoomNoteData {
+  room_id: number
+  content: string
 }
 
