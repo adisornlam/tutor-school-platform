@@ -1,187 +1,23 @@
-import { io, Socket } from 'socket.io-client'
+import { useChatSSE } from './useChatSSE'
 import type { ChatRoom, ChatMessage, SendMessageData } from '#shared/types/chat.types'
 
 export const useChat = () => {
   const config = useRuntimeConfig()
   const { accessToken, user } = useAuth()
-  const socket = ref<Socket | null>(null)
-  const connected = ref(false)
   const rooms = ref<ChatRoom[]>([])
   const activeRoom = ref<ChatRoom | null>(null)
   const messages = ref<Map<number, ChatMessage[]>>(new Map())
   const typingUsers = ref<Map<number, Set<number>>>(new Map()) // roomId -> Set of userIds
 
-  const connect = () => {
-    if (socket.value?.connected) {
-      console.log('[Chat] Already connected')
-      return
-    }
+  // Use SSE for real-time updates
+  const { 
+    connected, 
+    connect: connectSSE, 
+    disconnect: disconnectSSE,
+    subscribeToRoom: subscribeToRoomSSE,
+    setupEventListeners
+  } = useChatSSE()
 
-    if (!accessToken.value) {
-      console.warn('[Chat] No access token, cannot connect')
-      return
-    }
-
-    // Get base URL for Socket.IO
-    // Use window.location.origin if available (client-side), otherwise use config
-    const baseUrl = typeof window !== 'undefined' 
-      ? window.location.origin 
-      : (config.public.apiBase?.replace('/api', '') || 'http://localhost:4000')
-    
-    console.log('[Chat] 🔌 Connecting to:', baseUrl)
-    console.log('[Chat] Token exists:', !!accessToken.value)
-    console.log('[Chat] Token preview:', accessToken.value ? accessToken.value.substring(0, 20) + '...' : 'none')
-    
-    socket.value = io(baseUrl, {
-      auth: {
-        token: accessToken.value
-      },
-      path: '/socket.io',
-      transports: ['websocket', 'polling'],
-      reconnection: true,
-      reconnectionDelay: 1000,
-      reconnectionAttempts: 5,
-      timeout: 45000, // Increase timeout to 45 seconds (default is 20s)
-      forceNew: false,
-      // Additional options for better connection stability
-      upgrade: true,
-      rememberUpgrade: false,
-      autoConnect: true
-    })
-
-    socket.value.on('connect', () => {
-      connected.value = true
-      console.log('[Chat] ✅ Connected to server')
-      console.log('[Chat] Socket ID:', socket.value?.id)
-      console.log('[Chat] Socket connected:', socket.value?.connected)
-      console.log('[Chat] Transport:', socket.value.io.engine.transport.name)
-    })
-
-    socket.value.on('disconnect', (reason) => {
-      connected.value = false
-      console.warn('[Chat] ⚠️  Disconnected from server:', reason)
-    })
-
-    socket.value.on('connect_error', (error) => {
-      console.error('[Chat] ❌ Connection error:', error.message || error)
-      console.error('[Chat] Error details:', {
-        message: error.message,
-        description: (error as any).description,
-        type: (error as any).type,
-        context: (error as any).context,
-        data: (error as any).data
-      })
-      connected.value = false
-      
-      // Check if it's an authentication error
-      if (error.message?.includes('Authentication') || error.message?.includes('token') || error.message?.includes('Unauthorized')) {
-        console.error('[Chat] 🔐 Authentication failed - check token')
-        console.error('[Chat] Token exists:', !!accessToken.value)
-        if (accessToken.value) {
-          console.error('[Chat] Token preview:', accessToken.value.substring(0, 20) + '...')
-        }
-        // Don't retry on auth errors - need to fix token first
-        return
-      }
-      
-      // Retry connection after delay if it's a timeout or network error
-      if (error.message?.includes('timeout') || error.message?.includes('xhr poll error') || error.message?.includes('Network') || error.message?.includes('ECONNREFUSED')) {
-        console.log('[Chat] ⚠️  Network error detected, will retry in 3 seconds...')
-        setTimeout(() => {
-          if (accessToken.value && !connected.value) {
-            console.log('[Chat] 🔄 Retrying connection...')
-            if (socket.value && !socket.value.connected) {
-              socket.value.connect()
-            } else {
-              connect()
-            }
-          }
-        }, 3000)
-      }
-    })
-
-    socket.value.on('room_joined', (data: { roomId: number }) => {
-      console.log('[Chat] Joined room:', data.roomId)
-    })
-
-    socket.value.on('room_left', (data: { roomId: number }) => {
-      console.log('[Chat] Left room:', data.roomId)
-    })
-
-    socket.value.on('new_message', (message: ChatMessage) => {
-      console.log('[Chat] ✅ New message received:', {
-        id: message.id,
-        roomId: message.room_id,
-        senderId: message.sender_id,
-        content: message.content?.substring(0, 50),
-        type: message.message_type
-      })
-      
-      const roomMessages = messages.value.get(message.room_id) || []
-      
-      // Remove optimistic message if exists (replace with real message)
-      const tempIndex = roomMessages.findIndex(m => typeof m.id === 'string' && m.id.startsWith('temp-'))
-      if (tempIndex !== -1) {
-        roomMessages.splice(tempIndex, 1)
-      }
-      
-      // Check if message already exists (prevent duplicates)
-      const exists = roomMessages.some(m => m.id === message.id)
-      if (!exists) {
-        roomMessages.push(message)
-        messages.value.set(message.room_id, roomMessages)
-        console.log('[Chat] ✅ Message added to local state')
-      } else {
-        console.log('[Chat] ⚠️  Message already exists, skipping')
-      }
-    })
-
-    socket.value.on('new_message_notification', (data: { roomId: number; message: ChatMessage }) => {
-      console.log('[Chat] New message notification:', data)
-      // Update unread count or show notification
-      const room = rooms.value.find(r => r.id === data.roomId)
-      if (room) {
-        room.unread_count = (room.unread_count || 0) + 1
-      }
-    })
-
-    socket.value.on('user_typing', (data: { userId: number; userName: string }) => {
-      if (!activeRoom.value) return
-      const roomId = activeRoom.value.id
-      if (!typingUsers.value.has(roomId)) {
-        typingUsers.value.set(roomId, new Set())
-      }
-      typingUsers.value.get(roomId)!.add(data.userId)
-    })
-
-    socket.value.on('user_stopped_typing', (data: { userId: number }) => {
-      if (!activeRoom.value) return
-      const roomId = activeRoom.value.id
-      typingUsers.value.get(roomId)?.delete(data.userId)
-    })
-
-    socket.value.on('messages_read', (data: { roomId: number; userId: number }) => {
-      // Update read status for messages in the room
-      const roomMessages = messages.value.get(data.roomId) || []
-      roomMessages.forEach(msg => {
-        if (msg.sender_id !== data.userId && !msg.is_read) {
-          msg.is_read = true
-        }
-      })
-    })
-
-    socket.value.on('error', (error: { message: string }) => {
-      console.error('[Chat] Error:', error.message)
-    })
-  }
-
-  const disconnect = () => {
-    if (socket.value) {
-      socket.value.disconnect()
-      socket.value = null
-      connected.value = false
-    }
-  }
 
   const loadRooms = async () => {
     try {
@@ -197,11 +33,15 @@ export const useChat = () => {
       if (response.success) {
         rooms.value = response.data
         
-        // Join all rooms via socket
-        if (socket.value && connected.value) {
-          response.data.forEach(room => {
-            socket.value?.emit('join_room', { roomId: room.id })
-          })
+        // Subscribe to all rooms via SSE
+        response.data.forEach(room => {
+          subscribeToRoomSSE(room.id)
+        })
+        
+        // Update unread count
+        if (typeof window !== 'undefined') {
+          const { updateUnreadCount } = useUnreadMessages()
+          updateUnreadCount(response.data)
         }
       }
     } catch (error: any) {
@@ -223,10 +63,8 @@ export const useChat = () => {
       if (response.success) {
         activeRoom.value = response.data
         
-        // Join room via socket
-        if (socket.value && connected.value) {
-          socket.value.emit('join_room', { roomId })
-        }
+        // Subscribe to room via SSE
+        subscribeToRoomSSE(roomId)
         
         return response.data
       }
@@ -272,86 +110,209 @@ export const useChat = () => {
   }
 
   const joinRoom = (roomId: number) => {
-    if (socket.value && connected.value) {
-      socket.value.emit('join_room', { roomId })
-    }
+    // Subscribe to room via SSE
+    subscribeToRoomSSE(roomId)
   }
 
   const leaveRoom = (roomId: number) => {
-    if (socket.value && connected.value) {
-      socket.value.emit('leave_room', { roomId })
-    }
+    // SSE doesn't need explicit leave, but we can unsubscribe if needed
+    // For now, we'll keep subscription active
   }
 
-  const sendMessage = (data: SendMessageData) => {
-    if (!socket.value || !connected.value) {
-      console.error('[Chat] ❌ Socket not connected, cannot send message')
-      console.error('[Chat] Socket exists:', !!socket.value)
-      console.error('[Chat] Connected:', connected.value)
+  // Track sending state to prevent duplicate sends
+  const sendingMessages = ref<Set<string>>(new Set())
+  
+  const sendMessage = async (data: SendMessageData) => {
+    // Always use REST API for sending messages (SSE is one-way)
+    const messageContent = data.content || ''
+    const messageKey = `${data.room_id}-${messageContent}-${Date.now()}`
+    
+    // Prevent duplicate sends of the same message within 2 seconds
+    const duplicateKey = `${data.room_id}-${messageContent}`
+    if (sendingMessages.value.has(duplicateKey)) {
+      console.log('[Chat] ⚠️ Message already being sent, skipping duplicate:', messageContent.substring(0, 50))
       return
     }
-
-    // Optimistic update - add message to local state immediately
-    const tempId = `temp-${Date.now()}-${Math.random()}`
-    const optimisticMessage: ChatMessage = {
-      id: tempId as any,
-      room_id: data.room_id,
-      sender_id: user.value?.id || 0,
-      message_type: data.message_type || 'text',
-      content: data.content,
-      file_url: data.file_url || null,
-      file_name: data.file_name || null,
-      file_size: data.file_size || null,
-      file_type: data.file_type || null,
-      is_read: false,
-      read_at: null,
-      created_at: new Date().toISOString(),
-      sender: {
-        id: user.value?.id || 0,
-        first_name: user.value?.first_name || '',
-        last_name: user.value?.last_name || '',
-        avatar_url: user.value?.avatar_url || null
+    
+    // Mark as sending
+    sendingMessages.value.add(duplicateKey)
+    
+    try {
+      // Optimistic update - add message to local state immediately
+      const tempId = `temp-${Date.now()}-${Math.random()}`
+      
+      const optimisticMessage: ChatMessage = {
+        id: tempId as any,
+        room_id: data.room_id,
+        sender_id: user.value?.id || 0,
+        message_type: data.message_type || 'text',
+        content: messageContent,
+        file_url: data.file_url || null,
+        file_name: data.file_name || null,
+        file_size: data.file_size || null,
+        file_type: data.file_type || null,
+        is_read: false,
+        read_at: null,
+        created_at: new Date().toISOString(),
+        sender: {
+          id: user.value?.id || 0,
+          first_name: user.value?.first_name || '',
+          last_name: user.value?.last_name || '',
+          avatar_url: user.value?.avatar_url || null
+        }
       }
+
+      // Add to local messages (only if not already added)
+      const roomMessages = messages.value.get(data.room_id) || []
+      // Check if optimistic message with same content already exists
+      const hasOptimistic = roomMessages.some(m => {
+        const id = m.id as any
+        return typeof id === 'string' && id.startsWith('temp-') && m.content === messageContent
+      })
+      if (!hasOptimistic) {
+        roomMessages.push(optimisticMessage)
+        messages.value.set(data.room_id, roomMessages)
+      }
+
+      console.log('[Chat] 📤 Sending message via REST API:', {
+        roomId: data.room_id,
+        content: data.content?.substring(0, 50),
+        messageType: data.message_type
+      })
+
+      // Send message via REST API
+      const response = await $fetch<{ success: boolean; data: ChatMessage }>(
+        `${config.public.apiBase}/chat/rooms/${data.room_id}/messages`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken.value}`
+          },
+          body: {
+            content: data.content,
+            message_type: data.message_type || 'text',
+            file_url: data.file_url,
+            file_name: data.file_name,
+            file_size: data.file_size,
+            file_type: data.file_type
+          }
+        }
+      )
+
+      if (response.success) {
+        console.log('[Chat] 📥 REST API response received:', {
+          messageId: response.data.id,
+          content: response.data.content?.substring(0, 50)
+        })
+        
+        // Replace optimistic message with real message from REST API response
+        const roomMessages = messages.value.get(data.room_id) || []
+        
+        // Find and replace optimistic message
+        const tempIndex = roomMessages.findIndex(m => {
+          const id = m.id as any
+          return typeof id === 'string' && id.startsWith('temp-') && 
+                 m.content === messageContent && 
+                 m.sender_id === user.value?.id
+        })
+        
+        if (tempIndex !== -1) {
+          // Replace optimistic with real message
+          roomMessages[tempIndex] = response.data
+          // Update the Map to trigger reactivity
+          messages.value.set(data.room_id, [...roomMessages])
+          console.log('[Chat] ✅ Replaced optimistic message with real message from REST API')
+        } else {
+          // No optimistic found, check if real message already exists
+          const exists = roomMessages.some(m => {
+            const mId = m.id as any
+            return typeof mId === 'number' && mId === response.data.id
+          })
+          if (!exists) {
+            roomMessages.push(response.data)
+            messages.value.set(data.room_id, [...roomMessages])
+            console.log('[Chat] ✅ Added real message from REST API')
+          } else {
+            console.log('[Chat] ⚠️ Real message already exists, skipping')
+          }
+        }
+      }
+    } catch (error: any) {
+      console.error('[Chat] ❌ Error sending message via REST API:', error)
+      // Remove optimistic message on error
+      const roomMessages = messages.value.get(data.room_id) || []
+      const tempIndex = roomMessages.findIndex(m => {
+        const id = m.id as any
+        return typeof id === 'string' && id.startsWith('temp-') && 
+               m.content === messageContent &&
+               m.sender_id === user.value?.id
+      })
+      if (tempIndex !== -1) {
+        roomMessages.splice(tempIndex, 1)
+        messages.value.set(data.room_id, roomMessages)
+      }
+      throw error
+    } finally {
+      // Remove from sending set after 2 seconds (allow retry after that)
+      setTimeout(() => {
+        sendingMessages.value.delete(duplicateKey)
+      }, 2000)
     }
-
-    // Add to local messages
-    const roomMessages = messages.value.get(data.room_id) || []
-    roomMessages.push(optimisticMessage)
-    messages.value.set(data.room_id, roomMessages)
-
-    console.log('[Chat] 📤 Sending message:', {
-      roomId: data.room_id,
-      content: data.content?.substring(0, 50),
-      messageType: data.message_type
-    })
-
-    // Send via socket
-    socket.value.emit('send_message', {
-      roomId: data.room_id,
-      content: data.content,
-      messageType: data.message_type || 'text',
-      fileUrl: data.file_url,
-      fileName: data.file_name,
-      fileSize: data.file_size,
-      fileType: data.file_type
-    })
   }
 
-  const markAsRead = (roomId: number, messageId?: number) => {
-    if (socket.value && connected.value) {
-      socket.value.emit('mark_read', { roomId, messageId })
+  const markAsRead = async (roomId: number, messageId?: number) => {
+    // Use REST API to mark messages as read
+    try {
+      await $fetch(`${config.public.apiBase}/chat/rooms/${roomId}/messages/read`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken.value}`
+        },
+        body: {
+          messageId
+        }
+      })
+      
+      // Update room's unread_count in local state
+      const room = rooms.value.find(r => r.id === roomId)
+      if (room) {
+        room.unread_count = 0
+        // Update unread count
+        if (typeof window !== 'undefined') {
+          const { updateUnreadCount } = useUnreadMessages()
+          updateUnreadCount(rooms.value)
+        }
+      }
+    } catch (error) {
+      console.error('[Chat] Error marking messages as read:', error)
     }
   }
 
-  const startTyping = (roomId: number) => {
-    if (socket.value && connected.value) {
-      socket.value.emit('typing', { roomId })
+  const startTyping = async (roomId: number) => {
+    // Use REST API to indicate typing
+    try {
+      await $fetch(`${config.public.apiBase}/chat/rooms/${roomId}/typing`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken.value}`
+        }
+      })
+    } catch (error) {
+      console.error('[Chat] Error starting typing:', error)
     }
   }
 
-  const stopTyping = (roomId: number) => {
-    if (socket.value && connected.value) {
-      socket.value.emit('stop_typing', { roomId })
+  const stopTyping = async (roomId: number) => {
+    // Use REST API to stop typing
+    try {
+      await $fetch(`${config.public.apiBase}/chat/rooms/${roomId}/typing/stop`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken.value}`
+        }
+      })
+    } catch (error) {
+      console.error('[Chat] Error stopping typing:', error)
     }
   }
 
@@ -395,87 +356,146 @@ export const useChat = () => {
   }
 
   const setActiveRoom = (room: ChatRoom | null) => {
+    console.log('[Chat] 🎯 setActiveRoom called:', room?.id || 'null')
     activeRoom.value = room
     
-    // Leave previous room if exists
+    // Subscribe to room via SSE
     if (activeRoom.value) {
-      joinRoom(activeRoom.value.id)
+      subscribeToRoomSSE(activeRoom.value.id)
     }
   }
 
-  // Auto-connect when accessToken is available
-  watch(accessToken, (newToken, oldToken) => {
-    console.log('[Chat] Access token changed:', {
-      hasNewToken: !!newToken,
-      hadOldToken: !!oldToken,
-      connected: connected.value,
-      hasSocket: !!socket.value
-    })
+  // Setup SSE event listeners
+  const setupChatEventListeners = () => {
+    if (typeof window === 'undefined') {
+      console.warn('[Chat] Cannot setup event listeners in server-side')
+      return
+    }
     
-    if (newToken && !connected.value) {
-      // If socket exists but not connected, try to reconnect
-      if (socket.value && !socket.value.connected) {
-        console.log('[Chat] 🔄 Socket exists but not connected, trying to reconnect...')
-        socket.value.connect()
-        return
-      }
-      
-      // If no socket, create new connection
-      if (!socket.value) {
-        console.log('[Chat] 🔌 Creating new socket connection...')
-        nextTick(() => {
-          setTimeout(() => {
-            connect()
-          }, 500)
+    setupEventListeners(
+      // onNewMessage
+      // Note: SSE events should NOT be received by the sender (server excludes them)
+      // This handler only processes messages from other users
+      (message: ChatMessage) => {
+        console.log('[Chat] 📨 SSE event: new_message received:', {
+          id: message.id,
+          roomId: message.room_id,
+          senderId: message.sender_id,
+          content: message.content?.substring(0, 50)
         })
-      }
-    } else if (!newToken && connected.value) {
-      disconnect()
-    }
-  }, { immediate: true })
-  
-  // Also try to connect on mount if token is available
-  if (process.client) {
-    onMounted(() => {
-      console.log('[Chat] 🚀 useChat mounted, checking connection...', {
-        hasToken: !!accessToken.value,
-        connected: connected.value,
-        hasSocket: !!socket.value
-      })
-      
-      if (accessToken.value && !connected.value) {
-        setTimeout(() => {
-          if (!socket.value) {
-            console.log('[Chat] 🔌 Mounted: Creating connection...')
-            connect()
-          } else if (!socket.value.connected) {
-            console.log('[Chat] 🔄 Mounted: Reconnecting...')
-            socket.value.connect()
+        
+        const roomMessages = messages.value.get(message.room_id) || []
+        
+        // Simple check: if message already exists by ID, skip
+        const exists = roomMessages.some(m => {
+          const mId = m.id as any
+          return typeof mId === 'number' && mId === message.id
+        })
+        
+        if (exists) {
+          console.log('[Chat] ⚠️ Message ID', message.id, 'already exists - skipping')
+          return
+        }
+        
+        // Add the message (this should only be for messages from other users)
+        roomMessages.push(message)
+        messages.value.set(message.room_id, roomMessages)
+        console.log('[Chat] ✅ Message ID', message.id, 'added from SSE')
+        
+        // Update unread count immediately in local state (for instant badge update)
+        const room = rooms.value.find(r => r.id === message.room_id)
+        if (room) {
+          room.unread_count = (room.unread_count || 0) + 1
+          // Update unread count badge immediately
+          if (typeof window !== 'undefined') {
+            const { updateUnreadCount } = useUnreadMessages()
+            updateUnreadCount(rooms.value)
+            console.log('[Chat] ✅ Updated unread count immediately:', room.unread_count)
           }
-        }, 1000)
+        } else {
+          // Room not found in local state, reload rooms immediately to get it
+          console.log('[Chat] ⚠️ Room not found in local state, reloading rooms immediately...', {
+            roomId: message.room_id,
+            availableRooms: rooms.value.map(r => r.id)
+          })
+          // Reload rooms immediately (don't wait) so the room is available
+          // After rooms are loaded, if activeRoom matches this room, the watch will trigger
+          loadRooms().then(() => {
+            console.log('[Chat] ✅ Rooms reloaded after new message, checking if activeRoom needs update...')
+            // Check if we need to set activeRoom or trigger watch
+            const room = rooms.value.find(r => r.id === message.room_id)
+            if (room && !activeRoom.value) {
+              // If no activeRoom is set, we could auto-select this room
+              // But for now, just log - the user should select the room manually
+              console.log('[Chat] 💡 Room found after reload, but activeRoom is not set. User should select the room to see messages.')
+            } else if (room && activeRoom.value?.id === message.room_id) {
+              console.log('[Chat] ✅ ActiveRoom matches message room, watch should trigger UI update')
+            }
+          }).catch(error => {
+            console.error('[Chat] Error reloading rooms after new message:', error)
+          })
+        }
+        
+        // Reload rooms in background to sync with server (non-blocking, for accuracy)
+        setTimeout(async () => {
+          try {
+            await loadRooms()
+          } catch (error) {
+            console.error('[Chat] Error reloading rooms after new message:', error)
+          }
+        }, 2000)
+      },
+      // onTyping
+      (data: { userId: number; userName: string; roomId: number }) => {
+        if (!typingUsers.value.has(data.roomId)) {
+          typingUsers.value.set(data.roomId, new Set())
+        }
+        typingUsers.value.get(data.roomId)!.add(data.userId)
+      },
+      // onStopTyping
+      (data: { userId: number; roomId: number }) => {
+        typingUsers.value.get(data.roomId)?.delete(data.userId)
+      },
+      // onMessagesRead
+      (data: { roomId: number; userId: number }) => {
+        const roomMessages = messages.value.get(data.roomId) || []
+        roomMessages.forEach(msg => {
+          if (msg.sender_id !== data.userId && !msg.is_read) {
+            msg.is_read = true
+          }
+        })
+        
+        // Update room's unread_count if current user read messages
+        if (data.userId === user.value?.id) {
+          const room = rooms.value.find(r => r.id === data.roomId)
+          if (room) {
+            room.unread_count = 0
+            // Update unread count
+            if (typeof window !== 'undefined') {
+              const { updateUnreadCount } = useUnreadMessages()
+              updateUnreadCount(rooms.value)
+            }
+          }
+        }
+      },
+      // onRoomSubscribed
+      (data: { roomId: number }) => {
+        console.log(`[Chat] ✅ Subscribed to room ${data.roomId}`)
       }
-    })
+    )
   }
 
-  // Load rooms when connected
-  watch(connected, (isConnected) => {
-    if (isConnected) {
-      // Delay room loading slightly
-      setTimeout(() => {
-        loadRooms()
-      }, 200)
-    }
-  })
+  // Note: Connection should be managed by the component that uses this composable
+  // Don't auto-connect here to avoid multiple connections
 
   return {
-    socket: readonly(socket),
     connected: readonly(connected),
     rooms: readonly(rooms),
     activeRoom: readonly(activeRoom),
     messages: readonly(messages),
     typingUsers: readonly(typingUsers),
-    connect,
-    disconnect,
+    connect: connectSSE,
+    disconnect: disconnectSSE,
     loadRooms,
     loadRoom,
     loadMessages,
@@ -489,7 +509,7 @@ export const useChat = () => {
     getRoomMessages,
     getTypingUsers,
     clearMessages,
-    setActiveRoom
+    setActiveRoom,
+    setupChatEventListeners
   }
 }
-

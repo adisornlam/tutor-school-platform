@@ -75,13 +75,22 @@
               <NuxtLink
                 v-else
                 :to="menu.href || '#'"
-                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 :class="isActive(menu.href || '') 
                   ? 'bg-green-50 text-green-700' 
                   : 'text-gray-700 hover:bg-gray-100'"
               >
-                <MenuIcon v-if="menu.icon" :icon="menu.icon" class="w-5 h-5" />
-                <span>{{ menu.name }}</span>
+                <div class="flex items-center space-x-3">
+                  <MenuIcon v-if="menu.icon" :icon="menu.icon" class="w-5 h-5" />
+                  <span>{{ menu.name }}</span>
+                </div>
+                <!-- Unread badge for chat menu -->
+                <span
+                  v-if="menu.code === 'CHAT' && unreadCount > 0"
+                  class="flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-semibold text-white bg-red-500 rounded-full"
+                >
+                  {{ unreadCount > 99 ? '99+' : unreadCount }}
+                </span>
               </NuxtLink>
             </template>
             
@@ -243,6 +252,9 @@ const loadingMenus = ref(true)
 const menuError = ref<string | null>(null)
 const expandedMenus = ref<Record<string, boolean>>({})
 
+// Unread messages count for chat badge
+const { unreadCount, fetchUnreadCount } = useUnreadMessages()
+
 // Fetch menus from API
 const fetchMenus = async () => {
   loadingMenus.value = true
@@ -390,6 +402,14 @@ const handleLogout = async () => {
 onMounted(() => {
   fetchMenus()
   
+  // Fetch unread count on mount
+  fetchUnreadCount()
+  
+  // Refresh unread count every 10 seconds (reduced from 30s for better responsiveness)
+  const unreadInterval = setInterval(() => {
+    fetchUnreadCount()
+  }, 10000)
+  
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement
     if (!target.closest('.relative')) {
@@ -399,6 +419,7 @@ onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside)
+    clearInterval(unreadInterval)
   })
 })
 </script>

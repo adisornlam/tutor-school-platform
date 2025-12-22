@@ -82,6 +82,21 @@ export default defineNuxtConfig({
   //   }
   // },
 
+  // Vite configuration for HMR WebSocket port (avoid port conflicts)
+  // If PORT_VITE_HMR is set, use that port. Otherwise, Vite will auto-select an available port
+  vite: {
+    server: {
+      strictPort: false, // Allow Vite to use a different port if the specified one is in use
+      hmr: process.env.PORT_VITE_HMR 
+        ? {
+            // Use specific port from environment variable
+            port: parseInt(process.env.PORT_VITE_HMR),
+            clientPort: parseInt(process.env.PORT_VITE_HMR),
+          }
+        : true // true = use default behavior (auto-select available port)
+    }
+  },
+
   // Nitro configuration
   nitro: {
     port: 4000,

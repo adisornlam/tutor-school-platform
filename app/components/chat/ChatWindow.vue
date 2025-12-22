@@ -48,8 +48,8 @@
 
       <!-- Messages -->
       <ChatMessage
-        v-for="message in messages"
-        :key="message.id"
+        v-for="(message, index) in messages"
+        :key="`${message.id}-${message.created_at}-${index}`"
         :message="message"
         :current-user-id="currentUserId"
         @image-click="handleImageClick"

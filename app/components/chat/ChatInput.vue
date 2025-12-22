@@ -111,6 +111,8 @@ const previewFile = ref<File | null>(null)
 const previewFileUrl = ref<string>('')
 const error = ref('')
 const typingTimer = ref<NodeJS.Timeout | null>(null)
+const lastSentMessage = ref<string>('')
+const lastSentTime = ref<number>(0)
 
 const canSend = computed(() => {
   return (messageText.value.trim().length > 0 || previewFile.value !== null) && !props.uploading && !props.sending
@@ -167,6 +169,14 @@ const handleTyping = () => {
 
 const handleSend = async () => {
   if (!canSend.value) return
+  
+  // Prevent duplicate sends within 1 second
+  const now = Date.now()
+  const messageToSend = messageText.value.trim() || (previewFile.value ? previewFile.value.name : '')
+  if (lastSentMessage.value === messageToSend && (now - lastSentTime.value) < 1000) {
+    console.log('[ChatInput] ⚠️ Duplicate send prevented')
+    return
+  }
 
   error.value = ''
 
@@ -195,14 +205,19 @@ const handleSend = async () => {
     }
 
     // Send message
+    const contentToSend = messageText.value.trim() || (previewFile.value ? previewFile.value.name : '')
     emit('send-message', {
-      content: messageText.value.trim() || (previewFile.value ? previewFile.value.name : ''),
+      content: contentToSend,
       fileUrl,
       fileName,
       fileSize,
       fileType,
       messageType
     })
+
+    // Track last sent message to prevent duplicates
+    lastSentMessage.value = contentToSend
+    lastSentTime.value = Date.now()
 
     // Clear input
     messageText.value = ''

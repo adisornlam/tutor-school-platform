@@ -70,13 +70,22 @@
               <li>
                 <NuxtLink 
                   to="/chat" 
-                  class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors"
+                  class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors"
                   :class="$route.path.startsWith('/chat') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-100'"
                 >
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  <span>แชท</span>
+                  <div class="flex items-center space-x-3">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <span>แชท</span>
+                  </div>
+                  <!-- Unread badge -->
+                  <span
+                    v-if="unreadCount > 0"
+                    class="flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-semibold text-white bg-red-500 rounded-full"
+                  >
+                    {{ unreadCount > 99 ? '99+' : unreadCount }}
+                  </span>
                 </NuxtLink>
               </li>
             </ul>
@@ -124,11 +133,26 @@
 
 <script setup lang="ts">
 const { user, logout } = useAuth()
+const { unreadCount, fetchUnreadCount } = useUnreadMessages()
 const showUserMenu = ref(false)
 
 const handleLogout = async () => {
   showUserMenu.value = false
   await logout()
 }
+
+// Fetch unread count on mount and refresh periodically
+onMounted(() => {
+  fetchUnreadCount()
+  
+  // Refresh unread count every 10 seconds
+  const unreadInterval = setInterval(() => {
+    fetchUnreadCount()
+  }, 10000)
+  
+  onUnmounted(() => {
+    clearInterval(unreadInterval)
+  })
+})
 </script>
 
