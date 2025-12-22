@@ -4,15 +4,28 @@
 # Backup database to Downloads folder
 
 # ตั้งค่า
-DB_HOST="localhost"
-DB_PORT="3307"
-DB_USER="root"
-DB_NAME="tutordb"
+DB_HOST="${DB_HOST:-localhost}"
+DB_PORT="${DB_PORT:-3307}"
+DB_USER="${DB_USER:-root}"
+DB_PASSWORD="${DB_PASSWORD:-}"
+DB_NAME="${DB_NAME:-tutordb}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 BACKUP_DIR="$PROJECT_ROOT/docs/backups"
 DATE=$(date +%Y%m%d_%H%M%S)
 BACKUP_FILE="$BACKUP_DIR/backup_tutordb_$DATE.sql"
+
+# Load .env file if exists
+if [ -f "$PROJECT_ROOT/.env" ]; then
+    set -a
+    source "$PROJECT_ROOT/.env" 2>/dev/null || true
+    set +a
+    DB_HOST="${DB_HOST:-localhost}"
+    DB_PORT="${DB_PORT:-3307}"
+    DB_USER="${DB_USER:-root}"
+    DB_PASSWORD="${DB_PASSWORD:-}"
+    DB_NAME="${DB_NAME:-tutordb}"
+fi
 
 # หา mysqldump path
 MYSQLDUMP=""
@@ -40,7 +53,12 @@ echo "mysqldump: $MYSQLDUMP"
 echo "Output: $BACKUP_FILE"
 
 # Backup database
-"$MYSQLDUMP" -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" "$DB_NAME" > "$BACKUP_FILE"
+# Use --protocol=TCP to force TCP connection instead of socket
+if [ -n "$DB_PASSWORD" ]; then
+    "$MYSQLDUMP" --protocol=TCP -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" > "$BACKUP_FILE"
+else
+    "$MYSQLDUMP" --protocol=TCP -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" "$DB_NAME" > "$BACKUP_FILE"
+fi
 
 # ตรวจสอบว่าสำเร็จหรือไม่
 if [ $? -eq 0 ]; then
