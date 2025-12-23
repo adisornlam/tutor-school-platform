@@ -60,8 +60,8 @@ if [ "$CONFIRM" != "yes" ]; then
     exit 0
 fi
 
-# Restore database
-"$MYSQL" -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" "$DB_NAME" < "$BACKUP_FILE"
+# Restore database (remove GTID_PURGED lines for compatibility)
+sed -e '/GTID_PURGED/d' -e '/SET @@GLOBAL.GTID_PURGED/d' "$BACKUP_FILE" | "$MYSQL" -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" "$DB_NAME"
 
 # ตรวจสอบว่าสำเร็จหรือไม่
 if [ $? -eq 0 ]; then
