@@ -183,6 +183,17 @@ async function migrateAdminMenus() {
         is_active: true,
         roles: ['system_admin', 'owner', 'admin']
       },
+      {
+        code: 'CONTENT_PAGES',
+        name: 'หน้าเว็บไซต์',
+        name_en: 'Pages',
+        icon: 'DocumentIcon',
+        href: '/admin/content/pages',
+        parent_code: 'CONTENT',
+        display_order: 3,
+        is_active: true,
+        roles: ['system_admin', 'owner', 'admin']
+      },
       
       // Level 1: จัดการการชำระเงิน
       {
@@ -390,16 +401,16 @@ async function migrateAdminMenus() {
       // TUTOR MENUS
       // ============================================
       
-      // Level 1: ตารางสอน
+      // Level 1: ปฏิทินกิจกรรม
       {
         code: 'TUTOR_SCHEDULE',
-        name: 'ตารางสอน',
-        name_en: 'Teaching Schedule',
+        name: 'ปฏิทินกิจกรรม',
+        name_en: 'Calendar & Events',
         icon: 'CalendarIcon',
         href: '/admin/tutor/schedule',
         display_order: 10,
         is_active: true,
-        roles: ['tutor']
+        roles: ['system_admin', 'owner', 'admin', 'branch_admin', 'tutor']
       },
       
       // Level 1: คอร์สของฉัน
