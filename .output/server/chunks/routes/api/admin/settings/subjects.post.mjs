@@ -1,0 +1,91 @@
+globalThis.__timing__.logStart('Load chunks/routes/api/admin/settings/subjects.post');import { d as defineEventHandler, g as getUserRoles, c as createError, r as readBody, q as query, e as execute } from '../../../../nitro/nitro.mjs';
+import { r as requireAuth } from '../../../../_/auth.middleware.mjs';
+import 'node:http';
+import 'node:https';
+import 'node:crypto';
+import 'stream';
+import 'events';
+import 'http';
+import 'crypto';
+import 'buffer';
+import 'zlib';
+import 'https';
+import 'net';
+import 'tls';
+import 'url';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:path';
+import 'engine.io';
+import 'socket.io';
+import 'jsonwebtoken';
+import 'bcryptjs';
+import 'mysql2/promise';
+import 'node:url';
+
+const subjects_post = defineEventHandler(async (event) => {
+  const auth = await requireAuth(event);
+  const roles = await getUserRoles(auth.userId);
+  const allowedRoles = ["system_admin", "owner"];
+  if (!roles.some((role) => allowedRoles.includes(role))) {
+    throw createError({
+      statusCode: 403,
+      message: "Access denied. System Admin or Owner role required."
+    });
+  }
+  const body = await readBody();
+  if (!body.code || !body.name) {
+    throw createError({
+      statusCode: 400,
+      message: "Code and name are required"
+    });
+  }
+  try {
+    const existing = await query(
+      "SELECT id FROM subjects WHERE code = ?",
+      [body.code]
+    );
+    if (existing.length > 0) {
+      throw createError({
+        statusCode: 409,
+        message: "Subject code already exists"
+      });
+    }
+    const result = await execute(
+      `INSERT INTO subjects (code, name, short_name, description, icon)
+       VALUES (?, ?, ?, ?, ?)`,
+      [
+        body.code,
+        body.name,
+        body.short_name || null,
+        body.description || null,
+        body.icon || null
+      ]
+    );
+    const subjects = await query(
+      "SELECT * FROM subjects WHERE id = ?",
+      [result.insertId]
+    );
+    return {
+      success: true,
+      data: subjects[0],
+      message: "Subject created successfully"
+    };
+  } catch (error) {
+    if (error.statusCode) throw error;
+    if (error.code === "ER_NO_SUCH_TABLE") {
+      throw createError({
+        statusCode: 400,
+        message: "Subjects table does not exist. Please run migration first."
+      });
+    }
+    throw createError({
+      statusCode: 500,
+      message: "Failed to create subject"
+    });
+  }
+});
+
+export { subjects_post as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/admin/settings/subjects.post');
+//# sourceMappingURL=subjects.post.mjs.map

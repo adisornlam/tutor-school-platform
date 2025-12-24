@@ -1,0 +1,25 @@
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import './timing.js';globalThis.__timing__.logStart('Nitro Start');import 'node:http';
+import 'node:https';
+export { a7 as default } from './chunks/nitro/nitro.mjs';
+import 'node:crypto';
+import 'stream';
+import 'events';
+import 'http';
+import 'crypto';
+import 'buffer';
+import 'zlib';
+import 'https';
+import 'net';
+import 'tls';
+import 'url';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:path';
+import 'engine.io';
+import 'socket.io';
+import 'jsonwebtoken';
+import 'bcryptjs';
+import 'mysql2/promise';
+import 'node:url';;globalThis.__timing__.logEnd('Nitro Start');
+//# sourceMappingURL=index.mjs.map
