@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/webthdsw/kdcschool.webthdesign.com/
+    - /usr/local/bin/npm install
+    - /usr/local/bin/npm run build
+    # หมายเหตุ: สำหรับ Nuxt ระบบจะรันจากโฟลเดอร์ .output โดยตรงผ่าน Setup Node.js App
+    # ดังนั้นอาจไม่ต้อง cp ไฟล์ไปไหนเพิ่ม แต่ต้องมั่นใจว่า path ใน Node.js App ตรงกัน
