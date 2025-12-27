@@ -20,7 +20,6 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'mime-db';
 import 'querystring';
 import 'base64id';
 import 'timers';

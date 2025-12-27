@@ -116,6 +116,7 @@ export default defineNuxtConfig({
         'accepts',
         'negotiator', // dependency of accepts
         'mime-types', // dependency of accepts
+        'mime-db', // dependency of mime-types
         'h3',
         'ofetch',
         // Utility packages

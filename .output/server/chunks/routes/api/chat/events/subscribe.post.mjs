@@ -19,7 +19,6 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'fs';
-import 'mime-db';
 import 'path';
 import 'querystring';
 import 'base64id';
