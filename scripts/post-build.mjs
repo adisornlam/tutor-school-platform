@@ -116,59 +116,113 @@ try {
         debugRequires.set(match[1], match[0])
       }
       
-      // Also find and remove const debugModule = require$$13; declarations
+      // debug should be bundled via externals.inline
+      // Find the bundled debug module variable - look for debug$h or similar
+      const debugModuleVarPattern = /const (debug\$[a-z0-9]+)\s*=/g
+      const debugModuleVarMatches = [...content.matchAll(debugModuleVarPattern)]
+      
+      let bundledDebugVar = null
+      if (debugModuleVarMatches.length > 0) {
+        // Use the first bundled debug module (usually debug$h)
+        bundledDebugVar = debugModuleVarMatches[0][1]
+      }
+      
+      // Also find and replace const debugModule = require$$13; declarations
       const debugModulePattern = /const debugModule = (require\$\$[0-9]+);/g
       const debugModuleMatches = [...content.matchAll(debugModulePattern)]
       for (const match of debugModuleMatches) {
         const requireVar = match[1]
-        // Remove the const debugModule declaration
-        content = content.replace(
-          new RegExp(`const debugModule = ${requireVar.replace(/\$/g, '\\$')};\\n?`, 'g'),
-          ''
-        )
-      }
-      
-      // Remove old assignments first - need to escape all special regex characters
-      for (const [requireVar, fullMatch] of debugRequires) {
-        // Escape all special regex characters
-        const escapedMatch = fullMatch
-          .replace(/\\/g, '\\\\')
-          .replace(/\$/g, '\\$')
-          .replace(/\(/g, '\\(')
-          .replace(/\)/g, '\\)')
-          .replace(/\*/g, '\\*')
-          .replace(/\[/g, '\\[')
-          .replace(/\]/g, '\\]')
-          .replace(/\{/g, '\\{')
-          .replace(/\}/g, '\\}')
-          .replace(/\?/g, '\\?')
-          .replace(/\+/g, '\\+')
-          .replace(/\|/g, '\\|')
-          .replace(/\^/g, '\\^')
-        // Remove with optional newline
-        content = content.replace(new RegExp(escapedMatch + '\\n?', 'g'), '')
-      }
-      
-      // Add import statement and assignments
-      // Use a single import and assign to all require variables
-      const requireVars = Array.from(debugRequires.keys())
-      const debugImport = `import debugModule from 'debug';` + '\n' + 
-        requireVars.map(reqVar => `const ${reqVar} = debugModule;`).join('\n')
-      
-      // Insert after last import
-      const importLines = content.split('\n')
-      let lastImportIndex = -1
-      for (let i = 0; i < importLines.length; i++) {
-        if (importLines[i].trim().startsWith('import ')) {
-          lastImportIndex = i
+        // Check if this requireVar is one we're replacing
+        if (debugRequires.has(requireVar) && bundledDebugVar) {
+          // Replace with bundled debug module
+          content = content.replace(
+            new RegExp(`const debugModule = ${requireVar.replace(/\$/g, '\\$')};`, 'g'),
+            `const debugModule = ${bundledDebugVar};`
+          )
+        } else {
+          // Remove the const debugModule declaration if not in our list
+          content = content.replace(
+            new RegExp(`const debugModule = ${requireVar.replace(/\$/g, '\\$')};\\n?`, 'g'),
+            ''
+          )
         }
       }
       
-      if (lastImportIndex >= 0) {
-        importLines.splice(lastImportIndex + 1, 0, debugImport)
-        content = importLines.join('\n')
+      if (bundledDebugVar) {
+        // Replace old assignments with assignments to bundled debug module
+        for (const [requireVar, fullMatch] of debugRequires) {
+          // Replace the assignment
+          const escapedMatch = fullMatch
+            .replace(/\\/g, '\\\\')
+            .replace(/\$/g, '\\$')
+            .replace(/\(/g, '\\(')
+            .replace(/\)/g, '\\)')
+            .replace(/\*/g, '\\*')
+            .replace(/\[/g, '\\[')
+            .replace(/\]/g, '\\]')
+            .replace(/\{/g, '\\{')
+            .replace(/\}/g, '\\}')
+            .replace(/\?/g, '\\?')
+            .replace(/\+/g, '\\+')
+            .replace(/\|/g, '\\|')
+            .replace(/\^/g, '\\^')
+          // Replace with assignment to bundled debug
+          content = content.replace(
+            new RegExp(escapedMatch, 'g'),
+            `const ${requireVar} = ${bundledDebugVar};`
+          )
+        }
+        
+        // Also replace any remaining uses of require$$ variables that reference debug
+        // Pattern: const debug_1$c = require$$13; or const debug_1$3 = __importDefault$2(require$$13);
+        const debugVarPattern = /const (debug_[a-z0-9]+\$[a-z0-9]+)\s*=\s*(__importDefault[^\(]*\()?(require\$\$[0-9]+)(\))?;/g
+        const debugVarMatches = [...content.matchAll(debugVarPattern)]
+        for (const match of debugVarMatches) {
+          const varName = match[1]
+          const importDefault = match[2] || ''
+          const requireVar = match[3]
+          const closingParen = match[4] || ''
+          // Check if this requireVar is one we're replacing
+          if (debugRequires.has(requireVar)) {
+            // Replace with bundled debug module (remove __importDefault wrapper)
+            content = content.replace(
+              new RegExp(`const ${varName.replace(/\$/g, '\\$')}\\s*=\\s*${importDefault.replace(/[()]/g, '\\$&')}${requireVar.replace(/\$/g, '\\$')}${closingParen.replace(/[()]/g, '\\$&')};`, 'g'),
+              `const ${varName} = ${bundledDebugVar};`
+            )
+            // Also replace .default access and function calls
+            // debug$h is a function, so we can use it directly
+            content = content.replace(
+              new RegExp(`${varName.replace(/\$/g, '\\$')}\\.default`, 'g'),
+              bundledDebugVar
+            )
+            // Replace (0, debug_1$3) pattern with just debug$h
+            content = content.replace(
+              new RegExp(`\\(0\\s*,\\s*${varName.replace(/\$/g, '\\$')}\\)`, 'g'),
+              bundledDebugVar
+            )
+          }
+        }
+        
+        // Also replace any direct uses of require$$13 that we're tracking
+        for (const requireVar of debugRequires.keys()) {
+          // Replace standalone require$$13 with bundled debug
+          content = content.replace(
+            new RegExp(`\\b${requireVar.replace(/\$/g, '\\$')}\\b`, 'g'),
+            bundledDebugVar
+          )
+        }
+        
+        // Replace debug_1.debug pattern with debug$h
+        if (bundledDebugVar) {
+          content = content.replace(
+            /debug_1\$?[a-z0-9]*\.debug/g,
+            bundledDebugVar
+          )
+        }
       } else {
-        content = debugImport + '\n' + content
+        // If debug is not bundled, don't remove the assignments
+        // Just leave them as is - they should work if debug is in externals.inline
+        console.warn('⚠️ Warning: debug module variable not found in bundle, leaving original assignments')
       }
     }
     
