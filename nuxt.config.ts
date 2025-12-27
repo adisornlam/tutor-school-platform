@@ -107,6 +107,9 @@ export default defineNuxtConfig({
     externals: {
       inline: [
         '#shared',
+        // Node.js built-in modules that should not be bundled
+        // Note: events is a built-in module and should not be bundled
+        // 'events', // Don't bundle events - it's a Node.js built-in
         // Socket.IO and related packages
         'socket.io',
         'socket.io-client',
@@ -201,7 +204,23 @@ export default defineNuxtConfig({
         '@tiptap/extension-strike',
         '@tiptap/extension-text',
         '@tiptap/extension-underline',
+        '@tiptap/pm', // TipTap ProseMirror core
         '@tiptap/pm/state',
+        // ProseMirror packages (dependencies of @tiptap/pm)
+        'prosemirror-model',
+        'prosemirror-state',
+        'prosemirror-view',
+        'prosemirror-commands',
+        'prosemirror-dropcursor',
+        'prosemirror-transform',
+        'prosemirror-gapcursor',
+        'prosemirror-history',
+        'prosemirror-keymap',
+        'prosemirror-schema-list',
+        // Dependencies of ProseMirror
+        'orderedmap', // dependency of prosemirror-model
+        'rope-sequence', // dependency of prosemirror-transform
+        'w3c-keyname', // dependency of prosemirror-keymap
         '@tiptap/pm/commands',
         '@tiptap/pm/dropcursor',
         '@tiptap/pm/gapcursor',
@@ -248,6 +267,13 @@ export default defineNuxtConfig({
       output: {
         inlineDynamicImports: true
       },
+      external: (id) => {
+        // Don't bundle Node.js built-in modules
+        if (id === 'events' || id === 'node:events') {
+          return true
+        }
+        return false
+      },
       plugins: [
         {
           name: 'resolve-shared-relative',
@@ -280,6 +306,29 @@ export default defineNuxtConfig({
             // ws package will handle the fallback gracefully
             if (id === '\0utf-8-validate' || id === '\0bufferutil') {
               return 'export default {};'
+            }
+            return null
+          }
+        },
+        {
+          name: 'fix-events-import',
+          resolveId(source, importer) {
+            // Ensure events module is treated as external (Node.js built-in)
+            // This prevents bundling events module which causes EventEmitter to be a Module object
+            if (source === 'events') {
+              // Return external to prevent bundling
+              return { id: 'events', external: true }
+            }
+            if (source === 'node:events') {
+              // Return external to prevent bundling
+              return { id: 'node:events', external: true }
+            }
+            return null
+          },
+          load(id) {
+            // If events is somehow still being bundled, provide a proper EventEmitter
+            if (id === 'events' || id === 'node:events') {
+              return null // Let Node.js handle it
             }
             return null
           }
