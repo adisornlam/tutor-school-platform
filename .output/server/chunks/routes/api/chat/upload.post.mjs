@@ -22,7 +22,6 @@ import 'node:fs';
 import 'node:path';
 import 'querystring';
 import 'timers';
-import 'safe-buffer';
 import 'util';
 import 'jwa';
 import 'ms';

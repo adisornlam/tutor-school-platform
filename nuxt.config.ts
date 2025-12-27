@@ -128,6 +128,7 @@ export default defineNuxtConfig({
         // Authentication packages
         'jsonwebtoken', // JWT token generation/verification (used in server/utils/jwt.ts)
         'jws', // dependency of jsonwebtoken
+        'safe-buffer', // dependency of jws/jsonwebtoken
         // Utility packages
         'defu',
         'scule',

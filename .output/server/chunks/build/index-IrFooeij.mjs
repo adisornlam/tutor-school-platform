@@ -29,7 +29,6 @@ import 'fs';
 import 'path';
 import 'querystring';
 import 'timers';
-import 'safe-buffer';
 import 'util';
 import 'jwa';
 import 'ms';
