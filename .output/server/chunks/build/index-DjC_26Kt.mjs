@@ -30,7 +30,6 @@ import 'node:path';
 import 'fs';
 import 'path';
 import 'querystring';
-import 'base64id';
 import 'timers';
 import 'cookie';
 import 'ws';

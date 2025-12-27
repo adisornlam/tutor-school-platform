@@ -39,7 +39,6 @@
     "@vue/server-renderer": "3.5.26",
     "@vue/shared": "3.5.26",
     "aws-ssl-profiles": "1.1.2",
-    "base64id": "2.0.0",
     "bcryptjs": "2.4.3",
     "buffer-equal-constant-time": "1.0.1",
     "cookie": "0.7.2",

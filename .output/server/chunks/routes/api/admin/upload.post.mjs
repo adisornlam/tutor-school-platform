@@ -21,7 +21,6 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'querystring';
-import 'base64id';
 import 'timers';
 import 'cookie';
 import 'ws';
