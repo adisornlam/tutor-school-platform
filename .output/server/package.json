@@ -50,7 +50,6 @@
     "hookable": "5.5.3",
     "iconv-lite": "0.7.1",
     "is-property": "1.0.2",
-    "jsonwebtoken": "9.0.3",
     "jwa": "2.0.1",
     "jws": "4.0.1",
     "linkifyjs": "4.3.2",

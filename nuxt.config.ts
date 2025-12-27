@@ -125,6 +125,8 @@ export default defineNuxtConfig({
         'cookie', // dependency of h3
         'cors', // CORS handling (used by socket.io or h3)
         'ofetch',
+        // Authentication packages
+        'jsonwebtoken', // JWT token generation/verification (used in server/utils/jwt.ts)
         // Utility packages
         'defu',
         'scule',
