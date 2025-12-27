@@ -332,34 +332,52 @@ try {
       'Object.prototype.hasOwnProperty.call(buffer, $1)'
     )
     
-    // Fix ws module issue - replace ws_1.Server with WebSocketServer from ws
+    // Fix ws module issue - replace ws_1.Server with bundled WebSocketServer
     // Pattern: wsEngine: ws_1.Server
-    // Replace with: import { WebSocketServer as WsServer } from 'ws'; wsEngine: WsServer
+    // ws should be bundled via externals.inline, so find the bundled WebSocketServer
     const wsPattern = /wsEngine:\s*ws_1\.Server/g
     if (wsPattern.test(content)) {
-      // Check if WsServer is already imported
-      if (!content.includes('import { WebSocketServer as WsServer }')) {
-        // Add import
-        const importLines = content.split('\n')
-        let lastImportIndex = -1
-        for (let i = 0; i < importLines.length; i++) {
-          if (importLines[i].trim().startsWith('import ')) {
-            lastImportIndex = i
-          }
-        }
-        
-        if (lastImportIndex >= 0) {
-          importLines.splice(lastImportIndex + 1, 0, `import { WebSocketServer as WsServer } from 'ws';`)
-          content = importLines.join('\n')
-        } else {
-          content = `import { WebSocketServer as WsServer } from 'ws';\n` + content
+      // Find bundled WebSocketServer class
+      // Look for: class WebSocketServer extends EventEmitter
+      const bundledWsPattern = /class (WebSocketServer\$?[a-z0-9]*) extends EventEmitter/g
+      const bundledWsMatches = [...content.matchAll(bundledWsPattern)]
+      
+      let bundledWsServer = null
+      if (bundledWsMatches.length > 0) {
+        // Use the first WebSocketServer class found
+        bundledWsServer = bundledWsMatches[0][1]
+      } else {
+        // Try to find WebSocketServer variable
+        const wsVarPattern = /(WebSocketServer\$?[a-z0-9]*)\s*=\s*class WebSocketServer/g
+        const wsVarMatches = [...content.matchAll(wsVarPattern)]
+        if (wsVarMatches.length > 0) {
+          bundledWsServer = wsVarMatches[0][1]
         }
       }
-      // Replace ws_1.Server with WsServer
-      content = content.replace(/wsEngine:\s*ws_1\.Server/g, 'wsEngine: WsServer')
-      // Also fix const ws_1 = require$$8; if it exists
-      content = content.replace(/const ws_1 = require\$\$[0-9]+;/g, '')
+      
+      if (bundledWsServer) {
+        // Replace ws_1.Server with bundled WebSocketServer
+        content = content.replace(/wsEngine:\s*ws_1\.Server/g, `wsEngine: ${bundledWsServer}`)
+        // Also fix const ws_1 = require$$8; if it exists
+        content = content.replace(/const ws_1 = require\$\$[0-9]+;/g, '')
+        // Remove any import statements for ws that we might have added
+        content = content.replace(/import\s+\{\s*WebSocketServer\s+as\s+WsServer\s*\}\s+from\s+['"]ws['"];\s*\n?/g, '')
+      } else {
+        console.warn('⚠️ Warning: WebSocketServer not found in bundle, leaving original code')
+      }
     }
+    
+    // Remove any remaining import statements for ws (ws should be bundled)
+    // Remove all import statements that import from 'ws'
+    const lines = content.split('\n')
+    const filteredLines = lines.filter(line => {
+      // Skip lines that import from 'ws'
+      if (line.trim().startsWith('import ') && line.includes("from 'ws'") || line.includes('from "ws"')) {
+        return false
+      }
+      return true
+    })
+    content = filteredLines.join('\n')
     
     writeFileSync(indexPath, content, 'utf8')
     console.log('✅ Fixed EventEmitter, debug, util, stream, buffer, and ws imports in bundle')
