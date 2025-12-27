@@ -6,7 +6,6 @@
   "dependencies": {
     "@babel/parser": "7.28.5",
     "@heroicons/vue": "2.2.0",
-    "@socket.io/component-emitter": "3.1.2",
     "@tiptap/core": "3.14.0",
     "@tiptap/extension-blockquote": "3.14.0",
     "@tiptap/extension-bold": "3.14.0",

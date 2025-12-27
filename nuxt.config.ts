@@ -110,6 +110,7 @@ export default defineNuxtConfig({
         // Socket.IO and related packages
         'socket.io',
         'socket.io-client',
+        '@socket.io/component-emitter', // dependency of socket.io
         'engine.io',
         'engine.io-client',
         'ws', // WebSocket library used by engine.io

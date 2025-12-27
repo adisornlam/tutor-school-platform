@@ -22,7 +22,6 @@ import 'node:fs';
 import 'node:path';
 import 'querystring';
 import 'timers';
-import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
