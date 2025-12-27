@@ -32,7 +32,6 @@ import 'fs';
 import 'path';
 import 'querystring';
 import 'timers';
-import 'object-assign';
 import 'vary';
 import '@socket.io/component-emitter';
 import 'jsonwebtoken';

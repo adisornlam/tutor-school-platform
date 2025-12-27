@@ -127,7 +127,8 @@ export default defineNuxtConfig({
         'defu',
         'scule',
         'ufo',
-        'pathe'
+        'pathe',
+        'object-assign' // utility package used by various dependencies
         // Note: utf-8-validate and bufferutil are stubbed via rollupConfig plugin
         // They are optional dependencies that ws will fallback to pure JS if not available
         // Note: We don't inline large packages like mysql2, ioredis, etc. as they should be available on server
