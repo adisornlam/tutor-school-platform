@@ -114,6 +114,8 @@ export default defineNuxtConfig({
         'engine.io-client',
         // Core HTTP packages that may not be available
         'accepts',
+        'negotiator', // dependency of accepts
+        'mime-types', // dependency of accepts
         'h3',
         'ofetch',
         // Utility packages
