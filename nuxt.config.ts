@@ -129,7 +129,20 @@ export default defineNuxtConfig({
         'jsonwebtoken', // JWT token generation/verification (used in server/utils/jwt.ts)
         'jws', // dependency of jsonwebtoken
         'jwa', // dependency of jws
+        'ecdsa-sig-formatter', // dependency of jwa
+        'buffer-equal-constant-time', // dependency of jwa
         'safe-buffer', // dependency of jws/jsonwebtoken
+        'ms', // dependency of jsonwebtoken
+        // Additional dependencies found in build
+        'semver', // version comparison (used by various packages)
+        'helmet', // security headers (used by various packages)
+        'lodash.includes', // lodash utilities
+        'lodash.isboolean',
+        'lodash.isinteger',
+        'lodash.isnumber',
+        'lodash.isplainobject',
+        'lodash.isstring',
+        'lodash.once',
         // Utility packages
         'defu',
         'scule',
