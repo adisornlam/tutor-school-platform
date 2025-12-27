@@ -20,7 +20,6 @@ import 'fs';
 import 'path';
 import 'querystring';
 import 'timers';
-import 'ws';
 import 'cors';
 import '@socket.io/component-emitter';
 import 'jsonwebtoken';

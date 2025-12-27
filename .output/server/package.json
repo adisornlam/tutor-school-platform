@@ -94,7 +94,6 @@
     "vue-bundle-renderer": "2.2.0",
     "vue-router": "4.6.4",
     "w3c-keyname": "2.2.8",
-    "ws": "8.18.3",
     "xmlhttprequest-ssl": "2.1.2"
   }
 }

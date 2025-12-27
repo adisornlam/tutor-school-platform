@@ -1,23 +1,27 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import http, { Server as Server$3 } from 'node:http';
-import https, { Server as Server$2 } from 'node:https';
-import nodeCrypto, { createHash } from 'node:crypto';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import http$4, { Server as Server$3 } from 'node:http';
+import https$2, { Server as Server$2 } from 'node:https';
+import nodeCrypto, { createHash as createHash$4 } from 'node:crypto';
 import * as require$$0$2$1 from 'stream';
 import require$$0$2__default from 'stream';
-import * as require$$0$3 from 'events';
+import * as require$$0$3$1 from 'events';
 import require$$0$3__default from 'events';
-import * as require$$2$5 from 'http';
+import * as require$$2$3 from 'http';
 import require$$2__default from 'http';
-import * as require$$1$1 from 'crypto';
+import * as require$$1$5 from 'crypto';
 import require$$1__default from 'crypto';
-import require$$0$1$1 from 'buffer';
-import * as require$$0$4 from 'zlib';
+import * as require$$0$1$1 from 'buffer';
+import require$$0$1__default from 'buffer';
+import * as require$$0$5 from 'zlib';
 import require$$0__default from 'zlib';
-import require$$1$1$1 from 'https';
-import require$$3 from 'net';
-import require$$4$1 from 'tls';
-import * as require$$7 from 'url';
+import * as require$$1$1$1 from 'https';
+import require$$1$1__default from 'https';
+import * as require$$3$2 from 'net';
+import require$$3__default from 'net';
+import * as require$$4$1 from 'tls';
+import require$$4__default from 'tls';
+import * as require$$7$1 from 'url';
 import require$$7__default from 'url';
-import { EventEmitter } from 'node:events';
+import { EventEmitter as EventEmitter$4 } from 'node:events';
 import { Buffer as Buffer$1 } from 'node:buffer';
 import { promises, existsSync } from 'node:fs';
 import { resolve as resolve$1, dirname as dirname$1, join } from 'node:path';
@@ -25,7 +29,6 @@ import * as fs from 'fs';
 import * as path$1 from 'path';
 import * as querystring from 'querystring';
 import * as timers from 'timers';
-import * as ws from 'ws';
 import * as cors from 'cors';
 import { Emitter } from '@socket.io/component-emitter';
 import jwt$1 from 'jsonwebtoken';
@@ -439,13 +442,13 @@ function getDefaultExportFromCjs$1 (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 
-var bufferUtil = {exports: {}};
+var bufferUtil$4 = {exports: {}};
 
-var constants;
+var constants$2;
 var hasRequiredConstants;
 
 function requireConstants () {
-	if (hasRequiredConstants) return constants;
+	if (hasRequiredConstants) return constants$2;
 	hasRequiredConstants = 1;
 
 	const BINARY_TYPES = ['nodebuffer', 'arraybuffer', 'fragments'];
@@ -453,7 +456,7 @@ function requireConstants () {
 
 	if (hasBlob) BINARY_TYPES.push('blob');
 
-	constants = {
+	constants$2 = {
 	  BINARY_TYPES,
 	  EMPTY_BUFFER: Buffer.alloc(0),
 	  GUID: '258EAFA5-E914-47DA-95CA-C5AB0DC85B11',
@@ -464,13 +467,13 @@ function requireConstants () {
 	  kWebSocket: Symbol('websocket'),
 	  NOOP: () => {}
 	};
-	return constants;
+	return constants$2;
 }
 
 var hasRequiredBufferUtil;
 
 function requireBufferUtil () {
-	if (hasRequiredBufferUtil) return bufferUtil.exports;
+	if (hasRequiredBufferUtil) return bufferUtil$4.exports;
 	hasRequiredBufferUtil = 1;
 
 	const { EMPTY_BUFFER } = requireConstants();
@@ -576,7 +579,7 @@ function requireBufferUtil () {
 	  return buf;
 	}
 
-	bufferUtil.exports = {
+	bufferUtil$4.exports = {
 	  concat,
 	  mask: _mask,
 	  toArrayBuffer,
@@ -589,12 +592,12 @@ function requireBufferUtil () {
 	  try {
 	    const bufferUtil$1 = require('bufferutil');
 
-	    bufferUtil.exports.mask = function (source, mask, output, offset, length) {
+	    bufferUtil$4.exports.mask = function (source, mask, output, offset, length) {
 	      if (length < 48) _mask(source, mask, output, offset, length);
 	      else bufferUtil$1.mask(source, mask, output, offset, length);
 	    };
 
-	    bufferUtil.exports.unmask = function (buffer, mask) {
+	    bufferUtil$4.exports.unmask = function (buffer, mask) {
 	      if (buffer.length < 32) _unmask(buffer, mask);
 	      else bufferUtil$1.unmask(buffer, mask);
 	    };
@@ -602,14 +605,14 @@ function requireBufferUtil () {
 	    // Continue regardless of the error.
 	  }
 	}
-	return bufferUtil.exports;
+	return bufferUtil$4.exports;
 }
 
-var limiter;
+var limiter$2;
 var hasRequiredLimiter;
 
 function requireLimiter () {
-	if (hasRequiredLimiter) return limiter;
+	if (hasRequiredLimiter) return limiter$2;
 	hasRequiredLimiter = 1;
 
 	const kDone = Symbol('kDone');
@@ -664,15 +667,15 @@ function requireLimiter () {
 	  }
 	}
 
-	limiter = Limiter;
-	return limiter;
+	limiter$2 = Limiter;
+	return limiter$2;
 }
 
-var permessageDeflate;
+var permessageDeflate$2;
 var hasRequiredPermessageDeflate;
 
 function requirePermessageDeflate () {
-	if (hasRequiredPermessageDeflate) return permessageDeflate;
+	if (hasRequiredPermessageDeflate) return permessageDeflate$2;
 	hasRequiredPermessageDeflate = 1;
 
 	const zlib = require$$0__default;
@@ -1135,7 +1138,7 @@ function requirePermessageDeflate () {
 	  }
 	}
 
-	permessageDeflate = PerMessageDeflate;
+	permessageDeflate$2 = PerMessageDeflate;
 
 	/**
 	 * The listener of the `zlib.DeflateRaw` stream `'data'` event.
@@ -1201,18 +1204,18 @@ function requirePermessageDeflate () {
 	  err[kStatusCode] = 1007;
 	  this[kCallback](err);
 	}
-	return permessageDeflate;
+	return permessageDeflate$2;
 }
 
-var validation = {exports: {}};
+var validation$2 = {exports: {}};
 
 var hasRequiredValidation;
 
 function requireValidation () {
-	if (hasRequiredValidation) return validation.exports;
+	if (hasRequiredValidation) return validation$2.exports;
 	hasRequiredValidation = 1;
 
-	const { isUtf8 } = require$$0$1$1;
+	const { isUtf8 } = require$$0$1__default;
 
 	const { hasBlob } = requireConstants();
 
@@ -1340,7 +1343,7 @@ function requireValidation () {
 	  );
 	}
 
-	validation.exports = {
+	validation$2.exports = {
 	  isBlob,
 	  isValidStatusCode,
 	  isValidUTF8: _isValidUTF8,
@@ -1348,28 +1351,28 @@ function requireValidation () {
 	};
 
 	if (isUtf8) {
-	  validation.exports.isValidUTF8 = function (buf) {
+	  validation$2.exports.isValidUTF8 = function (buf) {
 	    return buf.length < 24 ? _isValidUTF8(buf) : isUtf8(buf);
 	  };
 	} /* istanbul ignore else  */ else if (!process.env.WS_NO_UTF_8_VALIDATE) {
 	  try {
 	    const isValidUTF8 = require('utf-8-validate');
 
-	    validation.exports.isValidUTF8 = function (buf) {
+	    validation$2.exports.isValidUTF8 = function (buf) {
 	      return buf.length < 32 ? _isValidUTF8(buf) : isValidUTF8(buf);
 	    };
 	  } catch (e) {
 	    // Continue regardless of the error.
 	  }
 	}
-	return validation.exports;
+	return validation$2.exports;
 }
 
-var receiver;
+var receiver$2;
 var hasRequiredReceiver;
 
 function requireReceiver () {
-	if (hasRequiredReceiver) return receiver;
+	if (hasRequiredReceiver) return receiver$2;
 	hasRequiredReceiver = 1;
 
 	const { Writable } = require$$0$2__default;
@@ -2075,17 +2078,17 @@ function requireReceiver () {
 	  }
 	}
 
-	receiver = Receiver;
-	return receiver;
+	receiver$2 = Receiver;
+	return receiver$2;
 }
 
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex" }] */
 
-var sender;
+var sender$2;
 var hasRequiredSender;
 
 function requireSender () {
-	if (hasRequiredSender) return sender;
+	if (hasRequiredSender) return sender$2;
 	hasRequiredSender = 1;
 
 	const { Duplex } = require$$0$2__default;
@@ -2653,7 +2656,7 @@ function requireSender () {
 	  }
 	}
 
-	sender = Sender;
+	sender$2 = Sender;
 
 	/**
 	 * Calls queued callbacks with an error.
@@ -2686,14 +2689,14 @@ function requireSender () {
 	  callCallbacks(sender, err, cb);
 	  sender.onerror(err);
 	}
-	return sender;
+	return sender$2;
 }
 
-var eventTarget;
+var eventTarget$2;
 var hasRequiredEventTarget;
 
 function requireEventTarget () {
-	if (hasRequiredEventTarget) return eventTarget;
+	if (hasRequiredEventTarget) return eventTarget$2;
 	hasRequiredEventTarget = 1;
 
 	const { kForOnEventAttribute, kListener } = requireConstants();
@@ -2963,7 +2966,7 @@ function requireEventTarget () {
 	  }
 	};
 
-	eventTarget = {
+	eventTarget$2 = {
 	  CloseEvent,
 	  ErrorEvent,
 	  Event,
@@ -2986,14 +2989,14 @@ function requireEventTarget () {
 	    listener.call(thisArg, event);
 	  }
 	}
-	return eventTarget;
+	return eventTarget$2;
 }
 
-var extension;
+var extension$4;
 var hasRequiredExtension;
 
 function requireExtension () {
-	if (hasRequiredExtension) return extension;
+	if (hasRequiredExtension) return extension$4;
 	hasRequiredExtension = 1;
 
 	const { tokenChars } = requireValidation();
@@ -3196,24 +3199,24 @@ function requireExtension () {
 	    .join(', ');
 	}
 
-	extension = { format, parse };
-	return extension;
+	extension$4 = { format, parse };
+	return extension$4;
 }
 
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex|Readable$", "caughtErrors": "none" }] */
 
-var websocket$2;
+var websocket$4;
 var hasRequiredWebsocket;
 
 function requireWebsocket () {
-	if (hasRequiredWebsocket) return websocket$2;
+	if (hasRequiredWebsocket) return websocket$4;
 	hasRequiredWebsocket = 1;
 
 	const EventEmitter = require$$0$3__default;
-	const https = require$$1$1$1;
+	const https = require$$1$1__default;
 	const http = require$$2__default;
-	const net = require$$3;
-	const tls = require$$4$1;
+	const net = require$$3__default;
+	const tls = require$$4__default;
 	const { randomBytes, createHash } = require$$1__default;
 	const { Duplex, Readable } = require$$0$2__default;
 	const { URL } = require$$7__default;
@@ -3822,7 +3825,7 @@ function requireWebsocket () {
 	WebSocket.prototype.addEventListener = addEventListener;
 	WebSocket.prototype.removeEventListener = removeEventListener;
 
-	websocket$2 = WebSocket;
+	websocket$4 = WebSocket;
 
 	/**
 	 * Initialize a WebSocket client.
@@ -4593,16 +4596,16 @@ function requireWebsocket () {
 	    this.destroy();
 	  }
 	}
-	return websocket$2;
+	return websocket$4;
 }
 
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^WebSocket$" }] */
 
-var stream;
+var stream$2;
 var hasRequiredStream;
 
 function requireStream () {
-	if (hasRequiredStream) return stream;
+	if (hasRequiredStream) return stream$2;
 	hasRequiredStream = 1;
 
 	requireWebsocket();
@@ -4762,8 +4765,8 @@ function requireStream () {
 	  return duplex;
 	}
 
-	stream = createWebSocketStream;
-	return stream;
+	stream$2 = createWebSocketStream;
+	return stream$2;
 }
 
 requireStream();
@@ -4774,11 +4777,11 @@ requireSender();
 
 requireWebsocket();
 
-var subprotocol;
+var subprotocol$4;
 var hasRequiredSubprotocol;
 
 function requireSubprotocol () {
-	if (hasRequiredSubprotocol) return subprotocol;
+	if (hasRequiredSubprotocol) return subprotocol$4;
 	hasRequiredSubprotocol = 1;
 
 	const { tokenChars } = requireValidation();
@@ -4840,17 +4843,17 @@ function requireSubprotocol () {
 	  return protocols;
 	}
 
-	subprotocol = { parse };
-	return subprotocol;
+	subprotocol$4 = { parse };
+	return subprotocol$4;
 }
 
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex$", "caughtErrors": "none" }] */
 
-var websocketServer;
+var websocketServer$2;
 var hasRequiredWebsocketServer;
 
 function requireWebsocketServer () {
-	if (hasRequiredWebsocketServer) return websocketServer;
+	if (hasRequiredWebsocketServer) return websocketServer$2;
 	hasRequiredWebsocketServer = 1;
 
 	const EventEmitter = require$$0$3__default;
@@ -5288,7 +5291,7 @@ function requireWebsocketServer () {
 	  }
 	}
 
-	websocketServer = WebSocketServer;
+	websocketServer$2 = WebSocketServer;
 
 	/**
 	 * Add event listeners on an `EventEmitter` using a map of <event, listener>
@@ -5389,7 +5392,7 @@ function requireWebsocketServer () {
 	    abortHandshake(socket, code, message);
 	  }
 	}
-	return websocketServer;
+	return websocketServer$2;
 }
 
 var websocketServerExports = requireWebsocketServer();
@@ -5903,7 +5906,7 @@ function stringifyParsedURL(parsed) {
   return proto + auth + host + pathname + search + hash;
 }
 
-function parse$3(str, options) {
+function parse$9(str, options) {
   if (typeof str !== "string") {
     throw new TypeError("argument str must be a string");
   }
@@ -6399,7 +6402,7 @@ const defuFn = createDefu((object, key, currentValue) => {
   }
 });
 
-function o(n){throw new Error(`${n} is not implemented yet!`)}let i$2 = class i extends EventEmitter{__unenv__={};readableEncoding=null;readableEnded=true;readableFlowing=false;readableHighWaterMark=0;readableLength=0;readableObjectMode=false;readableAborted=false;readableDidRead=false;closed=false;errored=null;readable=false;destroyed=false;static from(e,t){return new i(t)}constructor(e){super();}_read(e){}read(e){}setEncoding(e){return this}pause(){return this}resume(){return this}isPaused(){return  true}unpipe(e){return this}unshift(e,t){}wrap(e){return this}push(e,t){return  false}_destroy(e,t){this.removeAllListeners();}destroy(e){return this.destroyed=true,this._destroy(e),this}pipe(e,t){return {}}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return this.destroy(),Promise.resolve()}async*[Symbol.asyncIterator](){throw o("Readable.asyncIterator")}iterator(e){throw o("Readable.iterator")}map(e,t){throw o("Readable.map")}filter(e,t){throw o("Readable.filter")}forEach(e,t){throw o("Readable.forEach")}reduce(e,t,r){throw o("Readable.reduce")}find(e,t){throw o("Readable.find")}findIndex(e,t){throw o("Readable.findIndex")}some(e,t){throw o("Readable.some")}toArray(e){throw o("Readable.toArray")}every(e,t){throw o("Readable.every")}flatMap(e,t){throw o("Readable.flatMap")}drop(e,t){throw o("Readable.drop")}take(e,t){throw o("Readable.take")}asIndexedPairs(e){throw o("Readable.asIndexedPairs")}};let l$1 = class l extends EventEmitter{__unenv__={};writable=true;writableEnded=false;writableFinished=false;writableHighWaterMark=0;writableLength=0;writableObjectMode=false;writableCorked=0;closed=false;errored=null;writableNeedDrain=false;writableAborted=false;destroyed=false;_data;_encoding="utf8";constructor(e){super();}pipe(e,t){return {}}_write(e,t,r){if(this.writableEnded){r&&r();return}if(this._data===void 0)this._data=e;else {const s=typeof this._data=="string"?Buffer$1.from(this._data,this._encoding||t||"utf8"):this._data,a=typeof e=="string"?Buffer$1.from(e,t||this._encoding||"utf8"):e;this._data=Buffer$1.concat([s,a]);}this._encoding=t,r&&r();}_writev(e,t){}_destroy(e,t){}_final(e){}write(e,t,r){const s=typeof t=="string"?this._encoding:"utf8",a=typeof t=="function"?t:typeof r=="function"?r:void 0;return this._write(e,s,a),true}setDefaultEncoding(e){return this}end(e,t,r){const s=typeof e=="function"?e:typeof t=="function"?t:typeof r=="function"?r:void 0;if(this.writableEnded)return s&&s(),this;const a=e===s?void 0:e;if(a){const u=t===s?void 0:t;this.write(a,u,s);}return this.writableEnded=true,this.writableFinished=true,this.emit("close"),this.emit("finish"),this}cork(){}uncork(){}destroy(e){return this.destroyed=true,delete this._data,this.removeAllListeners(),this}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return Promise.resolve()}};const c$1=class c{allowHalfOpen=true;_destroy;constructor(e=new i$2,t=new l$1){Object.assign(this,e),Object.assign(this,t),this._destroy=m(e._destroy,t._destroy);}};function _(){return Object.assign(c$1.prototype,i$2.prototype),Object.assign(c$1.prototype,l$1.prototype),c$1}function m(...n){return function(...e){for(const t of n)t(...e);}}const g=_();class A extends g{__unenv__={};bufferSize=0;bytesRead=0;bytesWritten=0;connecting=false;destroyed=false;pending=false;localAddress="";localPort=0;remoteAddress="";remoteFamily="";remotePort=0;autoSelectFamilyAttemptedAddresses=[];readyState="readOnly";constructor(e){super();}write(e,t,r){return  false}connect(e,t,r){return this}end(e,t,r){return this}setEncoding(e){return this}pause(){return this}resume(){return this}setTimeout(e,t){return this}setNoDelay(e){return this}setKeepAlive(e,t){return this}address(){return {}}unref(){return this}ref(){return this}destroySoon(){this.destroy();}resetAndDestroy(){const e=new Error("ERR_SOCKET_CLOSED");return e.code="ERR_SOCKET_CLOSED",this.destroy(e),this}}class y extends i$2{aborted=false;httpVersion="1.1";httpVersionMajor=1;httpVersionMinor=1;complete=true;connection;socket;headers={};trailers={};method="GET";url="/";statusCode=200;statusMessage="";closed=false;errored=null;readable=false;constructor(e){super(),this.socket=this.connection=e||new A;}get rawHeaders(){const e=this.headers,t=[];for(const r in e)if(Array.isArray(e[r]))for(const s of e[r])t.push(r,s);else t.push(r,e[r]);return t}get rawTrailers(){return []}setTimeout(e,t){return this}get headersDistinct(){return p(this.headers)}get trailersDistinct(){return p(this.trailers)}}function p(n){const e={};for(const[t,r]of Object.entries(n))t&&(e[t]=(Array.isArray(r)?r:[r]).filter(Boolean));return e}class w extends l$1{statusCode=200;statusMessage="";upgrading=false;chunkedEncoding=false;shouldKeepAlive=false;useChunkedEncodingByDefault=false;sendDate=false;finished=false;headersSent=false;strictContentLength=false;connection=null;socket=null;req;_headers={};constructor(e){super(),this.req=e;}assignSocket(e){e._httpMessage=this,this.socket=e,this.connection=e,this.emit("socket",e),this._flush();}_flush(){this.flushHeaders();}detachSocket(e){}writeContinue(e){}writeHead(e,t,r){e&&(this.statusCode=e),typeof t=="string"&&(this.statusMessage=t,t=void 0);const s=r||t;if(s&&!Array.isArray(s))for(const a in s)this.setHeader(a,s[a]);return this.headersSent=true,this}writeProcessing(){}setTimeout(e,t){return this}appendHeader(e,t){e=e.toLowerCase();const r=this._headers[e],s=[...Array.isArray(r)?r:[r],...Array.isArray(t)?t:[t]].filter(Boolean);return this._headers[e]=s.length>1?s:s[0],this}setHeader(e,t){return this._headers[e.toLowerCase()]=t,this}setHeaders(e){for(const[t,r]of Object.entries(e))this.setHeader(t,r);return this}getHeader(e){return this._headers[e.toLowerCase()]}getHeaders(){return this._headers}getHeaderNames(){return Object.keys(this._headers)}hasHeader(e){return e.toLowerCase()in this._headers}removeHeader(e){delete this._headers[e.toLowerCase()];}addTrailers(e){}flushHeaders(){}writeEarlyHints(e,t){typeof t=="function"&&t();}}const E=(()=>{const n=function(){};return n.prototype=Object.create(null),n})();function R(n={}){const e=new E,t=Array.isArray(n)||H(n)?n:Object.entries(n);for(const[r,s]of t)if(s){if(e[r]===void 0){e[r]=s;continue}e[r]=[...Array.isArray(e[r])?e[r]:[e[r]],...Array.isArray(s)?s:[s]];}return e}function H(n){return typeof n?.entries=="function"}function v(n={}){if(n instanceof Headers)return n;const e=new Headers;for(const[t,r]of Object.entries(n))if(r!==void 0){if(Array.isArray(r)){for(const s of r)e.append(t,String(s));continue}e.set(t,String(r));}return e}const S=new Set([101,204,205,304]);async function b(n,e){const t=new y,r=new w(t);t.url=e.url?.toString()||"/";let s;if(!t.url.startsWith("/")){const d=new URL(t.url);s=d.host,t.url=d.pathname+d.search+d.hash;}t.method=e.method||"GET",t.headers=R(e.headers||{}),t.headers.host||(t.headers.host=e.host||s||"localhost"),t.connection.encrypted=t.connection.encrypted||e.protocol==="https",t.body=e.body||null,t.__unenv__=e.context,await n(t,r);let a=r._data;(S.has(r.statusCode)||t.method.toUpperCase()==="HEAD")&&(a=null,delete r._headers["content-length"]);const u={status:r.statusCode,statusText:r.statusMessage,headers:r._headers,body:a};return t.destroy(),r.destroy(),u}async function C(n,e,t={}){try{const r=await b(n,{url:e,...t});return new Response(r.body,{status:r.status,statusText:r.statusText,headers:v(r.headers)})}catch(r){return new Response(r.toString(),{status:Number.parseInt(r.statusCode||r.code)||500,statusText:r.statusText})}}
+function o(n){throw new Error(`${n} is not implemented yet!`)}let i$2 = class i extends EventEmitter$4{__unenv__={};readableEncoding=null;readableEnded=true;readableFlowing=false;readableHighWaterMark=0;readableLength=0;readableObjectMode=false;readableAborted=false;readableDidRead=false;closed=false;errored=null;readable=false;destroyed=false;static from(e,t){return new i(t)}constructor(e){super();}_read(e){}read(e){}setEncoding(e){return this}pause(){return this}resume(){return this}isPaused(){return  true}unpipe(e){return this}unshift(e,t){}wrap(e){return this}push(e,t){return  false}_destroy(e,t){this.removeAllListeners();}destroy(e){return this.destroyed=true,this._destroy(e),this}pipe(e,t){return {}}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return this.destroy(),Promise.resolve()}async*[Symbol.asyncIterator](){throw o("Readable.asyncIterator")}iterator(e){throw o("Readable.iterator")}map(e,t){throw o("Readable.map")}filter(e,t){throw o("Readable.filter")}forEach(e,t){throw o("Readable.forEach")}reduce(e,t,r){throw o("Readable.reduce")}find(e,t){throw o("Readable.find")}findIndex(e,t){throw o("Readable.findIndex")}some(e,t){throw o("Readable.some")}toArray(e){throw o("Readable.toArray")}every(e,t){throw o("Readable.every")}flatMap(e,t){throw o("Readable.flatMap")}drop(e,t){throw o("Readable.drop")}take(e,t){throw o("Readable.take")}asIndexedPairs(e){throw o("Readable.asIndexedPairs")}};let l$1 = class l extends EventEmitter$4{__unenv__={};writable=true;writableEnded=false;writableFinished=false;writableHighWaterMark=0;writableLength=0;writableObjectMode=false;writableCorked=0;closed=false;errored=null;writableNeedDrain=false;writableAborted=false;destroyed=false;_data;_encoding="utf8";constructor(e){super();}pipe(e,t){return {}}_write(e,t,r){if(this.writableEnded){r&&r();return}if(this._data===void 0)this._data=e;else {const s=typeof this._data=="string"?Buffer$1.from(this._data,this._encoding||t||"utf8"):this._data,a=typeof e=="string"?Buffer$1.from(e,t||this._encoding||"utf8"):e;this._data=Buffer$1.concat([s,a]);}this._encoding=t,r&&r();}_writev(e,t){}_destroy(e,t){}_final(e){}write(e,t,r){const s=typeof t=="string"?this._encoding:"utf8",a=typeof t=="function"?t:typeof r=="function"?r:void 0;return this._write(e,s,a),true}setDefaultEncoding(e){return this}end(e,t,r){const s=typeof e=="function"?e:typeof t=="function"?t:typeof r=="function"?r:void 0;if(this.writableEnded)return s&&s(),this;const a=e===s?void 0:e;if(a){const u=t===s?void 0:t;this.write(a,u,s);}return this.writableEnded=true,this.writableFinished=true,this.emit("close"),this.emit("finish"),this}cork(){}uncork(){}destroy(e){return this.destroyed=true,delete this._data,this.removeAllListeners(),this}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return Promise.resolve()}};const c$1=class c{allowHalfOpen=true;_destroy;constructor(e=new i$2,t=new l$1){Object.assign(this,e),Object.assign(this,t),this._destroy=m(e._destroy,t._destroy);}};function _(){return Object.assign(c$1.prototype,i$2.prototype),Object.assign(c$1.prototype,l$1.prototype),c$1}function m(...n){return function(...e){for(const t of n)t(...e);}}const g=_();class A extends g{__unenv__={};bufferSize=0;bytesRead=0;bytesWritten=0;connecting=false;destroyed=false;pending=false;localAddress="";localPort=0;remoteAddress="";remoteFamily="";remotePort=0;autoSelectFamilyAttemptedAddresses=[];readyState="readOnly";constructor(e){super();}write(e,t,r){return  false}connect(e,t,r){return this}end(e,t,r){return this}setEncoding(e){return this}pause(){return this}resume(){return this}setTimeout(e,t){return this}setNoDelay(e){return this}setKeepAlive(e,t){return this}address(){return {}}unref(){return this}ref(){return this}destroySoon(){this.destroy();}resetAndDestroy(){const e=new Error("ERR_SOCKET_CLOSED");return e.code="ERR_SOCKET_CLOSED",this.destroy(e),this}}class y extends i$2{aborted=false;httpVersion="1.1";httpVersionMajor=1;httpVersionMinor=1;complete=true;connection;socket;headers={};trailers={};method="GET";url="/";statusCode=200;statusMessage="";closed=false;errored=null;readable=false;constructor(e){super(),this.socket=this.connection=e||new A;}get rawHeaders(){const e=this.headers,t=[];for(const r in e)if(Array.isArray(e[r]))for(const s of e[r])t.push(r,s);else t.push(r,e[r]);return t}get rawTrailers(){return []}setTimeout(e,t){return this}get headersDistinct(){return p(this.headers)}get trailersDistinct(){return p(this.trailers)}}function p(n){const e={};for(const[t,r]of Object.entries(n))t&&(e[t]=(Array.isArray(r)?r:[r]).filter(Boolean));return e}class w extends l$1{statusCode=200;statusMessage="";upgrading=false;chunkedEncoding=false;shouldKeepAlive=false;useChunkedEncodingByDefault=false;sendDate=false;finished=false;headersSent=false;strictContentLength=false;connection=null;socket=null;req;_headers={};constructor(e){super(),this.req=e;}assignSocket(e){e._httpMessage=this,this.socket=e,this.connection=e,this.emit("socket",e),this._flush();}_flush(){this.flushHeaders();}detachSocket(e){}writeContinue(e){}writeHead(e,t,r){e&&(this.statusCode=e),typeof t=="string"&&(this.statusMessage=t,t=void 0);const s=r||t;if(s&&!Array.isArray(s))for(const a in s)this.setHeader(a,s[a]);return this.headersSent=true,this}writeProcessing(){}setTimeout(e,t){return this}appendHeader(e,t){e=e.toLowerCase();const r=this._headers[e],s=[...Array.isArray(r)?r:[r],...Array.isArray(t)?t:[t]].filter(Boolean);return this._headers[e]=s.length>1?s:s[0],this}setHeader(e,t){return this._headers[e.toLowerCase()]=t,this}setHeaders(e){for(const[t,r]of Object.entries(e))this.setHeader(t,r);return this}getHeader(e){return this._headers[e.toLowerCase()]}getHeaders(){return this._headers}getHeaderNames(){return Object.keys(this._headers)}hasHeader(e){return e.toLowerCase()in this._headers}removeHeader(e){delete this._headers[e.toLowerCase()];}addTrailers(e){}flushHeaders(){}writeEarlyHints(e,t){typeof t=="function"&&t();}}const E=(()=>{const n=function(){};return n.prototype=Object.create(null),n})();function R(n={}){const e=new E,t=Array.isArray(n)||H(n)?n:Object.entries(n);for(const[r,s]of t)if(s){if(e[r]===void 0){e[r]=s;continue}e[r]=[...Array.isArray(e[r])?e[r]:[e[r]],...Array.isArray(s)?s:[s]];}return e}function H(n){return typeof n?.entries=="function"}function v(n={}){if(n instanceof Headers)return n;const e=new Headers;for(const[t,r]of Object.entries(n))if(r!==void 0){if(Array.isArray(r)){for(const s of r)e.append(t,String(s));continue}e.set(t,String(r));}return e}const S=new Set([101,204,205,304]);async function b(n,e){const t=new y,r=new w(t);t.url=e.url?.toString()||"/";let s;if(!t.url.startsWith("/")){const d=new URL(t.url);s=d.host,t.url=d.pathname+d.search+d.hash;}t.method=e.method||"GET",t.headers=R(e.headers||{}),t.headers.host||(t.headers.host=e.host||s||"localhost"),t.connection.encrypted=t.connection.encrypted||e.protocol==="https",t.body=e.body||null,t.__unenv__=e.context,await n(t,r);let a=r._data;(S.has(r.statusCode)||t.method.toUpperCase()==="HEAD")&&(a=null,delete r._headers["content-length"]);const u={status:r.statusCode,statusText:r.statusMessage,headers:r._headers,body:a};return t.destroy(),r.destroy(),u}async function C(n,e,t={}){try{const r=await b(n,{url:e,...t});return new Response(r.body,{status:r.status,statusText:r.statusText,headers:v(r.headers)})}catch(r){return new Response(r.toString(),{status:Number.parseInt(r.statusCode||r.code)||500,statusText:r.statusText})}}
 
 function hasProp(obj, prop) {
   try {
@@ -6517,7 +6520,7 @@ function isError(input) {
   return input?.constructor?.__h3_error__ === true;
 }
 
-function parse$2(multipartBodyBuffer, boundary) {
+function parse$8(multipartBodyBuffer, boundary) {
   let lastline = "";
   let state = 0 /* INIT */;
   let buffer = [];
@@ -6772,7 +6775,7 @@ async function readMultipartFormData(event) {
   if (!body) {
     return;
   }
-  return parse$2(body, boundary);
+  return parse$8(body, boundary);
 }
 function getRequestWebStream(event) {
   if (!PayloadMethods$1.includes(event.method)) {
@@ -6897,7 +6900,7 @@ function getDistinctCookieKey(name, opts) {
 }
 
 function parseCookies(event) {
-  return parse$3(event.node.req.headers.cookie || "");
+  return parse$9(event.node.req.headers.cookie || "");
 }
 function getCookie(event, name) {
   return parseCookies(event)[name];
@@ -8439,8 +8442,8 @@ function createNodeFetch() {
     return l;
   }
   const agentOptions = { keepAlive: true };
-  const httpAgent = new http.Agent(agentOptions);
-  const httpsAgent = new https.Agent(agentOptions);
+  const httpAgent = new http$4.Agent(agentOptions);
+  const httpsAgent = new https$2.Agent(agentOptions);
   const nodeFetchOptions = {
     agent(parsedURL) {
       return parsedURL.protocol === "http:" ? httpAgent : httpsAgent;
@@ -9252,7 +9255,7 @@ function isEqual(object1, object2) {
   return false;
 }
 
-const e=globalThis.process?.getBuiltinModule?.("crypto")?.hash,r="sha256",s="base64url";function digest(t){if(e)return e(r,t,s);const o=createHash(r).update(t);return globalThis.process?.versions?.webcontainer?o.digest().toString(s):o.digest(s)}
+const e=globalThis.process?.getBuiltinModule?.("crypto")?.hash,r="sha256",s="base64url";function digest(t){if(e)return e(r,t,s);const o=createHash$4(r).update(t);return globalThis.process?.versions?.webcontainer?o.digest().toString(s):o.digest(s)}
 
 const Hasher = /* @__PURE__ */ (() => {
   class Hasher2 {
@@ -9968,7 +9971,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "b628a974-2ecc-4d1a-8583-ad6a8462df1d",
+    "buildId": "6c94b584-f607-4669-bbe6-5913cf2853ca",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -10453,17 +10456,17 @@ function getDefaultExportFromNamespaceIfNotNamed (n) {
 
 var engine_io = {};
 
-const require$$0$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$2$5);
+const require$$1$4 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$2$3);
 
 var server$1 = {};
 
-const require$$0$1 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(querystring);
+const require$$0$4 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(querystring);
 
-const require$$2$4 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$7);
+const require$$7 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$7$1);
 
 var base64id$1 = {exports: {}};
 
-const require$$2$3 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$1$1);
+const require$$3$1 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$1$5);
 
 /*!
  * base64id v0.1.0
@@ -10474,7 +10477,7 @@ const require$$2$3 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(requir
 	 * Module dependencies
 	 */
 
-	var crypto = require$$2$3;
+	var crypto = require$$3$1;
 
 	/**
 	 * Constructor
@@ -10579,7 +10582,7 @@ var polling$2 = {};
 
 var transport = {};
 
-const require$$8 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$3);
+const require$$0$3 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$3$1);
 
 const PACKET_TYPES = Object.create(null); // no Map = no polyfill
 PACKET_TYPES["open"] = "0";
@@ -10597,12 +10600,12 @@ const ERROR_PACKET = { type: "error", data: "parser error" };
 
 const encodePacket = ({ type, data }, supportsBinary, callback) => {
     if (data instanceof ArrayBuffer || ArrayBuffer.isView(data)) {
-        return callback(supportsBinary ? data : "b" + toBuffer(data, true).toString("base64"));
+        return callback(supportsBinary ? data : "b" + toBuffer$6(data, true).toString("base64"));
     }
     // plain string
     return callback(PACKET_TYPES[type] + (data || ""));
 };
-const toBuffer = (data, forceBufferConversion) => {
+const toBuffer$6 = (data, forceBufferConversion) => {
     if (Buffer.isBuffer(data) ||
         (data instanceof Uint8Array && !forceBufferConversion)) {
         return data;
@@ -10617,7 +10620,7 @@ const toBuffer = (data, forceBufferConversion) => {
 let TEXT_ENCODER;
 function encodePacketToBinary(packet, callback) {
     if (packet.data instanceof ArrayBuffer || ArrayBuffer.isView(packet.data)) {
-        return callback(toBuffer(packet.data, false));
+        return callback(toBuffer$6(packet.data, false));
     }
     encodePacket(packet, true, (encoded) => {
         if (!TEXT_ENCODER) {
@@ -11519,7 +11522,7 @@ const require$$13 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(debug$g
 
 Object.defineProperty(transport, "__esModule", { value: true });
 transport.Transport = void 0;
-const events_1$4 = require$$8;
+const events_1$4 = require$$0$3;
 const parser_v4 = esm;
 const parser_v3 = parserV3;
 const debug_1$b = require$$13;
@@ -11634,7 +11637,7 @@ class Transport extends events_1$4.EventEmitter {
 }
 transport.Transport = Transport;
 
-const require$$2$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$4);
+const require$$0$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$5);
 
 var negotiator = {exports: {}};
 
@@ -12559,7 +12562,7 @@ var negotiatorExports = negotiator.exports;
 
 var mimeTypes = {};
 
-const require$$0 = {
+const require$$0$1 = {
 	"application/1d-interleaved-parityfec": {
 	source: "iana"
 },
@@ -23273,7 +23276,7 @@ const require$$0 = {
  * Module exports.
  */
 
-var mimeDb = require$$0;
+var mimeDb = require$$0$1;
 
 const require$$5 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(path$1);
 
@@ -23707,7 +23710,7 @@ function validMime (type) {
 Object.defineProperty(polling$2, "__esModule", { value: true });
 polling$2.Polling = void 0;
 const transport_1$4 = transport;
-const zlib_1$1 = require$$2$2;
+const zlib_1$1 = require$$0$2;
 const accepts$1 = accepts$2;
 const debug_1$a = require$$13;
 const debug$d = (0, debug_1$a.default)("engine:polling");
@@ -24041,7 +24044,7 @@ var pollingJsonp = {};
 Object.defineProperty(pollingJsonp, "__esModule", { value: true });
 pollingJsonp.JSONP = void 0;
 const polling_1$2 = polling$2;
-const qs$1 = require$$0$1;
+const qs$1 = require$$0$4;
 const rDoubleSlashes = /\\\\n/g;
 const rSlashes = /(\\)?\\n/g;
 class JSONP extends polling_1$2.Polling {
@@ -24079,14 +24082,14 @@ class JSONP extends polling_1$2.Polling {
 }
 pollingJsonp.JSONP = JSONP;
 
-var websocket$1 = {};
+var websocket$3 = {};
 
-Object.defineProperty(websocket$1, "__esModule", { value: true });
-websocket$1.WebSocket = void 0;
+Object.defineProperty(websocket$3, "__esModule", { value: true });
+websocket$3.WebSocket = void 0;
 const transport_1$3 = transport;
 const debug_1$9 = require$$13;
 const debug$c = (0, debug_1$9.default)("engine:ws");
-let WebSocket$2 = class WebSocket extends transport_1$3.Transport {
+let WebSocket$8 = class WebSocket extends transport_1$3.Transport {
     /**
      * WebSocket transport
      *
@@ -24173,7 +24176,7 @@ let WebSocket$2 = class WebSocket extends transport_1$3.Transport {
         fn && fn();
     }
 };
-websocket$1.WebSocket = WebSocket$2;
+websocket$3.WebSocket = WebSocket$8;
 
 var webtransport = {};
 
@@ -24243,7 +24246,7 @@ webtransport.WebTransport = WebTransport;
 Object.defineProperty(transports, "__esModule", { value: true });
 const polling_1$1 = polling$2;
 const polling_jsonp_1 = pollingJsonp;
-const websocket_1$1 = websocket$1;
+const websocket_1$1 = websocket$3;
 const webtransport_1$1 = webtransport;
 transports.default = {
     polling: polling$1,
@@ -24265,13 +24268,13 @@ polling$1.upgradesTo = ["websocket", "webtransport"];
 
 var socket$1 = {};
 
-const require$$2$1 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(timers);
+const require$$2$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(timers);
 
 Object.defineProperty(socket$1, "__esModule", { value: true });
 socket$1.Socket = void 0;
-const events_1$3 = require$$8;
+const events_1$3 = require$$0$3;
 const debug_1$7 = require$$13;
-const timers_1 = require$$2$1;
+const timers_1 = require$$2$2;
 const debug$a = (0, debug_1$7.default)("engine:socket");
 let Socket$2 = class Socket extends events_1$3.EventEmitter {
     get readyState() {
@@ -24737,7 +24740,7 @@ var cookie = {};
  * @public
  */
 
-cookie.parse = parse$1;
+cookie.parse = parse$7;
 cookie.serialize = serialize;
 
 /**
@@ -24822,7 +24825,7 @@ var pathValueRegExp = /^[\u0020-\u003A\u003D-\u007E]*$/;
  * @public
  */
 
-function parse$1(str, opt) {
+function parse$7(str, opt) {
   if (typeof str !== 'string') {
     throw new TypeError('argument str must be a string');
   }
@@ -25059,21 +25062,4701 @@ function tryDecode$1(str, decode) {
   }
 }
 
-const require$$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(ws);
+const require$$2$1 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$2$1);
+
+const { Duplex: Duplex$7 } = require$$2$1;
+
+/**
+ * Emits the `'close'` event on a stream.
+ *
+ * @param {Duplex} stream The stream.
+ * @private
+ */
+function emitClose$3(stream) {
+  stream.emit('close');
+}
+
+/**
+ * The listener of the `'end'` event.
+ *
+ * @private
+ */
+function duplexOnEnd$1() {
+  if (!this.destroyed && this._writableState.finished) {
+    this.destroy();
+  }
+}
+
+/**
+ * The listener of the `'error'` event.
+ *
+ * @param {Error} err The error
+ * @private
+ */
+function duplexOnError$1(err) {
+  this.removeListener('error', duplexOnError$1);
+  this.destroy();
+  if (this.listenerCount('error') === 0) {
+    // Do not suppress the throwing behavior.
+    this.emit('error', err);
+  }
+}
+
+/**
+ * Wraps a `WebSocket` in a duplex stream.
+ *
+ * @param {WebSocket} ws The `WebSocket` to wrap
+ * @param {Object} [options] The options for the `Duplex` constructor
+ * @return {Duplex} The duplex stream
+ * @public
+ */
+function createWebSocketStream$1(ws, options) {
+  let terminateOnDestroy = true;
+
+  const duplex = new Duplex$7({
+    ...options,
+    autoDestroy: false,
+    emitClose: false,
+    objectMode: false,
+    writableObjectMode: false
+  });
+
+  ws.on('message', function message(msg, isBinary) {
+    const data =
+      !isBinary && duplex._readableState.objectMode ? msg.toString() : msg;
+
+    if (!duplex.push(data)) ws.pause();
+  });
+
+  ws.once('error', function error(err) {
+    if (duplex.destroyed) return;
+
+    // Prevent `ws.terminate()` from being called by `duplex._destroy()`.
+    //
+    // - If the `'error'` event is emitted before the `'open'` event, then
+    //   `ws.terminate()` is a noop as no socket is assigned.
+    // - Otherwise, the error is re-emitted by the listener of the `'error'`
+    //   event of the `Receiver` object. The listener already closes the
+    //   connection by calling `ws.close()`. This allows a close frame to be
+    //   sent to the other peer. If `ws.terminate()` is called right after this,
+    //   then the close frame might not be sent.
+    terminateOnDestroy = false;
+    duplex.destroy(err);
+  });
+
+  ws.once('close', function close() {
+    if (duplex.destroyed) return;
+
+    duplex.push(null);
+  });
+
+  duplex._destroy = function (err, callback) {
+    if (ws.readyState === ws.CLOSED) {
+      callback(err);
+      process.nextTick(emitClose$3, duplex);
+      return;
+    }
+
+    let called = false;
+
+    ws.once('error', function error(err) {
+      called = true;
+      callback(err);
+    });
+
+    ws.once('close', function close() {
+      if (!called) callback(err);
+      process.nextTick(emitClose$3, duplex);
+    });
+
+    if (terminateOnDestroy) ws.terminate();
+  };
+
+  duplex._final = function (callback) {
+    if (ws.readyState === ws.CONNECTING) {
+      ws.once('open', function open() {
+        duplex._final(callback);
+      });
+      return;
+    }
+
+    // If the value of the `_socket` property is `null` it means that `ws` is a
+    // client websocket and the handshake failed. In fact, when this happens, a
+    // socket is never assigned to the websocket. Wait for the `'error'` event
+    // that will be emitted by the websocket.
+    if (ws._socket === null) return;
+
+    if (ws._socket._writableState.finished) {
+      callback();
+      if (duplex._readableState.endEmitted) duplex.destroy();
+    } else {
+      ws._socket.once('finish', function finish() {
+        // `duplex` is not destroyed here because the `'end'` event will be
+        // emitted on `duplex` after this `'finish'` event. The EOF signaling
+        // `null` chunk is, in fact, pushed when the websocket emits `'close'`.
+        callback();
+      });
+      ws.close();
+    }
+  };
+
+  duplex._read = function () {
+    if (ws.isPaused) ws.resume();
+  };
+
+  duplex._write = function (chunk, encoding, callback) {
+    if (ws.readyState === ws.CONNECTING) {
+      ws.once('open', function open() {
+        duplex._write(chunk, encoding, callback);
+      });
+      return;
+    }
+
+    ws.send(chunk, callback);
+  };
+
+  duplex.on('end', duplexOnEnd$1);
+  duplex.on('error', duplexOnError$1);
+  return duplex;
+}
+
+var stream$1 = createWebSocketStream$1;
+
+const stream_default$1 = /*@__PURE__*/getDefaultExportFromCjs(stream$1);
+
+var bufferUtil$3 = {exports: {}};
+
+var constants$1 = {
+  BINARY_TYPES: ['nodebuffer', 'arraybuffer', 'fragments'],
+  EMPTY_BUFFER: Buffer.alloc(0),
+  GUID: '258EAFA5-E914-47DA-95CA-C5AB0DC85B11',
+  kForOnEventAttribute: Symbol('kIsForOnEventAttribute'),
+  kListener: Symbol('kListener'),
+  kStatusCode: Symbol('status-code'),
+  kWebSocket: Symbol('websocket'),
+  NOOP: () => {}
+};
+
+const _bufferutil = {};
+
+const _bufferutil$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _bufferutil
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const require$$1$3 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(_bufferutil$1);
+
+var unmask$3;
+var mask$1;
+
+const { EMPTY_BUFFER: EMPTY_BUFFER$7 } = constants$1;
+
+const FastBuffer$5 = Buffer[Symbol.species];
+
+/**
+ * Merges an array of buffers into a new buffer.
+ *
+ * @param {Buffer[]} list The array of buffers to concat
+ * @param {Number} totalLength The total length of buffers in the list
+ * @return {Buffer} The resulting buffer
+ * @public
+ */
+function concat$3(list, totalLength) {
+  if (list.length === 0) return EMPTY_BUFFER$7;
+  if (list.length === 1) return list[0];
+
+  const target = Buffer.allocUnsafe(totalLength);
+  let offset = 0;
+
+  for (let i = 0; i < list.length; i++) {
+    const buf = list[i];
+    target.set(buf, offset);
+    offset += buf.length;
+  }
+
+  if (offset < totalLength) {
+    return new FastBuffer$5(target.buffer, target.byteOffset, offset);
+  }
+
+  return target;
+}
+
+/**
+ * Masks a buffer using the given mask.
+ *
+ * @param {Buffer} source The buffer to mask
+ * @param {Buffer} mask The mask to use
+ * @param {Buffer} output The buffer where to store the result
+ * @param {Number} offset The offset at which to start writing
+ * @param {Number} length The number of bytes to mask.
+ * @public
+ */
+function _mask$1(source, mask, output, offset, length) {
+  for (let i = 0; i < length; i++) {
+    output[offset + i] = source[i] ^ mask[i & 3];
+  }
+}
+
+/**
+ * Unmasks a buffer using the given mask.
+ *
+ * @param {Buffer} buffer The buffer to unmask
+ * @param {Buffer} mask The mask to use
+ * @public
+ */
+function _unmask$1(buffer, mask) {
+  for (let i = 0; i < buffer.length; i++) {
+    buffer[i] ^= mask[i & 3];
+  }
+}
+
+/**
+ * Converts a buffer to an `ArrayBuffer`.
+ *
+ * @param {Buffer} buf The buffer to convert
+ * @return {ArrayBuffer} Converted buffer
+ * @public
+ */
+function toArrayBuffer$4(buf) {
+  if (buf.length === buf.buffer.byteLength) {
+    return buf.buffer;
+  }
+
+  return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.length);
+}
+
+/**
+ * Converts `data` to a `Buffer`.
+ *
+ * @param {*} data The data to convert
+ * @return {Buffer} The buffer
+ * @throws {TypeError}
+ * @public
+ */
+function toBuffer$5(data) {
+  toBuffer$5.readOnly = true;
+
+  if (Buffer.isBuffer(data)) return data;
+
+  let buf;
+
+  if (data instanceof ArrayBuffer) {
+    buf = new FastBuffer$5(data);
+  } else if (ArrayBuffer.isView(data)) {
+    buf = new FastBuffer$5(data.buffer, data.byteOffset, data.byteLength);
+  } else {
+    buf = Buffer.from(data);
+    toBuffer$5.readOnly = false;
+  }
+
+  return buf;
+}
+
+bufferUtil$3.exports = {
+  concat: concat$3,
+  mask: _mask$1,
+  toArrayBuffer: toArrayBuffer$4,
+  toBuffer: toBuffer$5,
+  unmask: _unmask$1
+};
+
+/* istanbul ignore else  */
+if (!process.env.WS_NO_BUFFER_UTIL) {
+  try {
+    const bufferUtil = require$$1$3;
+
+    mask$1 = bufferUtil$3.exports.mask = function (source, mask, output, offset, length) {
+      if (length < 48) _mask$1(source, mask, output, offset, length);
+      else bufferUtil.mask(source, mask, output, offset, length);
+    };
+
+    unmask$3 = bufferUtil$3.exports.unmask = function (buffer, mask) {
+      if (buffer.length < 32) _unmask$1(buffer, mask);
+      else bufferUtil.unmask(buffer, mask);
+    };
+  } catch (e) {
+    // Continue regardless of the error.
+  }
+}
+
+var bufferUtilExports$1 = bufferUtil$3.exports;
+
+const kDone$1 = Symbol('kDone');
+const kRun$1 = Symbol('kRun');
+
+/**
+ * A very simple job queue with adjustable concurrency. Adapted from
+ * https://github.com/STRML/async-limiter
+ */
+let Limiter$3 = class Limiter {
+  /**
+   * Creates a new `Limiter`.
+   *
+   * @param {Number} [concurrency=Infinity] The maximum number of jobs allowed
+   *     to run concurrently
+   */
+  constructor(concurrency) {
+    this[kDone$1] = () => {
+      this.pending--;
+      this[kRun$1]();
+    };
+    this.concurrency = concurrency || Infinity;
+    this.jobs = [];
+    this.pending = 0;
+  }
+
+  /**
+   * Adds a job to the queue.
+   *
+   * @param {Function} job The job to run
+   * @public
+   */
+  add(job) {
+    this.jobs.push(job);
+    this[kRun$1]();
+  }
+
+  /**
+   * Removes a job from the queue and runs it if possible.
+   *
+   * @private
+   */
+  [kRun$1]() {
+    if (this.pending === this.concurrency) return;
+
+    if (this.jobs.length) {
+      const job = this.jobs.shift();
+
+      this.pending++;
+      job(this[kDone$1]);
+    }
+  }
+};
+
+var limiter$1 = Limiter$3;
+
+const zlib$1 = require$$0$2;
+
+const bufferUtil$2 = bufferUtilExports$1;
+const Limiter$2 = limiter$1;
+const { kStatusCode: kStatusCode$5 } = constants$1;
+
+const FastBuffer$4 = Buffer[Symbol.species];
+const TRAILER$1 = Buffer.from([0x00, 0x00, 0xff, 0xff]);
+const kPerMessageDeflate$1 = Symbol('permessage-deflate');
+const kTotalLength$1 = Symbol('total-length');
+const kCallback$1 = Symbol('callback');
+const kBuffers$1 = Symbol('buffers');
+const kError$3 = Symbol('error');
+
+//
+// We limit zlib concurrency, which prevents severe memory fragmentation
+// as documented in https://github.com/nodejs/node/issues/8871#issuecomment-250915913
+// and https://github.com/websockets/ws/issues/1202
+//
+// Intentionally global; it's the global thread pool that's an issue.
+//
+let zlibLimiter$1;
+
+/**
+ * permessage-deflate implementation.
+ */
+let PerMessageDeflate$9 = class PerMessageDeflate {
+  /**
+   * Creates a PerMessageDeflate instance.
+   *
+   * @param {Object} [options] Configuration options
+   * @param {(Boolean|Number)} [options.clientMaxWindowBits] Advertise support
+   *     for, or request, a custom client window size
+   * @param {Boolean} [options.clientNoContextTakeover=false] Advertise/
+   *     acknowledge disabling of client context takeover
+   * @param {Number} [options.concurrencyLimit=10] The number of concurrent
+   *     calls to zlib
+   * @param {(Boolean|Number)} [options.serverMaxWindowBits] Request/confirm the
+   *     use of a custom server window size
+   * @param {Boolean} [options.serverNoContextTakeover=false] Request/accept
+   *     disabling of server context takeover
+   * @param {Number} [options.threshold=1024] Size (in bytes) below which
+   *     messages should not be compressed if context takeover is disabled
+   * @param {Object} [options.zlibDeflateOptions] Options to pass to zlib on
+   *     deflate
+   * @param {Object} [options.zlibInflateOptions] Options to pass to zlib on
+   *     inflate
+   * @param {Boolean} [isServer=false] Create the instance in either server or
+   *     client mode
+   * @param {Number} [maxPayload=0] The maximum allowed message length
+   */
+  constructor(options, isServer, maxPayload) {
+    this._maxPayload = maxPayload | 0;
+    this._options = options || {};
+    this._threshold =
+      this._options.threshold !== undefined ? this._options.threshold : 1024;
+    this._isServer = !!isServer;
+    this._deflate = null;
+    this._inflate = null;
+
+    this.params = null;
+
+    if (!zlibLimiter$1) {
+      const concurrency =
+        this._options.concurrencyLimit !== undefined
+          ? this._options.concurrencyLimit
+          : 10;
+      zlibLimiter$1 = new Limiter$2(concurrency);
+    }
+  }
+
+  /**
+   * @type {String}
+   */
+  static get extensionName() {
+    return 'permessage-deflate';
+  }
+
+  /**
+   * Create an extension negotiation offer.
+   *
+   * @return {Object} Extension parameters
+   * @public
+   */
+  offer() {
+    const params = {};
+
+    if (this._options.serverNoContextTakeover) {
+      params.server_no_context_takeover = true;
+    }
+    if (this._options.clientNoContextTakeover) {
+      params.client_no_context_takeover = true;
+    }
+    if (this._options.serverMaxWindowBits) {
+      params.server_max_window_bits = this._options.serverMaxWindowBits;
+    }
+    if (this._options.clientMaxWindowBits) {
+      params.client_max_window_bits = this._options.clientMaxWindowBits;
+    } else if (this._options.clientMaxWindowBits == null) {
+      params.client_max_window_bits = true;
+    }
+
+    return params;
+  }
+
+  /**
+   * Accept an extension negotiation offer/response.
+   *
+   * @param {Array} configurations The extension negotiation offers/reponse
+   * @return {Object} Accepted configuration
+   * @public
+   */
+  accept(configurations) {
+    configurations = this.normalizeParams(configurations);
+
+    this.params = this._isServer
+      ? this.acceptAsServer(configurations)
+      : this.acceptAsClient(configurations);
+
+    return this.params;
+  }
+
+  /**
+   * Releases all resources used by the extension.
+   *
+   * @public
+   */
+  cleanup() {
+    if (this._inflate) {
+      this._inflate.close();
+      this._inflate = null;
+    }
+
+    if (this._deflate) {
+      const callback = this._deflate[kCallback$1];
+
+      this._deflate.close();
+      this._deflate = null;
+
+      if (callback) {
+        callback(
+          new Error(
+            'The deflate stream was closed while data was being processed'
+          )
+        );
+      }
+    }
+  }
+
+  /**
+   *  Accept an extension negotiation offer.
+   *
+   * @param {Array} offers The extension negotiation offers
+   * @return {Object} Accepted configuration
+   * @private
+   */
+  acceptAsServer(offers) {
+    const opts = this._options;
+    const accepted = offers.find((params) => {
+      if (
+        (opts.serverNoContextTakeover === false &&
+          params.server_no_context_takeover) ||
+        (params.server_max_window_bits &&
+          (opts.serverMaxWindowBits === false ||
+            (typeof opts.serverMaxWindowBits === 'number' &&
+              opts.serverMaxWindowBits > params.server_max_window_bits))) ||
+        (typeof opts.clientMaxWindowBits === 'number' &&
+          !params.client_max_window_bits)
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (!accepted) {
+      throw new Error('None of the extension offers can be accepted');
+    }
+
+    if (opts.serverNoContextTakeover) {
+      accepted.server_no_context_takeover = true;
+    }
+    if (opts.clientNoContextTakeover) {
+      accepted.client_no_context_takeover = true;
+    }
+    if (typeof opts.serverMaxWindowBits === 'number') {
+      accepted.server_max_window_bits = opts.serverMaxWindowBits;
+    }
+    if (typeof opts.clientMaxWindowBits === 'number') {
+      accepted.client_max_window_bits = opts.clientMaxWindowBits;
+    } else if (
+      accepted.client_max_window_bits === true ||
+      opts.clientMaxWindowBits === false
+    ) {
+      delete accepted.client_max_window_bits;
+    }
+
+    return accepted;
+  }
+
+  /**
+   * Accept the extension negotiation response.
+   *
+   * @param {Array} response The extension negotiation response
+   * @return {Object} Accepted configuration
+   * @private
+   */
+  acceptAsClient(response) {
+    const params = response[0];
+
+    if (
+      this._options.clientNoContextTakeover === false &&
+      params.client_no_context_takeover
+    ) {
+      throw new Error('Unexpected parameter "client_no_context_takeover"');
+    }
+
+    if (!params.client_max_window_bits) {
+      if (typeof this._options.clientMaxWindowBits === 'number') {
+        params.client_max_window_bits = this._options.clientMaxWindowBits;
+      }
+    } else if (
+      this._options.clientMaxWindowBits === false ||
+      (typeof this._options.clientMaxWindowBits === 'number' &&
+        params.client_max_window_bits > this._options.clientMaxWindowBits)
+    ) {
+      throw new Error(
+        'Unexpected or invalid parameter "client_max_window_bits"'
+      );
+    }
+
+    return params;
+  }
+
+  /**
+   * Normalize parameters.
+   *
+   * @param {Array} configurations The extension negotiation offers/reponse
+   * @return {Array} The offers/response with normalized parameters
+   * @private
+   */
+  normalizeParams(configurations) {
+    configurations.forEach((params) => {
+      Object.keys(params).forEach((key) => {
+        let value = params[key];
+
+        if (value.length > 1) {
+          throw new Error(`Parameter "${key}" must have only a single value`);
+        }
+
+        value = value[0];
+
+        if (key === 'client_max_window_bits') {
+          if (value !== true) {
+            const num = +value;
+            if (!Number.isInteger(num) || num < 8 || num > 15) {
+              throw new TypeError(
+                `Invalid value for parameter "${key}": ${value}`
+              );
+            }
+            value = num;
+          } else if (!this._isServer) {
+            throw new TypeError(
+              `Invalid value for parameter "${key}": ${value}`
+            );
+          }
+        } else if (key === 'server_max_window_bits') {
+          const num = +value;
+          if (!Number.isInteger(num) || num < 8 || num > 15) {
+            throw new TypeError(
+              `Invalid value for parameter "${key}": ${value}`
+            );
+          }
+          value = num;
+        } else if (
+          key === 'client_no_context_takeover' ||
+          key === 'server_no_context_takeover'
+        ) {
+          if (value !== true) {
+            throw new TypeError(
+              `Invalid value for parameter "${key}": ${value}`
+            );
+          }
+        } else {
+          throw new Error(`Unknown parameter "${key}"`);
+        }
+
+        params[key] = value;
+      });
+    });
+
+    return configurations;
+  }
+
+  /**
+   * Decompress data. Concurrency limited.
+   *
+   * @param {Buffer} data Compressed data
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @public
+   */
+  decompress(data, fin, callback) {
+    zlibLimiter$1.add((done) => {
+      this._decompress(data, fin, (err, result) => {
+        done();
+        callback(err, result);
+      });
+    });
+  }
+
+  /**
+   * Compress data. Concurrency limited.
+   *
+   * @param {(Buffer|String)} data Data to compress
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @public
+   */
+  compress(data, fin, callback) {
+    zlibLimiter$1.add((done) => {
+      this._compress(data, fin, (err, result) => {
+        done();
+        callback(err, result);
+      });
+    });
+  }
+
+  /**
+   * Decompress data.
+   *
+   * @param {Buffer} data Compressed data
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @private
+   */
+  _decompress(data, fin, callback) {
+    const endpoint = this._isServer ? 'client' : 'server';
+
+    if (!this._inflate) {
+      const key = `${endpoint}_max_window_bits`;
+      const windowBits =
+        typeof this.params[key] !== 'number'
+          ? zlib$1.Z_DEFAULT_WINDOWBITS
+          : this.params[key];
+
+      this._inflate = zlib$1.createInflateRaw({
+        ...this._options.zlibInflateOptions,
+        windowBits
+      });
+      this._inflate[kPerMessageDeflate$1] = this;
+      this._inflate[kTotalLength$1] = 0;
+      this._inflate[kBuffers$1] = [];
+      this._inflate.on('error', inflateOnError$1);
+      this._inflate.on('data', inflateOnData$1);
+    }
+
+    this._inflate[kCallback$1] = callback;
+
+    this._inflate.write(data);
+    if (fin) this._inflate.write(TRAILER$1);
+
+    this._inflate.flush(() => {
+      const err = this._inflate[kError$3];
+
+      if (err) {
+        this._inflate.close();
+        this._inflate = null;
+        callback(err);
+        return;
+      }
+
+      const data = bufferUtil$2.concat(
+        this._inflate[kBuffers$1],
+        this._inflate[kTotalLength$1]
+      );
+
+      if (this._inflate._readableState.endEmitted) {
+        this._inflate.close();
+        this._inflate = null;
+      } else {
+        this._inflate[kTotalLength$1] = 0;
+        this._inflate[kBuffers$1] = [];
+
+        if (fin && this.params[`${endpoint}_no_context_takeover`]) {
+          this._inflate.reset();
+        }
+      }
+
+      callback(null, data);
+    });
+  }
+
+  /**
+   * Compress data.
+   *
+   * @param {(Buffer|String)} data Data to compress
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @private
+   */
+  _compress(data, fin, callback) {
+    const endpoint = this._isServer ? 'server' : 'client';
+
+    if (!this._deflate) {
+      const key = `${endpoint}_max_window_bits`;
+      const windowBits =
+        typeof this.params[key] !== 'number'
+          ? zlib$1.Z_DEFAULT_WINDOWBITS
+          : this.params[key];
+
+      this._deflate = zlib$1.createDeflateRaw({
+        ...this._options.zlibDeflateOptions,
+        windowBits
+      });
+
+      this._deflate[kTotalLength$1] = 0;
+      this._deflate[kBuffers$1] = [];
+
+      this._deflate.on('data', deflateOnData$1);
+    }
+
+    this._deflate[kCallback$1] = callback;
+
+    this._deflate.write(data);
+    this._deflate.flush(zlib$1.Z_SYNC_FLUSH, () => {
+      if (!this._deflate) {
+        //
+        // The deflate stream was closed while data was being processed.
+        //
+        return;
+      }
+
+      let data = bufferUtil$2.concat(
+        this._deflate[kBuffers$1],
+        this._deflate[kTotalLength$1]
+      );
+
+      if (fin) {
+        data = new FastBuffer$4(data.buffer, data.byteOffset, data.length - 4);
+      }
+
+      //
+      // Ensure that the callback will not be called again in
+      // `PerMessageDeflate#cleanup()`.
+      //
+      this._deflate[kCallback$1] = null;
+
+      this._deflate[kTotalLength$1] = 0;
+      this._deflate[kBuffers$1] = [];
+
+      if (fin && this.params[`${endpoint}_no_context_takeover`]) {
+        this._deflate.reset();
+      }
+
+      callback(null, data);
+    });
+  }
+};
+
+var permessageDeflate$1 = PerMessageDeflate$9;
+
+/**
+ * The listener of the `zlib.DeflateRaw` stream `'data'` event.
+ *
+ * @param {Buffer} chunk A chunk of data
+ * @private
+ */
+function deflateOnData$1(chunk) {
+  this[kBuffers$1].push(chunk);
+  this[kTotalLength$1] += chunk.length;
+}
+
+/**
+ * The listener of the `zlib.InflateRaw` stream `'data'` event.
+ *
+ * @param {Buffer} chunk A chunk of data
+ * @private
+ */
+function inflateOnData$1(chunk) {
+  this[kTotalLength$1] += chunk.length;
+
+  if (
+    this[kPerMessageDeflate$1]._maxPayload < 1 ||
+    this[kTotalLength$1] <= this[kPerMessageDeflate$1]._maxPayload
+  ) {
+    this[kBuffers$1].push(chunk);
+    return;
+  }
+
+  this[kError$3] = new RangeError('Max payload size exceeded');
+  this[kError$3].code = 'WS_ERR_UNSUPPORTED_MESSAGE_LENGTH';
+  this[kError$3][kStatusCode$5] = 1009;
+  this.removeListener('data', inflateOnData$1);
+  this.reset();
+}
+
+/**
+ * The listener of the `zlib.InflateRaw` stream `'error'` event.
+ *
+ * @param {Error} err The emitted error
+ * @private
+ */
+function inflateOnError$1(err) {
+  //
+  // There is no need to call `Zlib#close()` as the handle is automatically
+  // closed when an error is emitted.
+  //
+  this[kPerMessageDeflate$1]._inflate = null;
+  err[kStatusCode$5] = 1007;
+  this[kCallback$1](err);
+}
+
+var validation$1 = {exports: {}};
+
+const require$$0 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$1$1);
+
+const _utf8Validate = {};
+
+const _utf8Validate$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _utf8Validate
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const require$$1$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(_utf8Validate$1);
+
+var isValidUTF8_1$1;
+
+const { isUtf8: isUtf8$1 } = require$$0;
+
+//
+// Allowed token characters:
+//
+// '!', '#', '$', '%', '&', ''', '*', '+', '-',
+// '.', 0-9, A-Z, '^', '_', '`', a-z, '|', '~'
+//
+// tokenChars[32] === 0 // ' '
+// tokenChars[33] === 1 // '!'
+// tokenChars[34] === 0 // '"'
+// ...
+//
+// prettier-ignore
+const tokenChars$5 = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0 - 15
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 16 - 31
+  0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, // 32 - 47
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, // 48 - 63
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 64 - 79
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, // 80 - 95
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 96 - 111
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0 // 112 - 127
+];
+
+/**
+ * Checks if a status code is allowed in a close frame.
+ *
+ * @param {Number} code The status code
+ * @return {Boolean} `true` if the status code is valid, else `false`
+ * @public
+ */
+function isValidStatusCode$5(code) {
+  return (
+    (code >= 1000 &&
+      code <= 1014 &&
+      code !== 1004 &&
+      code !== 1005 &&
+      code !== 1006) ||
+    (code >= 3000 && code <= 4999)
+  );
+}
+
+/**
+ * Checks if a given buffer contains only correct UTF-8.
+ * Ported from https://www.cl.cam.ac.uk/%7Emgk25/ucs/utf8_check.c by
+ * Markus Kuhn.
+ *
+ * @param {Buffer} buf The buffer to check
+ * @return {Boolean} `true` if `buf` contains only correct UTF-8, else `false`
+ * @public
+ */
+function _isValidUTF8$1(buf) {
+  const len = buf.length;
+  let i = 0;
+
+  while (i < len) {
+    if ((buf[i] & 0x80) === 0) {
+      // 0xxxxxxx
+      i++;
+    } else if ((buf[i] & 0xe0) === 0xc0) {
+      // 110xxxxx 10xxxxxx
+      if (
+        i + 1 === len ||
+        (buf[i + 1] & 0xc0) !== 0x80 ||
+        (buf[i] & 0xfe) === 0xc0 // Overlong
+      ) {
+        return false;
+      }
+
+      i += 2;
+    } else if ((buf[i] & 0xf0) === 0xe0) {
+      // 1110xxxx 10xxxxxx 10xxxxxx
+      if (
+        i + 2 >= len ||
+        (buf[i + 1] & 0xc0) !== 0x80 ||
+        (buf[i + 2] & 0xc0) !== 0x80 ||
+        (buf[i] === 0xe0 && (buf[i + 1] & 0xe0) === 0x80) || // Overlong
+        (buf[i] === 0xed && (buf[i + 1] & 0xe0) === 0xa0) // Surrogate (U+D800 - U+DFFF)
+      ) {
+        return false;
+      }
+
+      i += 3;
+    } else if ((buf[i] & 0xf8) === 0xf0) {
+      // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+      if (
+        i + 3 >= len ||
+        (buf[i + 1] & 0xc0) !== 0x80 ||
+        (buf[i + 2] & 0xc0) !== 0x80 ||
+        (buf[i + 3] & 0xc0) !== 0x80 ||
+        (buf[i] === 0xf0 && (buf[i + 1] & 0xf0) === 0x80) || // Overlong
+        (buf[i] === 0xf4 && buf[i + 1] > 0x8f) ||
+        buf[i] > 0xf4 // > U+10FFFF
+      ) {
+        return false;
+      }
+
+      i += 4;
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+validation$1.exports = {
+  isValidStatusCode: isValidStatusCode$5,
+  isValidUTF8: _isValidUTF8$1,
+  tokenChars: tokenChars$5
+};
+
+if (isUtf8$1) {
+  isValidUTF8_1$1 = validation$1.exports.isValidUTF8 = function (buf) {
+    return buf.length < 24 ? _isValidUTF8$1(buf) : isUtf8$1(buf);
+  };
+} /* istanbul ignore else  */ else if (!process.env.WS_NO_UTF_8_VALIDATE) {
+  try {
+    const isValidUTF8 = require$$1$2;
+
+    isValidUTF8_1$1 = validation$1.exports.isValidUTF8 = function (buf) {
+      return buf.length < 32 ? _isValidUTF8$1(buf) : isValidUTF8(buf);
+    };
+  } catch (e) {
+    // Continue regardless of the error.
+  }
+}
+
+var validationExports$1 = validation$1.exports;
+
+const { Writable: Writable$1 } = require$$2$1;
+
+const PerMessageDeflate$8 = permessageDeflate$1;
+const {
+  BINARY_TYPES: BINARY_TYPES$3,
+  EMPTY_BUFFER: EMPTY_BUFFER$6,
+  kStatusCode: kStatusCode$4,
+  kWebSocket: kWebSocket$5
+} = constants$1;
+const { concat: concat$2, toArrayBuffer: toArrayBuffer$3, unmask: unmask$2 } = bufferUtilExports$1;
+const { isValidStatusCode: isValidStatusCode$4, isValidUTF8: isValidUTF8$1 } = validationExports$1;
+
+const FastBuffer$3 = Buffer[Symbol.species];
+
+const GET_INFO$1 = 0;
+const GET_PAYLOAD_LENGTH_16$1 = 1;
+const GET_PAYLOAD_LENGTH_64$1 = 2;
+const GET_MASK$1 = 3;
+const GET_DATA$1 = 4;
+const INFLATING$1 = 5;
+const DEFER_EVENT$1 = 6;
+
+/**
+ * HyBi Receiver implementation.
+ *
+ * @extends Writable
+ */
+let Receiver$3 = class Receiver extends Writable$1 {
+  /**
+   * Creates a Receiver instance.
+   *
+   * @param {Object} [options] Options object
+   * @param {Boolean} [options.allowSynchronousEvents=true] Specifies whether
+   *     any of the `'message'`, `'ping'`, and `'pong'` events can be emitted
+   *     multiple times in the same tick
+   * @param {String} [options.binaryType=nodebuffer] The type for binary data
+   * @param {Object} [options.extensions] An object containing the negotiated
+   *     extensions
+   * @param {Boolean} [options.isServer=false] Specifies whether to operate in
+   *     client or server mode
+   * @param {Number} [options.maxPayload=0] The maximum allowed message length
+   * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+   *     not to skip UTF-8 validation for text and close messages
+   */
+  constructor(options = {}) {
+    super();
+
+    this._allowSynchronousEvents =
+      options.allowSynchronousEvents !== undefined
+        ? options.allowSynchronousEvents
+        : true;
+    this._binaryType = options.binaryType || BINARY_TYPES$3[0];
+    this._extensions = options.extensions || {};
+    this._isServer = !!options.isServer;
+    this._maxPayload = options.maxPayload | 0;
+    this._skipUTF8Validation = !!options.skipUTF8Validation;
+    this[kWebSocket$5] = undefined;
+
+    this._bufferedBytes = 0;
+    this._buffers = [];
+
+    this._compressed = false;
+    this._payloadLength = 0;
+    this._mask = undefined;
+    this._fragmented = 0;
+    this._masked = false;
+    this._fin = false;
+    this._opcode = 0;
+
+    this._totalPayloadLength = 0;
+    this._messageLength = 0;
+    this._fragments = [];
+
+    this._errored = false;
+    this._loop = false;
+    this._state = GET_INFO$1;
+  }
+
+  /**
+   * Implements `Writable.prototype._write()`.
+   *
+   * @param {Buffer} chunk The chunk of data to write
+   * @param {String} encoding The character encoding of `chunk`
+   * @param {Function} cb Callback
+   * @private
+   */
+  _write(chunk, encoding, cb) {
+    if (this._opcode === 0x08 && this._state == GET_INFO$1) return cb();
+
+    this._bufferedBytes += chunk.length;
+    this._buffers.push(chunk);
+    this.startLoop(cb);
+  }
+
+  /**
+   * Consumes `n` bytes from the buffered data.
+   *
+   * @param {Number} n The number of bytes to consume
+   * @return {Buffer} The consumed bytes
+   * @private
+   */
+  consume(n) {
+    this._bufferedBytes -= n;
+
+    if (n === this._buffers[0].length) return this._buffers.shift();
+
+    if (n < this._buffers[0].length) {
+      const buf = this._buffers[0];
+      this._buffers[0] = new FastBuffer$3(
+        buf.buffer,
+        buf.byteOffset + n,
+        buf.length - n
+      );
+
+      return new FastBuffer$3(buf.buffer, buf.byteOffset, n);
+    }
+
+    const dst = Buffer.allocUnsafe(n);
+
+    do {
+      const buf = this._buffers[0];
+      const offset = dst.length - n;
+
+      if (n >= buf.length) {
+        dst.set(this._buffers.shift(), offset);
+      } else {
+        dst.set(new Uint8Array(buf.buffer, buf.byteOffset, n), offset);
+        this._buffers[0] = new FastBuffer$3(
+          buf.buffer,
+          buf.byteOffset + n,
+          buf.length - n
+        );
+      }
+
+      n -= buf.length;
+    } while (n > 0);
+
+    return dst;
+  }
+
+  /**
+   * Starts the parsing loop.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  startLoop(cb) {
+    this._loop = true;
+
+    do {
+      switch (this._state) {
+        case GET_INFO$1:
+          this.getInfo(cb);
+          break;
+        case GET_PAYLOAD_LENGTH_16$1:
+          this.getPayloadLength16(cb);
+          break;
+        case GET_PAYLOAD_LENGTH_64$1:
+          this.getPayloadLength64(cb);
+          break;
+        case GET_MASK$1:
+          this.getMask();
+          break;
+        case GET_DATA$1:
+          this.getData(cb);
+          break;
+        case INFLATING$1:
+        case DEFER_EVENT$1:
+          this._loop = false;
+          return;
+      }
+    } while (this._loop);
+
+    if (!this._errored) cb();
+  }
+
+  /**
+   * Reads the first two bytes of a frame.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getInfo(cb) {
+    if (this._bufferedBytes < 2) {
+      this._loop = false;
+      return;
+    }
+
+    const buf = this.consume(2);
+
+    if ((buf[0] & 0x30) !== 0x00) {
+      const error = this.createError(
+        RangeError,
+        'RSV2 and RSV3 must be clear',
+        true,
+        1002,
+        'WS_ERR_UNEXPECTED_RSV_2_3'
+      );
+
+      cb(error);
+      return;
+    }
+
+    const compressed = (buf[0] & 0x40) === 0x40;
+
+    if (compressed && !this._extensions[PerMessageDeflate$8.extensionName]) {
+      const error = this.createError(
+        RangeError,
+        'RSV1 must be clear',
+        true,
+        1002,
+        'WS_ERR_UNEXPECTED_RSV_1'
+      );
+
+      cb(error);
+      return;
+    }
+
+    this._fin = (buf[0] & 0x80) === 0x80;
+    this._opcode = buf[0] & 0x0f;
+    this._payloadLength = buf[1] & 0x7f;
+
+    if (this._opcode === 0x00) {
+      if (compressed) {
+        const error = this.createError(
+          RangeError,
+          'RSV1 must be clear',
+          true,
+          1002,
+          'WS_ERR_UNEXPECTED_RSV_1'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (!this._fragmented) {
+        const error = this.createError(
+          RangeError,
+          'invalid opcode 0',
+          true,
+          1002,
+          'WS_ERR_INVALID_OPCODE'
+        );
+
+        cb(error);
+        return;
+      }
+
+      this._opcode = this._fragmented;
+    } else if (this._opcode === 0x01 || this._opcode === 0x02) {
+      if (this._fragmented) {
+        const error = this.createError(
+          RangeError,
+          `invalid opcode ${this._opcode}`,
+          true,
+          1002,
+          'WS_ERR_INVALID_OPCODE'
+        );
+
+        cb(error);
+        return;
+      }
+
+      this._compressed = compressed;
+    } else if (this._opcode > 0x07 && this._opcode < 0x0b) {
+      if (!this._fin) {
+        const error = this.createError(
+          RangeError,
+          'FIN must be set',
+          true,
+          1002,
+          'WS_ERR_EXPECTED_FIN'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (compressed) {
+        const error = this.createError(
+          RangeError,
+          'RSV1 must be clear',
+          true,
+          1002,
+          'WS_ERR_UNEXPECTED_RSV_1'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (
+        this._payloadLength > 0x7d ||
+        (this._opcode === 0x08 && this._payloadLength === 1)
+      ) {
+        const error = this.createError(
+          RangeError,
+          `invalid payload length ${this._payloadLength}`,
+          true,
+          1002,
+          'WS_ERR_INVALID_CONTROL_PAYLOAD_LENGTH'
+        );
+
+        cb(error);
+        return;
+      }
+    } else {
+      const error = this.createError(
+        RangeError,
+        `invalid opcode ${this._opcode}`,
+        true,
+        1002,
+        'WS_ERR_INVALID_OPCODE'
+      );
+
+      cb(error);
+      return;
+    }
+
+    if (!this._fin && !this._fragmented) this._fragmented = this._opcode;
+    this._masked = (buf[1] & 0x80) === 0x80;
+
+    if (this._isServer) {
+      if (!this._masked) {
+        const error = this.createError(
+          RangeError,
+          'MASK must be set',
+          true,
+          1002,
+          'WS_ERR_EXPECTED_MASK'
+        );
+
+        cb(error);
+        return;
+      }
+    } else if (this._masked) {
+      const error = this.createError(
+        RangeError,
+        'MASK must be clear',
+        true,
+        1002,
+        'WS_ERR_UNEXPECTED_MASK'
+      );
+
+      cb(error);
+      return;
+    }
+
+    if (this._payloadLength === 126) this._state = GET_PAYLOAD_LENGTH_16$1;
+    else if (this._payloadLength === 127) this._state = GET_PAYLOAD_LENGTH_64$1;
+    else this.haveLength(cb);
+  }
+
+  /**
+   * Gets extended payload length (7+16).
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getPayloadLength16(cb) {
+    if (this._bufferedBytes < 2) {
+      this._loop = false;
+      return;
+    }
+
+    this._payloadLength = this.consume(2).readUInt16BE(0);
+    this.haveLength(cb);
+  }
+
+  /**
+   * Gets extended payload length (7+64).
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getPayloadLength64(cb) {
+    if (this._bufferedBytes < 8) {
+      this._loop = false;
+      return;
+    }
+
+    const buf = this.consume(8);
+    const num = buf.readUInt32BE(0);
+
+    //
+    // The maximum safe integer in JavaScript is 2^53 - 1. An error is returned
+    // if payload length is greater than this number.
+    //
+    if (num > Math.pow(2, 53 - 32) - 1) {
+      const error = this.createError(
+        RangeError,
+        'Unsupported WebSocket frame: payload length > 2^53 - 1',
+        false,
+        1009,
+        'WS_ERR_UNSUPPORTED_DATA_PAYLOAD_LENGTH'
+      );
+
+      cb(error);
+      return;
+    }
+
+    this._payloadLength = num * Math.pow(2, 32) + buf.readUInt32BE(4);
+    this.haveLength(cb);
+  }
+
+  /**
+   * Payload length has been read.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  haveLength(cb) {
+    if (this._payloadLength && this._opcode < 0x08) {
+      this._totalPayloadLength += this._payloadLength;
+      if (this._totalPayloadLength > this._maxPayload && this._maxPayload > 0) {
+        const error = this.createError(
+          RangeError,
+          'Max payload size exceeded',
+          false,
+          1009,
+          'WS_ERR_UNSUPPORTED_MESSAGE_LENGTH'
+        );
+
+        cb(error);
+        return;
+      }
+    }
+
+    if (this._masked) this._state = GET_MASK$1;
+    else this._state = GET_DATA$1;
+  }
+
+  /**
+   * Reads mask bytes.
+   *
+   * @private
+   */
+  getMask() {
+    if (this._bufferedBytes < 4) {
+      this._loop = false;
+      return;
+    }
+
+    this._mask = this.consume(4);
+    this._state = GET_DATA$1;
+  }
+
+  /**
+   * Reads data bytes.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getData(cb) {
+    let data = EMPTY_BUFFER$6;
+
+    if (this._payloadLength) {
+      if (this._bufferedBytes < this._payloadLength) {
+        this._loop = false;
+        return;
+      }
+
+      data = this.consume(this._payloadLength);
+
+      if (
+        this._masked &&
+        (this._mask[0] | this._mask[1] | this._mask[2] | this._mask[3]) !== 0
+      ) {
+        unmask$2(data, this._mask);
+      }
+    }
+
+    if (this._opcode > 0x07) {
+      this.controlMessage(data, cb);
+      return;
+    }
+
+    if (this._compressed) {
+      this._state = INFLATING$1;
+      this.decompress(data, cb);
+      return;
+    }
+
+    if (data.length) {
+      //
+      // This message is not compressed so its length is the sum of the payload
+      // length of all fragments.
+      //
+      this._messageLength = this._totalPayloadLength;
+      this._fragments.push(data);
+    }
+
+    this.dataMessage(cb);
+  }
+
+  /**
+   * Decompresses data.
+   *
+   * @param {Buffer} data Compressed data
+   * @param {Function} cb Callback
+   * @private
+   */
+  decompress(data, cb) {
+    const perMessageDeflate = this._extensions[PerMessageDeflate$8.extensionName];
+
+    perMessageDeflate.decompress(data, this._fin, (err, buf) => {
+      if (err) return cb(err);
+
+      if (buf.length) {
+        this._messageLength += buf.length;
+        if (this._messageLength > this._maxPayload && this._maxPayload > 0) {
+          const error = this.createError(
+            RangeError,
+            'Max payload size exceeded',
+            false,
+            1009,
+            'WS_ERR_UNSUPPORTED_MESSAGE_LENGTH'
+          );
+
+          cb(error);
+          return;
+        }
+
+        this._fragments.push(buf);
+      }
+
+      this.dataMessage(cb);
+      if (this._state === GET_INFO$1) this.startLoop(cb);
+    });
+  }
+
+  /**
+   * Handles a data message.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  dataMessage(cb) {
+    if (!this._fin) {
+      this._state = GET_INFO$1;
+      return;
+    }
+
+    const messageLength = this._messageLength;
+    const fragments = this._fragments;
+
+    this._totalPayloadLength = 0;
+    this._messageLength = 0;
+    this._fragmented = 0;
+    this._fragments = [];
+
+    if (this._opcode === 2) {
+      let data;
+
+      if (this._binaryType === 'nodebuffer') {
+        data = concat$2(fragments, messageLength);
+      } else if (this._binaryType === 'arraybuffer') {
+        data = toArrayBuffer$3(concat$2(fragments, messageLength));
+      } else {
+        data = fragments;
+      }
+
+      if (this._allowSynchronousEvents) {
+        this.emit('message', data, true);
+        this._state = GET_INFO$1;
+      } else {
+        this._state = DEFER_EVENT$1;
+        setImmediate(() => {
+          this.emit('message', data, true);
+          this._state = GET_INFO$1;
+          this.startLoop(cb);
+        });
+      }
+    } else {
+      const buf = concat$2(fragments, messageLength);
+
+      if (!this._skipUTF8Validation && !isValidUTF8$1(buf)) {
+        const error = this.createError(
+          Error,
+          'invalid UTF-8 sequence',
+          true,
+          1007,
+          'WS_ERR_INVALID_UTF8'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (this._state === INFLATING$1 || this._allowSynchronousEvents) {
+        this.emit('message', buf, false);
+        this._state = GET_INFO$1;
+      } else {
+        this._state = DEFER_EVENT$1;
+        setImmediate(() => {
+          this.emit('message', buf, false);
+          this._state = GET_INFO$1;
+          this.startLoop(cb);
+        });
+      }
+    }
+  }
+
+  /**
+   * Handles a control message.
+   *
+   * @param {Buffer} data Data to handle
+   * @return {(Error|RangeError|undefined)} A possible error
+   * @private
+   */
+  controlMessage(data, cb) {
+    if (this._opcode === 0x08) {
+      if (data.length === 0) {
+        this._loop = false;
+        this.emit('conclude', 1005, EMPTY_BUFFER$6);
+        this.end();
+      } else {
+        const code = data.readUInt16BE(0);
+
+        if (!isValidStatusCode$4(code)) {
+          const error = this.createError(
+            RangeError,
+            `invalid status code ${code}`,
+            true,
+            1002,
+            'WS_ERR_INVALID_CLOSE_CODE'
+          );
+
+          cb(error);
+          return;
+        }
+
+        const buf = new FastBuffer$3(
+          data.buffer,
+          data.byteOffset + 2,
+          data.length - 2
+        );
+
+        if (!this._skipUTF8Validation && !isValidUTF8$1(buf)) {
+          const error = this.createError(
+            Error,
+            'invalid UTF-8 sequence',
+            true,
+            1007,
+            'WS_ERR_INVALID_UTF8'
+          );
+
+          cb(error);
+          return;
+        }
+
+        this._loop = false;
+        this.emit('conclude', code, buf);
+        this.end();
+      }
+
+      this._state = GET_INFO$1;
+      return;
+    }
+
+    if (this._allowSynchronousEvents) {
+      this.emit(this._opcode === 0x09 ? 'ping' : 'pong', data);
+      this._state = GET_INFO$1;
+    } else {
+      this._state = DEFER_EVENT$1;
+      setImmediate(() => {
+        this.emit(this._opcode === 0x09 ? 'ping' : 'pong', data);
+        this._state = GET_INFO$1;
+        this.startLoop(cb);
+      });
+    }
+  }
+
+  /**
+   * Builds an error object.
+   *
+   * @param {function(new:Error|RangeError)} ErrorCtor The error constructor
+   * @param {String} message The error message
+   * @param {Boolean} prefix Specifies whether or not to add a default prefix to
+   *     `message`
+   * @param {Number} statusCode The status code
+   * @param {String} errorCode The exposed error code
+   * @return {(Error|RangeError)} The error
+   * @private
+   */
+  createError(ErrorCtor, message, prefix, statusCode, errorCode) {
+    this._loop = false;
+    this._errored = true;
+
+    const err = new ErrorCtor(
+      prefix ? `Invalid WebSocket frame: ${message}` : message
+    );
+
+    Error.captureStackTrace(err, this.createError);
+    err.code = errorCode;
+    err[kStatusCode$4] = statusCode;
+    return err;
+  }
+};
+
+var receiver$1 = Receiver$3;
+
+const receiver_default$1 = /*@__PURE__*/getDefaultExportFromCjs(receiver$1);
+
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex" }] */
+
+const { Duplex: Duplex$6 } = require$$2$1;
+const { randomFillSync: randomFillSync$1 } = require$$3$1;
+
+const PerMessageDeflate$7 = permessageDeflate$1;
+const { EMPTY_BUFFER: EMPTY_BUFFER$5 } = constants$1;
+const { isValidStatusCode: isValidStatusCode$3 } = validationExports$1;
+const { mask: applyMask$1, toBuffer: toBuffer$4 } = bufferUtilExports$1;
+
+const kByteLength$1 = Symbol('kByteLength');
+const maskBuffer$1 = Buffer.alloc(4);
+const RANDOM_POOL_SIZE$1 = 8 * 1024;
+let randomPool$1;
+let randomPoolPointer$1 = RANDOM_POOL_SIZE$1;
+
+/**
+ * HyBi Sender implementation.
+ */
+let Sender$3 = class Sender {
+  /**
+   * Creates a Sender instance.
+   *
+   * @param {Duplex} socket The connection socket
+   * @param {Object} [extensions] An object containing the negotiated extensions
+   * @param {Function} [generateMask] The function used to generate the masking
+   *     key
+   */
+  constructor(socket, extensions, generateMask) {
+    this._extensions = extensions || {};
+
+    if (generateMask) {
+      this._generateMask = generateMask;
+      this._maskBuffer = Buffer.alloc(4);
+    }
+
+    this._socket = socket;
+
+    this._firstFragment = true;
+    this._compress = false;
+
+    this._bufferedBytes = 0;
+    this._deflating = false;
+    this._queue = [];
+  }
+
+  /**
+   * Frames a piece of data according to the HyBi WebSocket protocol.
+   *
+   * @param {(Buffer|String)} data The data to frame
+   * @param {Object} options Options object
+   * @param {Boolean} [options.fin=false] Specifies whether or not to set the
+   *     FIN bit
+   * @param {Function} [options.generateMask] The function used to generate the
+   *     masking key
+   * @param {Boolean} [options.mask=false] Specifies whether or not to mask
+   *     `data`
+   * @param {Buffer} [options.maskBuffer] The buffer used to store the masking
+   *     key
+   * @param {Number} options.opcode The opcode
+   * @param {Boolean} [options.readOnly=false] Specifies whether `data` can be
+   *     modified
+   * @param {Boolean} [options.rsv1=false] Specifies whether or not to set the
+   *     RSV1 bit
+   * @return {(Buffer|String)[]} The framed data
+   * @public
+   */
+  static frame(data, options) {
+    let mask;
+    let merge = false;
+    let offset = 2;
+    let skipMasking = false;
+
+    if (options.mask) {
+      mask = options.maskBuffer || maskBuffer$1;
+
+      if (options.generateMask) {
+        options.generateMask(mask);
+      } else {
+        if (randomPoolPointer$1 === RANDOM_POOL_SIZE$1) {
+          /* istanbul ignore else  */
+          if (randomPool$1 === undefined) {
+            //
+            // This is lazily initialized because server-sent frames must not
+            // be masked so it may never be used.
+            //
+            randomPool$1 = Buffer.alloc(RANDOM_POOL_SIZE$1);
+          }
+
+          randomFillSync$1(randomPool$1, 0, RANDOM_POOL_SIZE$1);
+          randomPoolPointer$1 = 0;
+        }
+
+        mask[0] = randomPool$1[randomPoolPointer$1++];
+        mask[1] = randomPool$1[randomPoolPointer$1++];
+        mask[2] = randomPool$1[randomPoolPointer$1++];
+        mask[3] = randomPool$1[randomPoolPointer$1++];
+      }
+
+      skipMasking = (mask[0] | mask[1] | mask[2] | mask[3]) === 0;
+      offset = 6;
+    }
+
+    let dataLength;
+
+    if (typeof data === 'string') {
+      if (
+        (!options.mask || skipMasking) &&
+        options[kByteLength$1] !== undefined
+      ) {
+        dataLength = options[kByteLength$1];
+      } else {
+        data = Buffer.from(data);
+        dataLength = data.length;
+      }
+    } else {
+      dataLength = data.length;
+      merge = options.mask && options.readOnly && !skipMasking;
+    }
+
+    let payloadLength = dataLength;
+
+    if (dataLength >= 65536) {
+      offset += 8;
+      payloadLength = 127;
+    } else if (dataLength > 125) {
+      offset += 2;
+      payloadLength = 126;
+    }
+
+    const target = Buffer.allocUnsafe(merge ? dataLength + offset : offset);
+
+    target[0] = options.fin ? options.opcode | 0x80 : options.opcode;
+    if (options.rsv1) target[0] |= 0x40;
+
+    target[1] = payloadLength;
+
+    if (payloadLength === 126) {
+      target.writeUInt16BE(dataLength, 2);
+    } else if (payloadLength === 127) {
+      target[2] = target[3] = 0;
+      target.writeUIntBE(dataLength, 4, 6);
+    }
+
+    if (!options.mask) return [target, data];
+
+    target[1] |= 0x80;
+    target[offset - 4] = mask[0];
+    target[offset - 3] = mask[1];
+    target[offset - 2] = mask[2];
+    target[offset - 1] = mask[3];
+
+    if (skipMasking) return [target, data];
+
+    if (merge) {
+      applyMask$1(data, mask, target, offset, dataLength);
+      return [target];
+    }
+
+    applyMask$1(data, mask, data, 0, dataLength);
+    return [target, data];
+  }
+
+  /**
+   * Sends a close message to the other peer.
+   *
+   * @param {Number} [code] The status code component of the body
+   * @param {(String|Buffer)} [data] The message component of the body
+   * @param {Boolean} [mask=false] Specifies whether or not to mask the message
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  close(code, data, mask, cb) {
+    let buf;
+
+    if (code === undefined) {
+      buf = EMPTY_BUFFER$5;
+    } else if (typeof code !== 'number' || !isValidStatusCode$3(code)) {
+      throw new TypeError('First argument must be a valid error code number');
+    } else if (data === undefined || !data.length) {
+      buf = Buffer.allocUnsafe(2);
+      buf.writeUInt16BE(code, 0);
+    } else {
+      const length = Buffer.byteLength(data);
+
+      if (length > 123) {
+        throw new RangeError('The message must not be greater than 123 bytes');
+      }
+
+      buf = Buffer.allocUnsafe(2 + length);
+      buf.writeUInt16BE(code, 0);
+
+      if (typeof data === 'string') {
+        buf.write(data, 2);
+      } else {
+        buf.set(data, 2);
+      }
+    }
+
+    const options = {
+      [kByteLength$1]: buf.length,
+      fin: true,
+      generateMask: this._generateMask,
+      mask,
+      maskBuffer: this._maskBuffer,
+      opcode: 0x08,
+      readOnly: false,
+      rsv1: false
+    };
+
+    if (this._deflating) {
+      this.enqueue([this.dispatch, buf, false, options, cb]);
+    } else {
+      this.sendFrame(Sender.frame(buf, options), cb);
+    }
+  }
+
+  /**
+   * Sends a ping message to the other peer.
+   *
+   * @param {*} data The message to send
+   * @param {Boolean} [mask=false] Specifies whether or not to mask `data`
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  ping(data, mask, cb) {
+    let byteLength;
+    let readOnly;
+
+    if (typeof data === 'string') {
+      byteLength = Buffer.byteLength(data);
+      readOnly = false;
+    } else {
+      data = toBuffer$4(data);
+      byteLength = data.length;
+      readOnly = toBuffer$4.readOnly;
+    }
+
+    if (byteLength > 125) {
+      throw new RangeError('The data size must not be greater than 125 bytes');
+    }
+
+    const options = {
+      [kByteLength$1]: byteLength,
+      fin: true,
+      generateMask: this._generateMask,
+      mask,
+      maskBuffer: this._maskBuffer,
+      opcode: 0x09,
+      readOnly,
+      rsv1: false
+    };
+
+    if (this._deflating) {
+      this.enqueue([this.dispatch, data, false, options, cb]);
+    } else {
+      this.sendFrame(Sender.frame(data, options), cb);
+    }
+  }
+
+  /**
+   * Sends a pong message to the other peer.
+   *
+   * @param {*} data The message to send
+   * @param {Boolean} [mask=false] Specifies whether or not to mask `data`
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  pong(data, mask, cb) {
+    let byteLength;
+    let readOnly;
+
+    if (typeof data === 'string') {
+      byteLength = Buffer.byteLength(data);
+      readOnly = false;
+    } else {
+      data = toBuffer$4(data);
+      byteLength = data.length;
+      readOnly = toBuffer$4.readOnly;
+    }
+
+    if (byteLength > 125) {
+      throw new RangeError('The data size must not be greater than 125 bytes');
+    }
+
+    const options = {
+      [kByteLength$1]: byteLength,
+      fin: true,
+      generateMask: this._generateMask,
+      mask,
+      maskBuffer: this._maskBuffer,
+      opcode: 0x0a,
+      readOnly,
+      rsv1: false
+    };
+
+    if (this._deflating) {
+      this.enqueue([this.dispatch, data, false, options, cb]);
+    } else {
+      this.sendFrame(Sender.frame(data, options), cb);
+    }
+  }
+
+  /**
+   * Sends a data message to the other peer.
+   *
+   * @param {*} data The message to send
+   * @param {Object} options Options object
+   * @param {Boolean} [options.binary=false] Specifies whether `data` is binary
+   *     or text
+   * @param {Boolean} [options.compress=false] Specifies whether or not to
+   *     compress `data`
+   * @param {Boolean} [options.fin=false] Specifies whether the fragment is the
+   *     last one
+   * @param {Boolean} [options.mask=false] Specifies whether or not to mask
+   *     `data`
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  send(data, options, cb) {
+    const perMessageDeflate = this._extensions[PerMessageDeflate$7.extensionName];
+    let opcode = options.binary ? 2 : 1;
+    let rsv1 = options.compress;
+
+    let byteLength;
+    let readOnly;
+
+    if (typeof data === 'string') {
+      byteLength = Buffer.byteLength(data);
+      readOnly = false;
+    } else {
+      data = toBuffer$4(data);
+      byteLength = data.length;
+      readOnly = toBuffer$4.readOnly;
+    }
+
+    if (this._firstFragment) {
+      this._firstFragment = false;
+      if (
+        rsv1 &&
+        perMessageDeflate &&
+        perMessageDeflate.params[
+          perMessageDeflate._isServer
+            ? 'server_no_context_takeover'
+            : 'client_no_context_takeover'
+        ]
+      ) {
+        rsv1 = byteLength >= perMessageDeflate._threshold;
+      }
+      this._compress = rsv1;
+    } else {
+      rsv1 = false;
+      opcode = 0;
+    }
+
+    if (options.fin) this._firstFragment = true;
+
+    if (perMessageDeflate) {
+      const opts = {
+        [kByteLength$1]: byteLength,
+        fin: options.fin,
+        generateMask: this._generateMask,
+        mask: options.mask,
+        maskBuffer: this._maskBuffer,
+        opcode,
+        readOnly,
+        rsv1
+      };
+
+      if (this._deflating) {
+        this.enqueue([this.dispatch, data, this._compress, opts, cb]);
+      } else {
+        this.dispatch(data, this._compress, opts, cb);
+      }
+    } else {
+      this.sendFrame(
+        Sender.frame(data, {
+          [kByteLength$1]: byteLength,
+          fin: options.fin,
+          generateMask: this._generateMask,
+          mask: options.mask,
+          maskBuffer: this._maskBuffer,
+          opcode,
+          readOnly,
+          rsv1: false
+        }),
+        cb
+      );
+    }
+  }
+
+  /**
+   * Dispatches a message.
+   *
+   * @param {(Buffer|String)} data The message to send
+   * @param {Boolean} [compress=false] Specifies whether or not to compress
+   *     `data`
+   * @param {Object} options Options object
+   * @param {Boolean} [options.fin=false] Specifies whether or not to set the
+   *     FIN bit
+   * @param {Function} [options.generateMask] The function used to generate the
+   *     masking key
+   * @param {Boolean} [options.mask=false] Specifies whether or not to mask
+   *     `data`
+   * @param {Buffer} [options.maskBuffer] The buffer used to store the masking
+   *     key
+   * @param {Number} options.opcode The opcode
+   * @param {Boolean} [options.readOnly=false] Specifies whether `data` can be
+   *     modified
+   * @param {Boolean} [options.rsv1=false] Specifies whether or not to set the
+   *     RSV1 bit
+   * @param {Function} [cb] Callback
+   * @private
+   */
+  dispatch(data, compress, options, cb) {
+    if (!compress) {
+      this.sendFrame(Sender.frame(data, options), cb);
+      return;
+    }
+
+    const perMessageDeflate = this._extensions[PerMessageDeflate$7.extensionName];
+
+    this._bufferedBytes += options[kByteLength$1];
+    this._deflating = true;
+    perMessageDeflate.compress(data, options.fin, (_, buf) => {
+      if (this._socket.destroyed) {
+        const err = new Error(
+          'The socket was closed while data was being compressed'
+        );
+
+        if (typeof cb === 'function') cb(err);
+
+        for (let i = 0; i < this._queue.length; i++) {
+          const params = this._queue[i];
+          const callback = params[params.length - 1];
+
+          if (typeof callback === 'function') callback(err);
+        }
+
+        return;
+      }
+
+      this._bufferedBytes -= options[kByteLength$1];
+      this._deflating = false;
+      options.readOnly = false;
+      this.sendFrame(Sender.frame(buf, options), cb);
+      this.dequeue();
+    });
+  }
+
+  /**
+   * Executes queued send operations.
+   *
+   * @private
+   */
+  dequeue() {
+    while (!this._deflating && this._queue.length) {
+      const params = this._queue.shift();
+
+      this._bufferedBytes -= params[3][kByteLength$1];
+      Reflect.apply(params[0], this, params.slice(1));
+    }
+  }
+
+  /**
+   * Enqueues a send operation.
+   *
+   * @param {Array} params Send operation parameters.
+   * @private
+   */
+  enqueue(params) {
+    this._bufferedBytes += params[3][kByteLength$1];
+    this._queue.push(params);
+  }
+
+  /**
+   * Sends a frame.
+   *
+   * @param {Buffer[]} list The frame to send
+   * @param {Function} [cb] Callback
+   * @private
+   */
+  sendFrame(list, cb) {
+    if (list.length === 2) {
+      this._socket.cork();
+      this._socket.write(list[0]);
+      this._socket.write(list[1], cb);
+      this._socket.uncork();
+    } else {
+      this._socket.write(list[0], cb);
+    }
+  }
+};
+
+var sender$1 = Sender$3;
+
+const sender_default$1 = /*@__PURE__*/getDefaultExportFromCjs(sender$1);
+
+const require$$1$1 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$1$1$1);
+
+const require$$3 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$3$2);
+
+const require$$4 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$4$1);
+
+const { kForOnEventAttribute: kForOnEventAttribute$3, kListener: kListener$3 } = constants$1;
+
+const kCode$1 = Symbol('kCode');
+const kData$1 = Symbol('kData');
+const kError$2 = Symbol('kError');
+const kMessage$1 = Symbol('kMessage');
+const kReason$1 = Symbol('kReason');
+const kTarget$1 = Symbol('kTarget');
+const kType$1 = Symbol('kType');
+const kWasClean$1 = Symbol('kWasClean');
+
+/**
+ * Class representing an event.
+ */
+let Event$1 = class Event {
+  /**
+   * Create a new `Event`.
+   *
+   * @param {String} type The name of the event
+   * @throws {TypeError} If the `type` argument is not specified
+   */
+  constructor(type) {
+    this[kTarget$1] = null;
+    this[kType$1] = type;
+  }
+
+  /**
+   * @type {*}
+   */
+  get target() {
+    return this[kTarget$1];
+  }
+
+  /**
+   * @type {String}
+   */
+  get type() {
+    return this[kType$1];
+  }
+};
+
+Object.defineProperty(Event$1.prototype, 'target', { enumerable: true });
+Object.defineProperty(Event$1.prototype, 'type', { enumerable: true });
+
+/**
+ * Class representing a close event.
+ *
+ * @extends Event
+ */
+let CloseEvent$1 = class CloseEvent extends Event$1 {
+  /**
+   * Create a new `CloseEvent`.
+   *
+   * @param {String} type The name of the event
+   * @param {Object} [options] A dictionary object that allows for setting
+   *     attributes via object members of the same name
+   * @param {Number} [options.code=0] The status code explaining why the
+   *     connection was closed
+   * @param {String} [options.reason=''] A human-readable string explaining why
+   *     the connection was closed
+   * @param {Boolean} [options.wasClean=false] Indicates whether or not the
+   *     connection was cleanly closed
+   */
+  constructor(type, options = {}) {
+    super(type);
+
+    this[kCode$1] = options.code === undefined ? 0 : options.code;
+    this[kReason$1] = options.reason === undefined ? '' : options.reason;
+    this[kWasClean$1] = options.wasClean === undefined ? false : options.wasClean;
+  }
+
+  /**
+   * @type {Number}
+   */
+  get code() {
+    return this[kCode$1];
+  }
+
+  /**
+   * @type {String}
+   */
+  get reason() {
+    return this[kReason$1];
+  }
+
+  /**
+   * @type {Boolean}
+   */
+  get wasClean() {
+    return this[kWasClean$1];
+  }
+};
+
+Object.defineProperty(CloseEvent$1.prototype, 'code', { enumerable: true });
+Object.defineProperty(CloseEvent$1.prototype, 'reason', { enumerable: true });
+Object.defineProperty(CloseEvent$1.prototype, 'wasClean', { enumerable: true });
+
+/**
+ * Class representing an error event.
+ *
+ * @extends Event
+ */
+let ErrorEvent$1 = class ErrorEvent extends Event$1 {
+  /**
+   * Create a new `ErrorEvent`.
+   *
+   * @param {String} type The name of the event
+   * @param {Object} [options] A dictionary object that allows for setting
+   *     attributes via object members of the same name
+   * @param {*} [options.error=null] The error that generated this event
+   * @param {String} [options.message=''] The error message
+   */
+  constructor(type, options = {}) {
+    super(type);
+
+    this[kError$2] = options.error === undefined ? null : options.error;
+    this[kMessage$1] = options.message === undefined ? '' : options.message;
+  }
+
+  /**
+   * @type {*}
+   */
+  get error() {
+    return this[kError$2];
+  }
+
+  /**
+   * @type {String}
+   */
+  get message() {
+    return this[kMessage$1];
+  }
+};
+
+Object.defineProperty(ErrorEvent$1.prototype, 'error', { enumerable: true });
+Object.defineProperty(ErrorEvent$1.prototype, 'message', { enumerable: true });
+
+/**
+ * Class representing a message event.
+ *
+ * @extends Event
+ */
+let MessageEvent$1 = class MessageEvent extends Event$1 {
+  /**
+   * Create a new `MessageEvent`.
+   *
+   * @param {String} type The name of the event
+   * @param {Object} [options] A dictionary object that allows for setting
+   *     attributes via object members of the same name
+   * @param {*} [options.data=null] The message content
+   */
+  constructor(type, options = {}) {
+    super(type);
+
+    this[kData$1] = options.data === undefined ? null : options.data;
+  }
+
+  /**
+   * @type {*}
+   */
+  get data() {
+    return this[kData$1];
+  }
+};
+
+Object.defineProperty(MessageEvent$1.prototype, 'data', { enumerable: true });
+
+/**
+ * This provides methods for emulating the `EventTarget` interface. It's not
+ * meant to be used directly.
+ *
+ * @mixin
+ */
+const EventTarget$1 = {
+  /**
+   * Register an event listener.
+   *
+   * @param {String} type A string representing the event type to listen for
+   * @param {(Function|Object)} handler The listener to add
+   * @param {Object} [options] An options object specifies characteristics about
+   *     the event listener
+   * @param {Boolean} [options.once=false] A `Boolean` indicating that the
+   *     listener should be invoked at most once after being added. If `true`,
+   *     the listener would be automatically removed when invoked.
+   * @public
+   */
+  addEventListener(type, handler, options = {}) {
+    for (const listener of this.listeners(type)) {
+      if (
+        !options[kForOnEventAttribute$3] &&
+        listener[kListener$3] === handler &&
+        !listener[kForOnEventAttribute$3]
+      ) {
+        return;
+      }
+    }
+
+    let wrapper;
+
+    if (type === 'message') {
+      wrapper = function onMessage(data, isBinary) {
+        const event = new MessageEvent$1('message', {
+          data: isBinary ? data : data.toString()
+        });
+
+        event[kTarget$1] = this;
+        callListener$1(handler, this, event);
+      };
+    } else if (type === 'close') {
+      wrapper = function onClose(code, message) {
+        const event = new CloseEvent$1('close', {
+          code,
+          reason: message.toString(),
+          wasClean: this._closeFrameReceived && this._closeFrameSent
+        });
+
+        event[kTarget$1] = this;
+        callListener$1(handler, this, event);
+      };
+    } else if (type === 'error') {
+      wrapper = function onError(error) {
+        const event = new ErrorEvent$1('error', {
+          error,
+          message: error.message
+        });
+
+        event[kTarget$1] = this;
+        callListener$1(handler, this, event);
+      };
+    } else if (type === 'open') {
+      wrapper = function onOpen() {
+        const event = new Event$1('open');
+
+        event[kTarget$1] = this;
+        callListener$1(handler, this, event);
+      };
+    } else {
+      return;
+    }
+
+    wrapper[kForOnEventAttribute$3] = !!options[kForOnEventAttribute$3];
+    wrapper[kListener$3] = handler;
+
+    if (options.once) {
+      this.once(type, wrapper);
+    } else {
+      this.on(type, wrapper);
+    }
+  },
+
+  /**
+   * Remove an event listener.
+   *
+   * @param {String} type A string representing the event type to remove
+   * @param {(Function|Object)} handler The listener to remove
+   * @public
+   */
+  removeEventListener(type, handler) {
+    for (const listener of this.listeners(type)) {
+      if (listener[kListener$3] === handler && !listener[kForOnEventAttribute$3]) {
+        this.removeListener(type, listener);
+        break;
+      }
+    }
+  }
+};
+
+var eventTarget$1 = {
+  EventTarget: EventTarget$1};
+
+/**
+ * Call an event listener
+ *
+ * @param {(Function|Object)} listener The listener to call
+ * @param {*} thisArg The value to use as `this`` when calling the listener
+ * @param {Event} event The event to pass to the listener
+ * @private
+ */
+function callListener$1(listener, thisArg, event) {
+  if (typeof listener === 'object' && listener.handleEvent) {
+    listener.handleEvent.call(listener, event);
+  } else {
+    listener.call(thisArg, event);
+  }
+}
+
+const { tokenChars: tokenChars$4 } = validationExports$1;
+
+/**
+ * Adds an offer to the map of extension offers or a parameter to the map of
+ * parameters.
+ *
+ * @param {Object} dest The map of extension offers or parameters
+ * @param {String} name The extension or parameter name
+ * @param {(Object|Boolean|String)} elem The extension parameters or the
+ *     parameter value
+ * @private
+ */
+function push$1(dest, name, elem) {
+  if (dest[name] === undefined) dest[name] = [elem];
+  else dest[name].push(elem);
+}
+
+/**
+ * Parses the `Sec-WebSocket-Extensions` header into an object.
+ *
+ * @param {String} header The field value of the header
+ * @return {Object} The parsed object
+ * @public
+ */
+function parse$6(header) {
+  const offers = Object.create(null);
+  let params = Object.create(null);
+  let mustUnescape = false;
+  let isEscaping = false;
+  let inQuotes = false;
+  let extensionName;
+  let paramName;
+  let start = -1;
+  let code = -1;
+  let end = -1;
+  let i = 0;
+
+  for (; i < header.length; i++) {
+    code = header.charCodeAt(i);
+
+    if (extensionName === undefined) {
+      if (end === -1 && tokenChars$4[code] === 1) {
+        if (start === -1) start = i;
+      } else if (
+        i !== 0 &&
+        (code === 0x20 /* ' ' */ || code === 0x09) /* '\t' */
+      ) {
+        if (end === -1 && start !== -1) end = i;
+      } else if (code === 0x3b /* ';' */ || code === 0x2c /* ',' */) {
+        if (start === -1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+
+        if (end === -1) end = i;
+        const name = header.slice(start, end);
+        if (code === 0x2c) {
+          push$1(offers, name, params);
+          params = Object.create(null);
+        } else {
+          extensionName = name;
+        }
+
+        start = end = -1;
+      } else {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+    } else if (paramName === undefined) {
+      if (end === -1 && tokenChars$4[code] === 1) {
+        if (start === -1) start = i;
+      } else if (code === 0x20 || code === 0x09) {
+        if (end === -1 && start !== -1) end = i;
+      } else if (code === 0x3b || code === 0x2c) {
+        if (start === -1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+
+        if (end === -1) end = i;
+        push$1(params, header.slice(start, end), true);
+        if (code === 0x2c) {
+          push$1(offers, extensionName, params);
+          params = Object.create(null);
+          extensionName = undefined;
+        }
+
+        start = end = -1;
+      } else if (code === 0x3d /* '=' */ && start !== -1 && end === -1) {
+        paramName = header.slice(start, i);
+        start = end = -1;
+      } else {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+    } else {
+      //
+      // The value of a quoted-string after unescaping must conform to the
+      // token ABNF, so only token characters are valid.
+      // Ref: https://tools.ietf.org/html/rfc6455#section-9.1
+      //
+      if (isEscaping) {
+        if (tokenChars$4[code] !== 1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+        if (start === -1) start = i;
+        else if (!mustUnescape) mustUnescape = true;
+        isEscaping = false;
+      } else if (inQuotes) {
+        if (tokenChars$4[code] === 1) {
+          if (start === -1) start = i;
+        } else if (code === 0x22 /* '"' */ && start !== -1) {
+          inQuotes = false;
+          end = i;
+        } else if (code === 0x5c /* '\' */) {
+          isEscaping = true;
+        } else {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+      } else if (code === 0x22 && header.charCodeAt(i - 1) === 0x3d) {
+        inQuotes = true;
+      } else if (end === -1 && tokenChars$4[code] === 1) {
+        if (start === -1) start = i;
+      } else if (start !== -1 && (code === 0x20 || code === 0x09)) {
+        if (end === -1) end = i;
+      } else if (code === 0x3b || code === 0x2c) {
+        if (start === -1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+
+        if (end === -1) end = i;
+        let value = header.slice(start, end);
+        if (mustUnescape) {
+          value = value.replace(/\\/g, '');
+          mustUnescape = false;
+        }
+        push$1(params, paramName, value);
+        if (code === 0x2c) {
+          push$1(offers, extensionName, params);
+          params = Object.create(null);
+          extensionName = undefined;
+        }
+
+        paramName = undefined;
+        start = end = -1;
+      } else {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+    }
+  }
+
+  if (start === -1 || inQuotes || code === 0x20 || code === 0x09) {
+    throw new SyntaxError('Unexpected end of input');
+  }
+
+  if (end === -1) end = i;
+  const token = header.slice(start, end);
+  if (extensionName === undefined) {
+    push$1(offers, token, params);
+  } else {
+    if (paramName === undefined) {
+      push$1(params, token, true);
+    } else if (mustUnescape) {
+      push$1(params, paramName, token.replace(/\\/g, ''));
+    } else {
+      push$1(params, paramName, token);
+    }
+    push$1(offers, extensionName, params);
+  }
+
+  return offers;
+}
+
+/**
+ * Builds the `Sec-WebSocket-Extensions` header field value.
+ *
+ * @param {Object} extensions The map of extensions and parameters to format
+ * @return {String} A string representing the given object
+ * @public
+ */
+function format$3(extensions) {
+  return Object.keys(extensions)
+    .map((extension) => {
+      let configurations = extensions[extension];
+      if (!Array.isArray(configurations)) configurations = [configurations];
+      return configurations
+        .map((params) => {
+          return [extension]
+            .concat(
+              Object.keys(params).map((k) => {
+                let values = params[k];
+                if (!Array.isArray(values)) values = [values];
+                return values
+                  .map((v) => (v === true ? k : `${k}=${v}`))
+                  .join('; ');
+              })
+            )
+            .join('; ');
+        })
+        .join(', ');
+    })
+    .join(', ');
+}
+
+var extension$3 = { format: format$3, parse: parse$6 };
+
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex|Readable$", "caughtErrors": "none" }] */
+
+const EventEmitter$3 = require$$0$3;
+const https$1 = require$$1$1;
+const http$3 = require$$1$4;
+const net$1 = require$$3;
+const tls$1 = require$$4;
+const { randomBytes: randomBytes$1, createHash: createHash$3 } = require$$3$1;
+const { Duplex: Duplex$5, Readable: Readable$1 } = require$$2$1;
+const { URL: URL$2 } = require$$7;
+
+const PerMessageDeflate$6 = permessageDeflate$1;
+const Receiver$2 = receiver$1;
+const Sender$2 = sender$1;
+const {
+  BINARY_TYPES: BINARY_TYPES$2,
+  EMPTY_BUFFER: EMPTY_BUFFER$4,
+  GUID: GUID$3,
+  kForOnEventAttribute: kForOnEventAttribute$2,
+  kListener: kListener$2,
+  kStatusCode: kStatusCode$3,
+  kWebSocket: kWebSocket$4,
+  NOOP: NOOP$1
+} = constants$1;
+const {
+  EventTarget: { addEventListener: addEventListener$1, removeEventListener: removeEventListener$1 }
+} = eventTarget$1;
+const { format: format$2, parse: parse$5 } = extension$3;
+const { toBuffer: toBuffer$3 } = bufferUtilExports$1;
+
+const closeTimeout$1 = 30 * 1000;
+const kAborted$1 = Symbol('kAborted');
+const protocolVersions$1 = [8, 13];
+const readyStates$1 = ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'];
+const subprotocolRegex$1 = /^[!#$%&'*+\-.0-9A-Z^_`|a-z~]+$/;
+
+/**
+ * Class representing a WebSocket.
+ *
+ * @extends EventEmitter
+ */
+let WebSocket$6 = class WebSocket extends EventEmitter$3 {
+  /**
+   * Create a new `WebSocket`.
+   *
+   * @param {(String|URL)} address The URL to which to connect
+   * @param {(String|String[])} [protocols] The subprotocols
+   * @param {Object} [options] Connection options
+   */
+  constructor(address, protocols, options) {
+    super();
+
+    this._binaryType = BINARY_TYPES$2[0];
+    this._closeCode = 1006;
+    this._closeFrameReceived = false;
+    this._closeFrameSent = false;
+    this._closeMessage = EMPTY_BUFFER$4;
+    this._closeTimer = null;
+    this._extensions = {};
+    this._paused = false;
+    this._protocol = '';
+    this._readyState = WebSocket.CONNECTING;
+    this._receiver = null;
+    this._sender = null;
+    this._socket = null;
+
+    if (address !== null) {
+      this._bufferedAmount = 0;
+      this._isServer = false;
+      this._redirects = 0;
+
+      if (protocols === undefined) {
+        protocols = [];
+      } else if (!Array.isArray(protocols)) {
+        if (typeof protocols === 'object' && protocols !== null) {
+          options = protocols;
+          protocols = [];
+        } else {
+          protocols = [protocols];
+        }
+      }
+
+      initAsClient$1(this, address, protocols, options);
+    } else {
+      this._autoPong = options.autoPong;
+      this._isServer = true;
+    }
+  }
+
+  /**
+   * This deviates from the WHATWG interface since ws doesn't support the
+   * required default "blob" type (instead we define a custom "nodebuffer"
+   * type).
+   *
+   * @type {String}
+   */
+  get binaryType() {
+    return this._binaryType;
+  }
+
+  set binaryType(type) {
+    if (!BINARY_TYPES$2.includes(type)) return;
+
+    this._binaryType = type;
+
+    //
+    // Allow to change `binaryType` on the fly.
+    //
+    if (this._receiver) this._receiver._binaryType = type;
+  }
+
+  /**
+   * @type {Number}
+   */
+  get bufferedAmount() {
+    if (!this._socket) return this._bufferedAmount;
+
+    return this._socket._writableState.length + this._sender._bufferedBytes;
+  }
+
+  /**
+   * @type {String}
+   */
+  get extensions() {
+    return Object.keys(this._extensions).join();
+  }
+
+  /**
+   * @type {Boolean}
+   */
+  get isPaused() {
+    return this._paused;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onclose() {
+    return null;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onerror() {
+    return null;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onopen() {
+    return null;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onmessage() {
+    return null;
+  }
+
+  /**
+   * @type {String}
+   */
+  get protocol() {
+    return this._protocol;
+  }
+
+  /**
+   * @type {Number}
+   */
+  get readyState() {
+    return this._readyState;
+  }
+
+  /**
+   * @type {String}
+   */
+  get url() {
+    return this._url;
+  }
+
+  /**
+   * Set up the socket and the internal resources.
+   *
+   * @param {Duplex} socket The network socket between the server and client
+   * @param {Buffer} head The first packet of the upgraded stream
+   * @param {Object} options Options object
+   * @param {Boolean} [options.allowSynchronousEvents=false] Specifies whether
+   *     any of the `'message'`, `'ping'`, and `'pong'` events can be emitted
+   *     multiple times in the same tick
+   * @param {Function} [options.generateMask] The function used to generate the
+   *     masking key
+   * @param {Number} [options.maxPayload=0] The maximum allowed message size
+   * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+   *     not to skip UTF-8 validation for text and close messages
+   * @private
+   */
+  setSocket(socket, head, options) {
+    const receiver = new Receiver$2({
+      allowSynchronousEvents: options.allowSynchronousEvents,
+      binaryType: this.binaryType,
+      extensions: this._extensions,
+      isServer: this._isServer,
+      maxPayload: options.maxPayload,
+      skipUTF8Validation: options.skipUTF8Validation
+    });
+
+    this._sender = new Sender$2(socket, this._extensions, options.generateMask);
+    this._receiver = receiver;
+    this._socket = socket;
+
+    receiver[kWebSocket$4] = this;
+    socket[kWebSocket$4] = this;
+
+    receiver.on('conclude', receiverOnConclude$1);
+    receiver.on('drain', receiverOnDrain$1);
+    receiver.on('error', receiverOnError$1);
+    receiver.on('message', receiverOnMessage$1);
+    receiver.on('ping', receiverOnPing$1);
+    receiver.on('pong', receiverOnPong$1);
+
+    //
+    // These methods may not be available if `socket` is just a `Duplex`.
+    //
+    if (socket.setTimeout) socket.setTimeout(0);
+    if (socket.setNoDelay) socket.setNoDelay();
+
+    if (head.length > 0) socket.unshift(head);
+
+    socket.on('close', socketOnClose$1);
+    socket.on('data', socketOnData$1);
+    socket.on('end', socketOnEnd$1);
+    socket.on('error', socketOnError$3);
+
+    this._readyState = WebSocket.OPEN;
+    this.emit('open');
+  }
+
+  /**
+   * Emit the `'close'` event.
+   *
+   * @private
+   */
+  emitClose() {
+    if (!this._socket) {
+      this._readyState = WebSocket.CLOSED;
+      this.emit('close', this._closeCode, this._closeMessage);
+      return;
+    }
+
+    if (this._extensions[PerMessageDeflate$6.extensionName]) {
+      this._extensions[PerMessageDeflate$6.extensionName].cleanup();
+    }
+
+    this._receiver.removeAllListeners();
+    this._readyState = WebSocket.CLOSED;
+    this.emit('close', this._closeCode, this._closeMessage);
+  }
+
+  /**
+   * Start a closing handshake.
+   *
+   *          +----------+   +-----------+   +----------+
+   *     - - -|ws.close()|-->|close frame|-->|ws.close()|- - -
+   *    |     +----------+   +-----------+   +----------+     |
+   *          +----------+   +-----------+         |
+   * CLOSING  |ws.close()|<--|close frame|<--+-----+       CLOSING
+   *          +----------+   +-----------+   |
+   *    |           |                        |   +---+        |
+   *                +------------------------+-->|fin| - - - -
+   *    |         +---+                      |   +---+
+   *     - - - - -|fin|<---------------------+
+   *              +---+
+   *
+   * @param {Number} [code] Status code explaining why the connection is closing
+   * @param {(String|Buffer)} [data] The reason why the connection is
+   *     closing
+   * @public
+   */
+  close(code, data) {
+    if (this.readyState === WebSocket.CLOSED) return;
+    if (this.readyState === WebSocket.CONNECTING) {
+      const msg = 'WebSocket was closed before the connection was established';
+      abortHandshake$3(this, this._req, msg);
+      return;
+    }
+
+    if (this.readyState === WebSocket.CLOSING) {
+      if (
+        this._closeFrameSent &&
+        (this._closeFrameReceived || this._receiver._writableState.errorEmitted)
+      ) {
+        this._socket.end();
+      }
+
+      return;
+    }
+
+    this._readyState = WebSocket.CLOSING;
+    this._sender.close(code, data, !this._isServer, (err) => {
+      //
+      // This error is handled by the `'error'` listener on the socket. We only
+      // want to know if the close frame has been sent here.
+      //
+      if (err) return;
+
+      this._closeFrameSent = true;
+
+      if (
+        this._closeFrameReceived ||
+        this._receiver._writableState.errorEmitted
+      ) {
+        this._socket.end();
+      }
+    });
+
+    //
+    // Specify a timeout for the closing handshake to complete.
+    //
+    this._closeTimer = setTimeout(
+      this._socket.destroy.bind(this._socket),
+      closeTimeout$1
+    );
+  }
+
+  /**
+   * Pause the socket.
+   *
+   * @public
+   */
+  pause() {
+    if (
+      this.readyState === WebSocket.CONNECTING ||
+      this.readyState === WebSocket.CLOSED
+    ) {
+      return;
+    }
+
+    this._paused = true;
+    this._socket.pause();
+  }
+
+  /**
+   * Send a ping.
+   *
+   * @param {*} [data] The data to send
+   * @param {Boolean} [mask] Indicates whether or not to mask `data`
+   * @param {Function} [cb] Callback which is executed when the ping is sent
+   * @public
+   */
+  ping(data, mask, cb) {
+    if (this.readyState === WebSocket.CONNECTING) {
+      throw new Error('WebSocket is not open: readyState 0 (CONNECTING)');
+    }
+
+    if (typeof data === 'function') {
+      cb = data;
+      data = mask = undefined;
+    } else if (typeof mask === 'function') {
+      cb = mask;
+      mask = undefined;
+    }
+
+    if (typeof data === 'number') data = data.toString();
+
+    if (this.readyState !== WebSocket.OPEN) {
+      sendAfterClose$1(this, data, cb);
+      return;
+    }
+
+    if (mask === undefined) mask = !this._isServer;
+    this._sender.ping(data || EMPTY_BUFFER$4, mask, cb);
+  }
+
+  /**
+   * Send a pong.
+   *
+   * @param {*} [data] The data to send
+   * @param {Boolean} [mask] Indicates whether or not to mask `data`
+   * @param {Function} [cb] Callback which is executed when the pong is sent
+   * @public
+   */
+  pong(data, mask, cb) {
+    if (this.readyState === WebSocket.CONNECTING) {
+      throw new Error('WebSocket is not open: readyState 0 (CONNECTING)');
+    }
+
+    if (typeof data === 'function') {
+      cb = data;
+      data = mask = undefined;
+    } else if (typeof mask === 'function') {
+      cb = mask;
+      mask = undefined;
+    }
+
+    if (typeof data === 'number') data = data.toString();
+
+    if (this.readyState !== WebSocket.OPEN) {
+      sendAfterClose$1(this, data, cb);
+      return;
+    }
+
+    if (mask === undefined) mask = !this._isServer;
+    this._sender.pong(data || EMPTY_BUFFER$4, mask, cb);
+  }
+
+  /**
+   * Resume the socket.
+   *
+   * @public
+   */
+  resume() {
+    if (
+      this.readyState === WebSocket.CONNECTING ||
+      this.readyState === WebSocket.CLOSED
+    ) {
+      return;
+    }
+
+    this._paused = false;
+    if (!this._receiver._writableState.needDrain) this._socket.resume();
+  }
+
+  /**
+   * Send a data message.
+   *
+   * @param {*} data The message to send
+   * @param {Object} [options] Options object
+   * @param {Boolean} [options.binary] Specifies whether `data` is binary or
+   *     text
+   * @param {Boolean} [options.compress] Specifies whether or not to compress
+   *     `data`
+   * @param {Boolean} [options.fin=true] Specifies whether the fragment is the
+   *     last one
+   * @param {Boolean} [options.mask] Specifies whether or not to mask `data`
+   * @param {Function} [cb] Callback which is executed when data is written out
+   * @public
+   */
+  send(data, options, cb) {
+    if (this.readyState === WebSocket.CONNECTING) {
+      throw new Error('WebSocket is not open: readyState 0 (CONNECTING)');
+    }
+
+    if (typeof options === 'function') {
+      cb = options;
+      options = {};
+    }
+
+    if (typeof data === 'number') data = data.toString();
+
+    if (this.readyState !== WebSocket.OPEN) {
+      sendAfterClose$1(this, data, cb);
+      return;
+    }
+
+    const opts = {
+      binary: typeof data !== 'string',
+      mask: !this._isServer,
+      compress: true,
+      fin: true,
+      ...options
+    };
+
+    if (!this._extensions[PerMessageDeflate$6.extensionName]) {
+      opts.compress = false;
+    }
+
+    this._sender.send(data || EMPTY_BUFFER$4, opts, cb);
+  }
+
+  /**
+   * Forcibly close the connection.
+   *
+   * @public
+   */
+  terminate() {
+    if (this.readyState === WebSocket.CLOSED) return;
+    if (this.readyState === WebSocket.CONNECTING) {
+      const msg = 'WebSocket was closed before the connection was established';
+      abortHandshake$3(this, this._req, msg);
+      return;
+    }
+
+    if (this._socket) {
+      this._readyState = WebSocket.CLOSING;
+      this._socket.destroy();
+    }
+  }
+};
+
+/**
+ * @constant {Number} CONNECTING
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$6, 'CONNECTING', {
+  enumerable: true,
+  value: readyStates$1.indexOf('CONNECTING')
+});
+
+/**
+ * @constant {Number} CONNECTING
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$6.prototype, 'CONNECTING', {
+  enumerable: true,
+  value: readyStates$1.indexOf('CONNECTING')
+});
+
+/**
+ * @constant {Number} OPEN
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$6, 'OPEN', {
+  enumerable: true,
+  value: readyStates$1.indexOf('OPEN')
+});
+
+/**
+ * @constant {Number} OPEN
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$6.prototype, 'OPEN', {
+  enumerable: true,
+  value: readyStates$1.indexOf('OPEN')
+});
+
+/**
+ * @constant {Number} CLOSING
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$6, 'CLOSING', {
+  enumerable: true,
+  value: readyStates$1.indexOf('CLOSING')
+});
+
+/**
+ * @constant {Number} CLOSING
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$6.prototype, 'CLOSING', {
+  enumerable: true,
+  value: readyStates$1.indexOf('CLOSING')
+});
+
+/**
+ * @constant {Number} CLOSED
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$6, 'CLOSED', {
+  enumerable: true,
+  value: readyStates$1.indexOf('CLOSED')
+});
+
+/**
+ * @constant {Number} CLOSED
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$6.prototype, 'CLOSED', {
+  enumerable: true,
+  value: readyStates$1.indexOf('CLOSED')
+});
+
+[
+  'binaryType',
+  'bufferedAmount',
+  'extensions',
+  'isPaused',
+  'protocol',
+  'readyState',
+  'url'
+].forEach((property) => {
+  Object.defineProperty(WebSocket$6.prototype, property, { enumerable: true });
+});
+
+//
+// Add the `onopen`, `onerror`, `onclose`, and `onmessage` attributes.
+// See https://html.spec.whatwg.org/multipage/comms.html#the-websocket-interface
+//
+['open', 'error', 'close', 'message'].forEach((method) => {
+  Object.defineProperty(WebSocket$6.prototype, `on${method}`, {
+    enumerable: true,
+    get() {
+      for (const listener of this.listeners(method)) {
+        if (listener[kForOnEventAttribute$2]) return listener[kListener$2];
+      }
+
+      return null;
+    },
+    set(handler) {
+      for (const listener of this.listeners(method)) {
+        if (listener[kForOnEventAttribute$2]) {
+          this.removeListener(method, listener);
+          break;
+        }
+      }
+
+      if (typeof handler !== 'function') return;
+
+      this.addEventListener(method, handler, {
+        [kForOnEventAttribute$2]: true
+      });
+    }
+  });
+});
+
+WebSocket$6.prototype.addEventListener = addEventListener$1;
+WebSocket$6.prototype.removeEventListener = removeEventListener$1;
+
+var websocket$2 = WebSocket$6;
+
+/**
+ * Initialize a WebSocket client.
+ *
+ * @param {WebSocket} websocket The client to initialize
+ * @param {(String|URL)} address The URL to which to connect
+ * @param {Array} protocols The subprotocols
+ * @param {Object} [options] Connection options
+ * @param {Boolean} [options.allowSynchronousEvents=true] Specifies whether any
+ *     of the `'message'`, `'ping'`, and `'pong'` events can be emitted multiple
+ *     times in the same tick
+ * @param {Boolean} [options.autoPong=true] Specifies whether or not to
+ *     automatically send a pong in response to a ping
+ * @param {Function} [options.finishRequest] A function which can be used to
+ *     customize the headers of each http request before it is sent
+ * @param {Boolean} [options.followRedirects=false] Whether or not to follow
+ *     redirects
+ * @param {Function} [options.generateMask] The function used to generate the
+ *     masking key
+ * @param {Number} [options.handshakeTimeout] Timeout in milliseconds for the
+ *     handshake request
+ * @param {Number} [options.maxPayload=104857600] The maximum allowed message
+ *     size
+ * @param {Number} [options.maxRedirects=10] The maximum number of redirects
+ *     allowed
+ * @param {String} [options.origin] Value of the `Origin` or
+ *     `Sec-WebSocket-Origin` header
+ * @param {(Boolean|Object)} [options.perMessageDeflate=true] Enable/disable
+ *     permessage-deflate
+ * @param {Number} [options.protocolVersion=13] Value of the
+ *     `Sec-WebSocket-Version` header
+ * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+ *     not to skip UTF-8 validation for text and close messages
+ * @private
+ */
+function initAsClient$1(websocket, address, protocols, options) {
+  const opts = {
+    allowSynchronousEvents: true,
+    autoPong: true,
+    protocolVersion: protocolVersions$1[1],
+    maxPayload: 100 * 1024 * 1024,
+    skipUTF8Validation: false,
+    perMessageDeflate: true,
+    followRedirects: false,
+    maxRedirects: 10,
+    ...options,
+    socketPath: undefined,
+    hostname: undefined,
+    protocol: undefined,
+    timeout: undefined,
+    method: 'GET',
+    host: undefined,
+    path: undefined,
+    port: undefined
+  };
+
+  websocket._autoPong = opts.autoPong;
+
+  if (!protocolVersions$1.includes(opts.protocolVersion)) {
+    throw new RangeError(
+      `Unsupported protocol version: ${opts.protocolVersion} ` +
+        `(supported versions: ${protocolVersions$1.join(', ')})`
+    );
+  }
+
+  let parsedUrl;
+
+  if (address instanceof URL$2) {
+    parsedUrl = address;
+  } else {
+    try {
+      parsedUrl = new URL$2(address);
+    } catch (e) {
+      throw new SyntaxError(`Invalid URL: ${address}`);
+    }
+  }
+
+  if (parsedUrl.protocol === 'http:') {
+    parsedUrl.protocol = 'ws:';
+  } else if (parsedUrl.protocol === 'https:') {
+    parsedUrl.protocol = 'wss:';
+  }
+
+  websocket._url = parsedUrl.href;
+
+  const isSecure = parsedUrl.protocol === 'wss:';
+  const isIpcUrl = parsedUrl.protocol === 'ws+unix:';
+  let invalidUrlMessage;
+
+  if (parsedUrl.protocol !== 'ws:' && !isSecure && !isIpcUrl) {
+    invalidUrlMessage =
+      'The URL\'s protocol must be one of "ws:", "wss:", ' +
+      '"http:", "https", or "ws+unix:"';
+  } else if (isIpcUrl && !parsedUrl.pathname) {
+    invalidUrlMessage = "The URL's pathname is empty";
+  } else if (parsedUrl.hash) {
+    invalidUrlMessage = 'The URL contains a fragment identifier';
+  }
+
+  if (invalidUrlMessage) {
+    const err = new SyntaxError(invalidUrlMessage);
+
+    if (websocket._redirects === 0) {
+      throw err;
+    } else {
+      emitErrorAndClose$1(websocket, err);
+      return;
+    }
+  }
+
+  const defaultPort = isSecure ? 443 : 80;
+  const key = randomBytes$1(16).toString('base64');
+  const request = isSecure ? https$1.request : http$3.request;
+  const protocolSet = new Set();
+  let perMessageDeflate;
+
+  opts.createConnection =
+    opts.createConnection || (isSecure ? tlsConnect$1 : netConnect$1);
+  opts.defaultPort = opts.defaultPort || defaultPort;
+  opts.port = parsedUrl.port || defaultPort;
+  opts.host = parsedUrl.hostname.startsWith('[')
+    ? parsedUrl.hostname.slice(1, -1)
+    : parsedUrl.hostname;
+  opts.headers = {
+    ...opts.headers,
+    'Sec-WebSocket-Version': opts.protocolVersion,
+    'Sec-WebSocket-Key': key,
+    Connection: 'Upgrade',
+    Upgrade: 'websocket'
+  };
+  opts.path = parsedUrl.pathname + parsedUrl.search;
+  opts.timeout = opts.handshakeTimeout;
+
+  if (opts.perMessageDeflate) {
+    perMessageDeflate = new PerMessageDeflate$6(
+      opts.perMessageDeflate !== true ? opts.perMessageDeflate : {},
+      false,
+      opts.maxPayload
+    );
+    opts.headers['Sec-WebSocket-Extensions'] = format$2({
+      [PerMessageDeflate$6.extensionName]: perMessageDeflate.offer()
+    });
+  }
+  if (protocols.length) {
+    for (const protocol of protocols) {
+      if (
+        typeof protocol !== 'string' ||
+        !subprotocolRegex$1.test(protocol) ||
+        protocolSet.has(protocol)
+      ) {
+        throw new SyntaxError(
+          'An invalid or duplicated subprotocol was specified'
+        );
+      }
+
+      protocolSet.add(protocol);
+    }
+
+    opts.headers['Sec-WebSocket-Protocol'] = protocols.join(',');
+  }
+  if (opts.origin) {
+    if (opts.protocolVersion < 13) {
+      opts.headers['Sec-WebSocket-Origin'] = opts.origin;
+    } else {
+      opts.headers.Origin = opts.origin;
+    }
+  }
+  if (parsedUrl.username || parsedUrl.password) {
+    opts.auth = `${parsedUrl.username}:${parsedUrl.password}`;
+  }
+
+  if (isIpcUrl) {
+    const parts = opts.path.split(':');
+
+    opts.socketPath = parts[0];
+    opts.path = parts[1];
+  }
+
+  let req;
+
+  if (opts.followRedirects) {
+    if (websocket._redirects === 0) {
+      websocket._originalIpc = isIpcUrl;
+      websocket._originalSecure = isSecure;
+      websocket._originalHostOrSocketPath = isIpcUrl
+        ? opts.socketPath
+        : parsedUrl.host;
+
+      const headers = options && options.headers;
+
+      //
+      // Shallow copy the user provided options so that headers can be changed
+      // without mutating the original object.
+      //
+      options = { ...options, headers: {} };
+
+      if (headers) {
+        for (const [key, value] of Object.entries(headers)) {
+          options.headers[key.toLowerCase()] = value;
+        }
+      }
+    } else if (websocket.listenerCount('redirect') === 0) {
+      const isSameHost = isIpcUrl
+        ? websocket._originalIpc
+          ? opts.socketPath === websocket._originalHostOrSocketPath
+          : false
+        : websocket._originalIpc
+          ? false
+          : parsedUrl.host === websocket._originalHostOrSocketPath;
+
+      if (!isSameHost || (websocket._originalSecure && !isSecure)) {
+        //
+        // Match curl 7.77.0 behavior and drop the following headers. These
+        // headers are also dropped when following a redirect to a subdomain.
+        //
+        delete opts.headers.authorization;
+        delete opts.headers.cookie;
+
+        if (!isSameHost) delete opts.headers.host;
+
+        opts.auth = undefined;
+      }
+    }
+
+    //
+    // Match curl 7.77.0 behavior and make the first `Authorization` header win.
+    // If the `Authorization` header is set, then there is nothing to do as it
+    // will take precedence.
+    //
+    if (opts.auth && !options.headers.authorization) {
+      options.headers.authorization =
+        'Basic ' + Buffer.from(opts.auth).toString('base64');
+    }
+
+    req = websocket._req = request(opts);
+
+    if (websocket._redirects) {
+      //
+      // Unlike what is done for the `'upgrade'` event, no early exit is
+      // triggered here if the user calls `websocket.close()` or
+      // `websocket.terminate()` from a listener of the `'redirect'` event. This
+      // is because the user can also call `request.destroy()` with an error
+      // before calling `websocket.close()` or `websocket.terminate()` and this
+      // would result in an error being emitted on the `request` object with no
+      // `'error'` event listeners attached.
+      //
+      websocket.emit('redirect', websocket.url, req);
+    }
+  } else {
+    req = websocket._req = request(opts);
+  }
+
+  if (opts.timeout) {
+    req.on('timeout', () => {
+      abortHandshake$3(websocket, req, 'Opening handshake has timed out');
+    });
+  }
+
+  req.on('error', (err) => {
+    if (req === null || req[kAborted$1]) return;
+
+    req = websocket._req = null;
+    emitErrorAndClose$1(websocket, err);
+  });
+
+  req.on('response', (res) => {
+    const location = res.headers.location;
+    const statusCode = res.statusCode;
+
+    if (
+      location &&
+      opts.followRedirects &&
+      statusCode >= 300 &&
+      statusCode < 400
+    ) {
+      if (++websocket._redirects > opts.maxRedirects) {
+        abortHandshake$3(websocket, req, 'Maximum redirects exceeded');
+        return;
+      }
+
+      req.abort();
+
+      let addr;
+
+      try {
+        addr = new URL$2(location, address);
+      } catch (e) {
+        const err = new SyntaxError(`Invalid URL: ${location}`);
+        emitErrorAndClose$1(websocket, err);
+        return;
+      }
+
+      initAsClient$1(websocket, addr, protocols, options);
+    } else if (!websocket.emit('unexpected-response', req, res)) {
+      abortHandshake$3(
+        websocket,
+        req,
+        `Unexpected server response: ${res.statusCode}`
+      );
+    }
+  });
+
+  req.on('upgrade', (res, socket, head) => {
+    websocket.emit('upgrade', res);
+
+    //
+    // The user may have closed the connection from a listener of the
+    // `'upgrade'` event.
+    //
+    if (websocket.readyState !== WebSocket$6.CONNECTING) return;
+
+    req = websocket._req = null;
+
+    const upgrade = res.headers.upgrade;
+
+    if (upgrade === undefined || upgrade.toLowerCase() !== 'websocket') {
+      abortHandshake$3(websocket, socket, 'Invalid Upgrade header');
+      return;
+    }
+
+    const digest = createHash$3('sha1')
+      .update(key + GUID$3)
+      .digest('base64');
+
+    if (res.headers['sec-websocket-accept'] !== digest) {
+      abortHandshake$3(websocket, socket, 'Invalid Sec-WebSocket-Accept header');
+      return;
+    }
+
+    const serverProt = res.headers['sec-websocket-protocol'];
+    let protError;
+
+    if (serverProt !== undefined) {
+      if (!protocolSet.size) {
+        protError = 'Server sent a subprotocol but none was requested';
+      } else if (!protocolSet.has(serverProt)) {
+        protError = 'Server sent an invalid subprotocol';
+      }
+    } else if (protocolSet.size) {
+      protError = 'Server sent no subprotocol';
+    }
+
+    if (protError) {
+      abortHandshake$3(websocket, socket, protError);
+      return;
+    }
+
+    if (serverProt) websocket._protocol = serverProt;
+
+    const secWebSocketExtensions = res.headers['sec-websocket-extensions'];
+
+    if (secWebSocketExtensions !== undefined) {
+      if (!perMessageDeflate) {
+        const message =
+          'Server sent a Sec-WebSocket-Extensions header but no extension ' +
+          'was requested';
+        abortHandshake$3(websocket, socket, message);
+        return;
+      }
+
+      let extensions;
+
+      try {
+        extensions = parse$5(secWebSocketExtensions);
+      } catch (err) {
+        const message = 'Invalid Sec-WebSocket-Extensions header';
+        abortHandshake$3(websocket, socket, message);
+        return;
+      }
+
+      const extensionNames = Object.keys(extensions);
+
+      if (
+        extensionNames.length !== 1 ||
+        extensionNames[0] !== PerMessageDeflate$6.extensionName
+      ) {
+        const message = 'Server indicated an extension that was not requested';
+        abortHandshake$3(websocket, socket, message);
+        return;
+      }
+
+      try {
+        perMessageDeflate.accept(extensions[PerMessageDeflate$6.extensionName]);
+      } catch (err) {
+        const message = 'Invalid Sec-WebSocket-Extensions header';
+        abortHandshake$3(websocket, socket, message);
+        return;
+      }
+
+      websocket._extensions[PerMessageDeflate$6.extensionName] =
+        perMessageDeflate;
+    }
+
+    websocket.setSocket(socket, head, {
+      allowSynchronousEvents: opts.allowSynchronousEvents,
+      generateMask: opts.generateMask,
+      maxPayload: opts.maxPayload,
+      skipUTF8Validation: opts.skipUTF8Validation
+    });
+  });
+
+  if (opts.finishRequest) {
+    opts.finishRequest(req, websocket);
+  } else {
+    req.end();
+  }
+}
+
+/**
+ * Emit the `'error'` and `'close'` events.
+ *
+ * @param {WebSocket} websocket The WebSocket instance
+ * @param {Error} The error to emit
+ * @private
+ */
+function emitErrorAndClose$1(websocket, err) {
+  websocket._readyState = WebSocket$6.CLOSING;
+  websocket.emit('error', err);
+  websocket.emitClose();
+}
+
+/**
+ * Create a `net.Socket` and initiate a connection.
+ *
+ * @param {Object} options Connection options
+ * @return {net.Socket} The newly created socket used to start the connection
+ * @private
+ */
+function netConnect$1(options) {
+  options.path = options.socketPath;
+  return net$1.connect(options);
+}
+
+/**
+ * Create a `tls.TLSSocket` and initiate a connection.
+ *
+ * @param {Object} options Connection options
+ * @return {tls.TLSSocket} The newly created socket used to start the connection
+ * @private
+ */
+function tlsConnect$1(options) {
+  options.path = undefined;
+
+  if (!options.servername && options.servername !== '') {
+    options.servername = net$1.isIP(options.host) ? '' : options.host;
+  }
+
+  return tls$1.connect(options);
+}
+
+/**
+ * Abort the handshake and emit an error.
+ *
+ * @param {WebSocket} websocket The WebSocket instance
+ * @param {(http.ClientRequest|net.Socket|tls.Socket)} stream The request to
+ *     abort or the socket to destroy
+ * @param {String} message The error message
+ * @private
+ */
+function abortHandshake$3(websocket, stream, message) {
+  websocket._readyState = WebSocket$6.CLOSING;
+
+  const err = new Error(message);
+  Error.captureStackTrace(err, abortHandshake$3);
+
+  if (stream.setHeader) {
+    stream[kAborted$1] = true;
+    stream.abort();
+
+    if (stream.socket && !stream.socket.destroyed) {
+      //
+      // On Node.js >= 14.3.0 `request.abort()` does not destroy the socket if
+      // called after the request completed. See
+      // https://github.com/websockets/ws/issues/1869.
+      //
+      stream.socket.destroy();
+    }
+
+    process.nextTick(emitErrorAndClose$1, websocket, err);
+  } else {
+    stream.destroy(err);
+    stream.once('error', websocket.emit.bind(websocket, 'error'));
+    stream.once('close', websocket.emitClose.bind(websocket));
+  }
+}
+
+/**
+ * Handle cases where the `ping()`, `pong()`, or `send()` methods are called
+ * when the `readyState` attribute is `CLOSING` or `CLOSED`.
+ *
+ * @param {WebSocket} websocket The WebSocket instance
+ * @param {*} [data] The data to send
+ * @param {Function} [cb] Callback
+ * @private
+ */
+function sendAfterClose$1(websocket, data, cb) {
+  if (data) {
+    const length = toBuffer$3(data).length;
+
+    //
+    // The `_bufferedAmount` property is used only when the peer is a client and
+    // the opening handshake fails. Under these circumstances, in fact, the
+    // `setSocket()` method is not called, so the `_socket` and `_sender`
+    // properties are set to `null`.
+    //
+    if (websocket._socket) websocket._sender._bufferedBytes += length;
+    else websocket._bufferedAmount += length;
+  }
+
+  if (cb) {
+    const err = new Error(
+      `WebSocket is not open: readyState ${websocket.readyState} ` +
+        `(${readyStates$1[websocket.readyState]})`
+    );
+    process.nextTick(cb, err);
+  }
+}
+
+/**
+ * The listener of the `Receiver` `'conclude'` event.
+ *
+ * @param {Number} code The status code
+ * @param {Buffer} reason The reason for closing
+ * @private
+ */
+function receiverOnConclude$1(code, reason) {
+  const websocket = this[kWebSocket$4];
+
+  websocket._closeFrameReceived = true;
+  websocket._closeMessage = reason;
+  websocket._closeCode = code;
+
+  if (websocket._socket[kWebSocket$4] === undefined) return;
+
+  websocket._socket.removeListener('data', socketOnData$1);
+  process.nextTick(resume$1, websocket._socket);
+
+  if (code === 1005) websocket.close();
+  else websocket.close(code, reason);
+}
+
+/**
+ * The listener of the `Receiver` `'drain'` event.
+ *
+ * @private
+ */
+function receiverOnDrain$1() {
+  const websocket = this[kWebSocket$4];
+
+  if (!websocket.isPaused) websocket._socket.resume();
+}
+
+/**
+ * The listener of the `Receiver` `'error'` event.
+ *
+ * @param {(RangeError|Error)} err The emitted error
+ * @private
+ */
+function receiverOnError$1(err) {
+  const websocket = this[kWebSocket$4];
+
+  if (websocket._socket[kWebSocket$4] !== undefined) {
+    websocket._socket.removeListener('data', socketOnData$1);
+
+    //
+    // On Node.js < 14.0.0 the `'error'` event is emitted synchronously. See
+    // https://github.com/websockets/ws/issues/1940.
+    //
+    process.nextTick(resume$1, websocket._socket);
+
+    websocket.close(err[kStatusCode$3]);
+  }
+
+  websocket.emit('error', err);
+}
+
+/**
+ * The listener of the `Receiver` `'finish'` event.
+ *
+ * @private
+ */
+function receiverOnFinish$1() {
+  this[kWebSocket$4].emitClose();
+}
+
+/**
+ * The listener of the `Receiver` `'message'` event.
+ *
+ * @param {Buffer|ArrayBuffer|Buffer[])} data The message
+ * @param {Boolean} isBinary Specifies whether the message is binary or not
+ * @private
+ */
+function receiverOnMessage$1(data, isBinary) {
+  this[kWebSocket$4].emit('message', data, isBinary);
+}
+
+/**
+ * The listener of the `Receiver` `'ping'` event.
+ *
+ * @param {Buffer} data The data included in the ping frame
+ * @private
+ */
+function receiverOnPing$1(data) {
+  const websocket = this[kWebSocket$4];
+
+  if (websocket._autoPong) websocket.pong(data, !this._isServer, NOOP$1);
+  websocket.emit('ping', data);
+}
+
+/**
+ * The listener of the `Receiver` `'pong'` event.
+ *
+ * @param {Buffer} data The data included in the pong frame
+ * @private
+ */
+function receiverOnPong$1(data) {
+  this[kWebSocket$4].emit('pong', data);
+}
+
+/**
+ * Resume a readable stream
+ *
+ * @param {Readable} stream The readable stream
+ * @private
+ */
+function resume$1(stream) {
+  stream.resume();
+}
+
+/**
+ * The listener of the socket `'close'` event.
+ *
+ * @private
+ */
+function socketOnClose$1() {
+  const websocket = this[kWebSocket$4];
+
+  this.removeListener('close', socketOnClose$1);
+  this.removeListener('data', socketOnData$1);
+  this.removeListener('end', socketOnEnd$1);
+
+  websocket._readyState = WebSocket$6.CLOSING;
+
+  let chunk;
+
+  //
+  // The close frame might not have been received or the `'end'` event emitted,
+  // for example, if the socket was destroyed due to an error. Ensure that the
+  // `receiver` stream is closed after writing any remaining buffered data to
+  // it. If the readable side of the socket is in flowing mode then there is no
+  // buffered data as everything has been already written and `readable.read()`
+  // will return `null`. If instead, the socket is paused, any possible buffered
+  // data will be read as a single chunk.
+  //
+  if (
+    !this._readableState.endEmitted &&
+    !websocket._closeFrameReceived &&
+    !websocket._receiver._writableState.errorEmitted &&
+    (chunk = websocket._socket.read()) !== null
+  ) {
+    websocket._receiver.write(chunk);
+  }
+
+  websocket._receiver.end();
+
+  this[kWebSocket$4] = undefined;
+
+  clearTimeout(websocket._closeTimer);
+
+  if (
+    websocket._receiver._writableState.finished ||
+    websocket._receiver._writableState.errorEmitted
+  ) {
+    websocket.emitClose();
+  } else {
+    websocket._receiver.on('error', receiverOnFinish$1);
+    websocket._receiver.on('finish', receiverOnFinish$1);
+  }
+}
+
+/**
+ * The listener of the socket `'data'` event.
+ *
+ * @param {Buffer} chunk A chunk of data
+ * @private
+ */
+function socketOnData$1(chunk) {
+  if (!this[kWebSocket$4]._receiver.write(chunk)) {
+    this.pause();
+  }
+}
+
+/**
+ * The listener of the socket `'end'` event.
+ *
+ * @private
+ */
+function socketOnEnd$1() {
+  const websocket = this[kWebSocket$4];
+
+  websocket._readyState = WebSocket$6.CLOSING;
+  websocket._receiver.end();
+  this.end();
+}
+
+/**
+ * The listener of the socket `'error'` event.
+ *
+ * @private
+ */
+function socketOnError$3() {
+  const websocket = this[kWebSocket$4];
+
+  this.removeListener('error', socketOnError$3);
+  this.on('error', NOOP$1);
+
+  if (websocket) {
+    websocket._readyState = WebSocket$6.CLOSING;
+    this.destroy();
+  }
+}
+
+const WebSocket$7 = /*@__PURE__*/getDefaultExportFromCjs(websocket$2);
+
+const { tokenChars: tokenChars$3 } = validationExports$1;
+
+/**
+ * Parses the `Sec-WebSocket-Protocol` header into a set of subprotocol names.
+ *
+ * @param {String} header The field value of the header
+ * @return {Set} The subprotocol names
+ * @public
+ */
+function parse$4(header) {
+  const protocols = new Set();
+  let start = -1;
+  let end = -1;
+  let i = 0;
+
+  for (i; i < header.length; i++) {
+    const code = header.charCodeAt(i);
+
+    if (end === -1 && tokenChars$3[code] === 1) {
+      if (start === -1) start = i;
+    } else if (
+      i !== 0 &&
+      (code === 0x20 /* ' ' */ || code === 0x09) /* '\t' */
+    ) {
+      if (end === -1 && start !== -1) end = i;
+    } else if (code === 0x2c /* ',' */) {
+      if (start === -1) {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+
+      if (end === -1) end = i;
+
+      const protocol = header.slice(start, end);
+
+      if (protocols.has(protocol)) {
+        throw new SyntaxError(`The "${protocol}" subprotocol is duplicated`);
+      }
+
+      protocols.add(protocol);
+      start = end = -1;
+    } else {
+      throw new SyntaxError(`Unexpected character at index ${i}`);
+    }
+  }
+
+  if (start === -1 || end !== -1) {
+    throw new SyntaxError('Unexpected end of input');
+  }
+
+  const protocol = header.slice(start, i);
+
+  if (protocols.has(protocol)) {
+    throw new SyntaxError(`The "${protocol}" subprotocol is duplicated`);
+  }
+
+  protocols.add(protocol);
+  return protocols;
+}
+
+var subprotocol$3 = { parse: parse$4 };
+
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex$", "caughtErrors": "none" }] */
+
+const EventEmitter$2 = require$$0$3;
+const http$2 = require$$1$4;
+const { Duplex: Duplex$4 } = require$$2$1;
+const { createHash: createHash$2 } = require$$3$1;
+
+const extension$2 = extension$3;
+const PerMessageDeflate$5 = permessageDeflate$1;
+const subprotocol$2 = subprotocol$3;
+const WebSocket$5 = websocket$2;
+const { GUID: GUID$2, kWebSocket: kWebSocket$3 } = constants$1;
+
+const keyRegex$1 = /^[+/0-9A-Za-z]{22}==$/;
+
+const RUNNING$1 = 0;
+const CLOSING$1 = 1;
+const CLOSED$1 = 2;
+
+/**
+ * Class representing a WebSocket server.
+ *
+ * @extends EventEmitter
+ */
+let WebSocketServer$1 = class WebSocketServer extends EventEmitter$2 {
+  /**
+   * Create a `WebSocketServer` instance.
+   *
+   * @param {Object} options Configuration options
+   * @param {Boolean} [options.allowSynchronousEvents=true] Specifies whether
+   *     any of the `'message'`, `'ping'`, and `'pong'` events can be emitted
+   *     multiple times in the same tick
+   * @param {Boolean} [options.autoPong=true] Specifies whether or not to
+   *     automatically send a pong in response to a ping
+   * @param {Number} [options.backlog=511] The maximum length of the queue of
+   *     pending connections
+   * @param {Boolean} [options.clientTracking=true] Specifies whether or not to
+   *     track clients
+   * @param {Function} [options.handleProtocols] A hook to handle protocols
+   * @param {String} [options.host] The hostname where to bind the server
+   * @param {Number} [options.maxPayload=104857600] The maximum allowed message
+   *     size
+   * @param {Boolean} [options.noServer=false] Enable no server mode
+   * @param {String} [options.path] Accept only connections matching this path
+   * @param {(Boolean|Object)} [options.perMessageDeflate=false] Enable/disable
+   *     permessage-deflate
+   * @param {Number} [options.port] The port where to bind the server
+   * @param {(http.Server|https.Server)} [options.server] A pre-created HTTP/S
+   *     server to use
+   * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+   *     not to skip UTF-8 validation for text and close messages
+   * @param {Function} [options.verifyClient] A hook to reject connections
+   * @param {Function} [options.WebSocket=WebSocket] Specifies the `WebSocket`
+   *     class to use. It must be the `WebSocket` class or class that extends it
+   * @param {Function} [callback] A listener for the `listening` event
+   */
+  constructor(options, callback) {
+    super();
+
+    options = {
+      allowSynchronousEvents: true,
+      autoPong: true,
+      maxPayload: 100 * 1024 * 1024,
+      skipUTF8Validation: false,
+      perMessageDeflate: false,
+      handleProtocols: null,
+      clientTracking: true,
+      verifyClient: null,
+      noServer: false,
+      backlog: null, // use default (511 as implemented in net.js)
+      server: null,
+      host: null,
+      path: null,
+      port: null,
+      WebSocket: WebSocket$5,
+      ...options
+    };
+
+    if (
+      (options.port == null && !options.server && !options.noServer) ||
+      (options.port != null && (options.server || options.noServer)) ||
+      (options.server && options.noServer)
+    ) {
+      throw new TypeError(
+        'One and only one of the "port", "server", or "noServer" options ' +
+          'must be specified'
+      );
+    }
+
+    if (options.port != null) {
+      this._server = http$2.createServer((req, res) => {
+        const body = http$2.STATUS_CODES[426];
+
+        res.writeHead(426, {
+          'Content-Length': body.length,
+          'Content-Type': 'text/plain'
+        });
+        res.end(body);
+      });
+      this._server.listen(
+        options.port,
+        options.host,
+        options.backlog,
+        callback
+      );
+    } else if (options.server) {
+      this._server = options.server;
+    }
+
+    if (this._server) {
+      const emitConnection = this.emit.bind(this, 'connection');
+
+      this._removeListeners = addListeners$1(this._server, {
+        listening: this.emit.bind(this, 'listening'),
+        error: this.emit.bind(this, 'error'),
+        upgrade: (req, socket, head) => {
+          this.handleUpgrade(req, socket, head, emitConnection);
+        }
+      });
+    }
+
+    if (options.perMessageDeflate === true) options.perMessageDeflate = {};
+    if (options.clientTracking) {
+      this.clients = new Set();
+      this._shouldEmitClose = false;
+    }
+
+    this.options = options;
+    this._state = RUNNING$1;
+  }
+
+  /**
+   * Returns the bound address, the address family name, and port of the server
+   * as reported by the operating system if listening on an IP socket.
+   * If the server is listening on a pipe or UNIX domain socket, the name is
+   * returned as a string.
+   *
+   * @return {(Object|String|null)} The address of the server
+   * @public
+   */
+  address() {
+    if (this.options.noServer) {
+      throw new Error('The server is operating in "noServer" mode');
+    }
+
+    if (!this._server) return null;
+    return this._server.address();
+  }
+
+  /**
+   * Stop the server from accepting new connections and emit the `'close'` event
+   * when all existing connections are closed.
+   *
+   * @param {Function} [cb] A one-time listener for the `'close'` event
+   * @public
+   */
+  close(cb) {
+    if (this._state === CLOSED$1) {
+      if (cb) {
+        this.once('close', () => {
+          cb(new Error('The server is not running'));
+        });
+      }
+
+      process.nextTick(emitClose$2, this);
+      return;
+    }
+
+    if (cb) this.once('close', cb);
+
+    if (this._state === CLOSING$1) return;
+    this._state = CLOSING$1;
+
+    if (this.options.noServer || this.options.server) {
+      if (this._server) {
+        this._removeListeners();
+        this._removeListeners = this._server = null;
+      }
+
+      if (this.clients) {
+        if (!this.clients.size) {
+          process.nextTick(emitClose$2, this);
+        } else {
+          this._shouldEmitClose = true;
+        }
+      } else {
+        process.nextTick(emitClose$2, this);
+      }
+    } else {
+      const server = this._server;
+
+      this._removeListeners();
+      this._removeListeners = this._server = null;
+
+      //
+      // The HTTP/S server was created internally. Close it, and rely on its
+      // `'close'` event.
+      //
+      server.close(() => {
+        emitClose$2(this);
+      });
+    }
+  }
+
+  /**
+   * See if a given request should be handled by this server instance.
+   *
+   * @param {http.IncomingMessage} req Request object to inspect
+   * @return {Boolean} `true` if the request is valid, else `false`
+   * @public
+   */
+  shouldHandle(req) {
+    if (this.options.path) {
+      const index = req.url.indexOf('?');
+      const pathname = index !== -1 ? req.url.slice(0, index) : req.url;
+
+      if (pathname !== this.options.path) return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Handle a HTTP Upgrade request.
+   *
+   * @param {http.IncomingMessage} req The request object
+   * @param {Duplex} socket The network socket between the server and client
+   * @param {Buffer} head The first packet of the upgraded stream
+   * @param {Function} cb Callback
+   * @public
+   */
+  handleUpgrade(req, socket, head, cb) {
+    socket.on('error', socketOnError$2);
+
+    const key = req.headers['sec-websocket-key'];
+    const upgrade = req.headers.upgrade;
+    const version = +req.headers['sec-websocket-version'];
+
+    if (req.method !== 'GET') {
+      const message = 'Invalid HTTP method';
+      abortHandshakeOrEmitwsClientError$1(this, req, socket, 405, message);
+      return;
+    }
+
+    if (upgrade === undefined || upgrade.toLowerCase() !== 'websocket') {
+      const message = 'Invalid Upgrade header';
+      abortHandshakeOrEmitwsClientError$1(this, req, socket, 400, message);
+      return;
+    }
+
+    if (key === undefined || !keyRegex$1.test(key)) {
+      const message = 'Missing or invalid Sec-WebSocket-Key header';
+      abortHandshakeOrEmitwsClientError$1(this, req, socket, 400, message);
+      return;
+    }
+
+    if (version !== 8 && version !== 13) {
+      const message = 'Missing or invalid Sec-WebSocket-Version header';
+      abortHandshakeOrEmitwsClientError$1(this, req, socket, 400, message);
+      return;
+    }
+
+    if (!this.shouldHandle(req)) {
+      abortHandshake$2(socket, 400);
+      return;
+    }
+
+    const secWebSocketProtocol = req.headers['sec-websocket-protocol'];
+    let protocols = new Set();
+
+    if (secWebSocketProtocol !== undefined) {
+      try {
+        protocols = subprotocol$2.parse(secWebSocketProtocol);
+      } catch (err) {
+        const message = 'Invalid Sec-WebSocket-Protocol header';
+        abortHandshakeOrEmitwsClientError$1(this, req, socket, 400, message);
+        return;
+      }
+    }
+
+    const secWebSocketExtensions = req.headers['sec-websocket-extensions'];
+    const extensions = {};
+
+    if (
+      this.options.perMessageDeflate &&
+      secWebSocketExtensions !== undefined
+    ) {
+      const perMessageDeflate = new PerMessageDeflate$5(
+        this.options.perMessageDeflate,
+        true,
+        this.options.maxPayload
+      );
+
+      try {
+        const offers = extension$2.parse(secWebSocketExtensions);
+
+        if (offers[PerMessageDeflate$5.extensionName]) {
+          perMessageDeflate.accept(offers[PerMessageDeflate$5.extensionName]);
+          extensions[PerMessageDeflate$5.extensionName] = perMessageDeflate;
+        }
+      } catch (err) {
+        const message =
+          'Invalid or unacceptable Sec-WebSocket-Extensions header';
+        abortHandshakeOrEmitwsClientError$1(this, req, socket, 400, message);
+        return;
+      }
+    }
+
+    //
+    // Optionally call external client verification handler.
+    //
+    if (this.options.verifyClient) {
+      const info = {
+        origin:
+          req.headers[`${version === 8 ? 'sec-websocket-origin' : 'origin'}`],
+        secure: !!(req.socket.authorized || req.socket.encrypted),
+        req
+      };
+
+      if (this.options.verifyClient.length === 2) {
+        this.options.verifyClient(info, (verified, code, message, headers) => {
+          if (!verified) {
+            return abortHandshake$2(socket, code || 401, message, headers);
+          }
+
+          this.completeUpgrade(
+            extensions,
+            key,
+            protocols,
+            req,
+            socket,
+            head,
+            cb
+          );
+        });
+        return;
+      }
+
+      if (!this.options.verifyClient(info)) return abortHandshake$2(socket, 401);
+    }
+
+    this.completeUpgrade(extensions, key, protocols, req, socket, head, cb);
+  }
+
+  /**
+   * Upgrade the connection to WebSocket.
+   *
+   * @param {Object} extensions The accepted extensions
+   * @param {String} key The value of the `Sec-WebSocket-Key` header
+   * @param {Set} protocols The subprotocols
+   * @param {http.IncomingMessage} req The request object
+   * @param {Duplex} socket The network socket between the server and client
+   * @param {Buffer} head The first packet of the upgraded stream
+   * @param {Function} cb Callback
+   * @throws {Error} If called more than once with the same socket
+   * @private
+   */
+  completeUpgrade(extensions, key, protocols, req, socket, head, cb) {
+    //
+    // Destroy the socket if the client has already sent a FIN packet.
+    //
+    if (!socket.readable || !socket.writable) return socket.destroy();
+
+    if (socket[kWebSocket$3]) {
+      throw new Error(
+        'server.handleUpgrade() was called more than once with the same ' +
+          'socket, possibly due to a misconfiguration'
+      );
+    }
+
+    if (this._state > RUNNING$1) return abortHandshake$2(socket, 503);
+
+    const digest = createHash$2('sha1')
+      .update(key + GUID$2)
+      .digest('base64');
+
+    const headers = [
+      'HTTP/1.1 101 Switching Protocols',
+      'Upgrade: websocket',
+      'Connection: Upgrade',
+      `Sec-WebSocket-Accept: ${digest}`
+    ];
+
+    const ws = new this.options.WebSocket(null, undefined, this.options);
+
+    if (protocols.size) {
+      //
+      // Optionally call external protocol selection handler.
+      //
+      const protocol = this.options.handleProtocols
+        ? this.options.handleProtocols(protocols, req)
+        : protocols.values().next().value;
+
+      if (protocol) {
+        headers.push(`Sec-WebSocket-Protocol: ${protocol}`);
+        ws._protocol = protocol;
+      }
+    }
+
+    if (extensions[PerMessageDeflate$5.extensionName]) {
+      const params = extensions[PerMessageDeflate$5.extensionName].params;
+      const value = extension$2.format({
+        [PerMessageDeflate$5.extensionName]: [params]
+      });
+      headers.push(`Sec-WebSocket-Extensions: ${value}`);
+      ws._extensions = extensions;
+    }
+
+    //
+    // Allow external modification/inspection of handshake headers.
+    //
+    this.emit('headers', headers, req);
+
+    socket.write(headers.concat('\r\n').join('\r\n'));
+    socket.removeListener('error', socketOnError$2);
+
+    ws.setSocket(socket, head, {
+      allowSynchronousEvents: this.options.allowSynchronousEvents,
+      maxPayload: this.options.maxPayload,
+      skipUTF8Validation: this.options.skipUTF8Validation
+    });
+
+    if (this.clients) {
+      this.clients.add(ws);
+      ws.on('close', () => {
+        this.clients.delete(ws);
+
+        if (this._shouldEmitClose && !this.clients.size) {
+          process.nextTick(emitClose$2, this);
+        }
+      });
+    }
+
+    cb(ws, req);
+  }
+};
+
+var websocketServer$1 = WebSocketServer$1;
+
+/**
+ * Add event listeners on an `EventEmitter` using a map of <event, listener>
+ * pairs.
+ *
+ * @param {EventEmitter} server The event emitter
+ * @param {Object.<String, Function>} map The listeners to add
+ * @return {Function} A function that will remove the added listeners when
+ *     called
+ * @private
+ */
+function addListeners$1(server, map) {
+  for (const event of Object.keys(map)) server.on(event, map[event]);
+
+  return function removeListeners() {
+    for (const event of Object.keys(map)) {
+      server.removeListener(event, map[event]);
+    }
+  };
+}
+
+/**
+ * Emit a `'close'` event on an `EventEmitter`.
+ *
+ * @param {EventEmitter} server The event emitter
+ * @private
+ */
+function emitClose$2(server) {
+  server._state = CLOSED$1;
+  server.emit('close');
+}
+
+/**
+ * Handle socket errors.
+ *
+ * @private
+ */
+function socketOnError$2() {
+  this.destroy();
+}
+
+/**
+ * Close the connection when preconditions are not fulfilled.
+ *
+ * @param {Duplex} socket The socket of the upgrade request
+ * @param {Number} code The HTTP response status code
+ * @param {String} [message] The HTTP response body
+ * @param {Object} [headers] Additional HTTP response headers
+ * @private
+ */
+function abortHandshake$2(socket, code, message, headers) {
+  //
+  // The socket is writable unless the user destroyed or ended it before calling
+  // `server.handleUpgrade()` or in the `verifyClient` function, which is a user
+  // error. Handling this does not make much sense as the worst that can happen
+  // is that some of the data written by the user might be discarded due to the
+  // call to `socket.end()` below, which triggers an `'error'` event that in
+  // turn causes the socket to be destroyed.
+  //
+  message = message || http$2.STATUS_CODES[code];
+  headers = {
+    Connection: 'close',
+    'Content-Type': 'text/html',
+    'Content-Length': Buffer.byteLength(message),
+    ...headers
+  };
+
+  socket.once('finish', socket.destroy);
+
+  socket.end(
+    `HTTP/1.1 ${code} ${http$2.STATUS_CODES[code]}\r\n` +
+      Object.keys(headers)
+        .map((h) => `${h}: ${headers[h]}`)
+        .join('\r\n') +
+      '\r\n\r\n' +
+      message
+  );
+}
+
+/**
+ * Emit a `'wsClientError'` event on a `WebSocketServer` if there is at least
+ * one listener for it, otherwise call `abortHandshake()`.
+ *
+ * @param {WebSocketServer} server The WebSocket server
+ * @param {http.IncomingMessage} req The request object
+ * @param {Duplex} socket The socket of the upgrade request
+ * @param {Number} code The HTTP response status code
+ * @param {String} message The HTTP response body
+ * @private
+ */
+function abortHandshakeOrEmitwsClientError$1(server, req, socket, code, message) {
+  if (server.listenerCount('wsClientError')) {
+    const err = new Error(message);
+    Error.captureStackTrace(err, abortHandshakeOrEmitwsClientError$1);
+
+    server.emit('wsClientError', err, socket, req);
+  } else {
+    abortHandshake$2(socket, code, message);
+  }
+}
+
+const websocketServer_default$1 = /*@__PURE__*/getDefaultExportFromCjs(websocketServer$1);
+
+const wrapper$2 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  Receiver: receiver_default$1,
+  Sender: sender_default$1,
+  WebSocket: WebSocket$7,
+  WebSocketServer: websocketServer_default$1,
+  createWebSocketStream: stream_default$1,
+  default: WebSocket$7
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const require$$8 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(wrapper$2);
 
 const require$$17 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(cors);
 
 Object.defineProperty(server$1, "__esModule", { value: true });
 server$1.Server = server$1.BaseServer = void 0;
-const qs = require$$0$1;
-const url_1 = require$$2$4;
+const qs = require$$0$4;
+const url_1 = require$$7;
 const base64id = base64idExports;
 const transports_1 = transports;
-const events_1$2 = require$$8;
+const events_1$2 = require$$0$3;
 const socket_1 = socket$1;
 const debug_1$6 = require$$13;
 const cookie_1 = cookie;
-const ws_1 = require$$2;
+const ws_1 = require$$8;
 const webtransport_1 = webtransport;
 const engine_io_parser_1 = esm;
 const debug$9 = (0, debug_1$6.default)("engine");
@@ -25858,7 +30541,7 @@ var polling = {};
 Object.defineProperty(polling, "__esModule", { value: true });
 polling.Polling = void 0;
 const transport_1$1 = transport;
-const zlib_1 = require$$2$2;
+const zlib_1 = require$$0$2;
 const accepts = accepts$2;
 const debug_1$5 = require$$13;
 const debug$8 = (0, debug_1$5.default)("engine:polling");
@@ -26219,14 +30902,14 @@ class Polling extends transport_1$1.Transport {
 }
 polling.Polling = Polling;
 
-var websocket = {};
+var websocket$1 = {};
 
-Object.defineProperty(websocket, "__esModule", { value: true });
-websocket.WebSocket = void 0;
+Object.defineProperty(websocket$1, "__esModule", { value: true });
+websocket$1.WebSocket = void 0;
 const transport_1 = transport;
 const debug_1$4 = require$$13;
 const debug$7 = (0, debug_1$4.default)("engine:ws");
-let WebSocket$1 = class WebSocket extends transport_1.Transport {
+let WebSocket$4 = class WebSocket extends transport_1.Transport {
     /**
      * WebSocket transport
      *
@@ -26292,11 +30975,11 @@ let WebSocket$1 = class WebSocket extends transport_1.Transport {
         this.socket.end();
     }
 };
-websocket.WebSocket = WebSocket$1;
+websocket$1.WebSocket = WebSocket$4;
 
 Object.defineProperty(transportsUws, "__esModule", { value: true });
 const polling_1 = polling;
-const websocket_1 = websocket;
+const websocket_1 = websocket$1;
 transportsUws.default = {
     polling: polling_1.Polling,
     websocket: websocket_1.WebSocket,
@@ -26586,7 +31269,7 @@ class ResponseWrapper {
 	exports$1.protocol = exports$1.Transport = exports$1.Socket = exports$1.uServer = exports$1.parser = exports$1.transports = exports$1.Server = void 0;
 	exports$1.listen = listen;
 	exports$1.attach = attach;
-	const http_1 = require$$0$2;
+	const http_1 = require$$1$4;
 	const server_1 = server$1;
 	Object.defineProperty(exports$1, "Server", { enumerable: true, get: function () { return server_1.Server; } });
 	const index_1 = transports;
@@ -26637,7 +31320,7 @@ class ResponseWrapper {
 	} 
 } (engine_io));
 
-const wrapper = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const wrapper$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   Server: engine_io.Server,
   Socket: engine_io.Socket,
@@ -26653,9 +31336,7 @@ var dist$2 = {exports: {}};
 
 const require$$1 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(fs);
 
-const require$$4 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(require$$0$2$1);
-
-const require$$6 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(wrapper);
+const require$$6 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(wrapper$1);
 
 var client = {};
 
@@ -27118,7 +31799,7 @@ Object.defineProperty(client, "__esModule", { value: true });
 client.Client = void 0;
 const socket_io_parser_1$2 = parser;
 const debugModule = require$$13;
-const url = require$$2$4;
+const url = require$$7;
 const debug$4 = debugModule("socket.io:client");
 class Client {
     /**
@@ -27390,7 +32071,7 @@ var typedEvents = {};
 
 Object.defineProperty(typedEvents, "__esModule", { value: true });
 typedEvents.StrictEventEmitter = void 0;
-const events_1$1 = require$$8;
+const events_1$1 = require$$0$3;
 /**
  * Strictly typed version of an `EventEmitter`. A `TypedEventEmitter` takes type
  * parameters for mappings of event names to event data types, and strictly
@@ -29542,10 +34223,4664 @@ yeast$1.yeast = yeast;
 for (; i < length; i++)
     map[alphabet[i]] = i;
 
+const { Duplex: Duplex$3 } = require$$2$1;
+
+/**
+ * Emits the `'close'` event on a stream.
+ *
+ * @param {Duplex} stream The stream.
+ * @private
+ */
+function emitClose$1(stream) {
+  stream.emit('close');
+}
+
+/**
+ * The listener of the `'end'` event.
+ *
+ * @private
+ */
+function duplexOnEnd() {
+  if (!this.destroyed && this._writableState.finished) {
+    this.destroy();
+  }
+}
+
+/**
+ * The listener of the `'error'` event.
+ *
+ * @param {Error} err The error
+ * @private
+ */
+function duplexOnError(err) {
+  this.removeListener('error', duplexOnError);
+  this.destroy();
+  if (this.listenerCount('error') === 0) {
+    // Do not suppress the throwing behavior.
+    this.emit('error', err);
+  }
+}
+
+/**
+ * Wraps a `WebSocket` in a duplex stream.
+ *
+ * @param {WebSocket} ws The `WebSocket` to wrap
+ * @param {Object} [options] The options for the `Duplex` constructor
+ * @return {Duplex} The duplex stream
+ * @public
+ */
+function createWebSocketStream(ws, options) {
+  let terminateOnDestroy = true;
+
+  const duplex = new Duplex$3({
+    ...options,
+    autoDestroy: false,
+    emitClose: false,
+    objectMode: false,
+    writableObjectMode: false
+  });
+
+  ws.on('message', function message(msg, isBinary) {
+    const data =
+      !isBinary && duplex._readableState.objectMode ? msg.toString() : msg;
+
+    if (!duplex.push(data)) ws.pause();
+  });
+
+  ws.once('error', function error(err) {
+    if (duplex.destroyed) return;
+
+    // Prevent `ws.terminate()` from being called by `duplex._destroy()`.
+    //
+    // - If the `'error'` event is emitted before the `'open'` event, then
+    //   `ws.terminate()` is a noop as no socket is assigned.
+    // - Otherwise, the error is re-emitted by the listener of the `'error'`
+    //   event of the `Receiver` object. The listener already closes the
+    //   connection by calling `ws.close()`. This allows a close frame to be
+    //   sent to the other peer. If `ws.terminate()` is called right after this,
+    //   then the close frame might not be sent.
+    terminateOnDestroy = false;
+    duplex.destroy(err);
+  });
+
+  ws.once('close', function close() {
+    if (duplex.destroyed) return;
+
+    duplex.push(null);
+  });
+
+  duplex._destroy = function (err, callback) {
+    if (ws.readyState === ws.CLOSED) {
+      callback(err);
+      process.nextTick(emitClose$1, duplex);
+      return;
+    }
+
+    let called = false;
+
+    ws.once('error', function error(err) {
+      called = true;
+      callback(err);
+    });
+
+    ws.once('close', function close() {
+      if (!called) callback(err);
+      process.nextTick(emitClose$1, duplex);
+    });
+
+    if (terminateOnDestroy) ws.terminate();
+  };
+
+  duplex._final = function (callback) {
+    if (ws.readyState === ws.CONNECTING) {
+      ws.once('open', function open() {
+        duplex._final(callback);
+      });
+      return;
+    }
+
+    // If the value of the `_socket` property is `null` it means that `ws` is a
+    // client websocket and the handshake failed. In fact, when this happens, a
+    // socket is never assigned to the websocket. Wait for the `'error'` event
+    // that will be emitted by the websocket.
+    if (ws._socket === null) return;
+
+    if (ws._socket._writableState.finished) {
+      callback();
+      if (duplex._readableState.endEmitted) duplex.destroy();
+    } else {
+      ws._socket.once('finish', function finish() {
+        // `duplex` is not destroyed here because the `'end'` event will be
+        // emitted on `duplex` after this `'finish'` event. The EOF signaling
+        // `null` chunk is, in fact, pushed when the websocket emits `'close'`.
+        callback();
+      });
+      ws.close();
+    }
+  };
+
+  duplex._read = function () {
+    if (ws.isPaused) ws.resume();
+  };
+
+  duplex._write = function (chunk, encoding, callback) {
+    if (ws.readyState === ws.CONNECTING) {
+      ws.once('open', function open() {
+        duplex._write(chunk, encoding, callback);
+      });
+      return;
+    }
+
+    ws.send(chunk, callback);
+  };
+
+  duplex.on('end', duplexOnEnd);
+  duplex.on('error', duplexOnError);
+  return duplex;
+}
+
+var stream = createWebSocketStream;
+
+const stream_default = /*@__PURE__*/getDefaultExportFromCjs(stream);
+
+var bufferUtil$1 = {exports: {}};
+
+var constants = {
+  BINARY_TYPES: ['nodebuffer', 'arraybuffer', 'fragments'],
+  EMPTY_BUFFER: Buffer.alloc(0),
+  GUID: '258EAFA5-E914-47DA-95CA-C5AB0DC85B11',
+  kForOnEventAttribute: Symbol('kIsForOnEventAttribute'),
+  kListener: Symbol('kListener'),
+  kStatusCode: Symbol('status-code'),
+  kWebSocket: Symbol('websocket'),
+  NOOP: () => {}
+};
+
+var unmask$1;
+var mask;
+
+const { EMPTY_BUFFER: EMPTY_BUFFER$3 } = constants;
+
+const FastBuffer$2 = Buffer[Symbol.species];
+
+/**
+ * Merges an array of buffers into a new buffer.
+ *
+ * @param {Buffer[]} list The array of buffers to concat
+ * @param {Number} totalLength The total length of buffers in the list
+ * @return {Buffer} The resulting buffer
+ * @public
+ */
+function concat$1(list, totalLength) {
+  if (list.length === 0) return EMPTY_BUFFER$3;
+  if (list.length === 1) return list[0];
+
+  const target = Buffer.allocUnsafe(totalLength);
+  let offset = 0;
+
+  for (let i = 0; i < list.length; i++) {
+    const buf = list[i];
+    target.set(buf, offset);
+    offset += buf.length;
+  }
+
+  if (offset < totalLength) {
+    return new FastBuffer$2(target.buffer, target.byteOffset, offset);
+  }
+
+  return target;
+}
+
+/**
+ * Masks a buffer using the given mask.
+ *
+ * @param {Buffer} source The buffer to mask
+ * @param {Buffer} mask The mask to use
+ * @param {Buffer} output The buffer where to store the result
+ * @param {Number} offset The offset at which to start writing
+ * @param {Number} length The number of bytes to mask.
+ * @public
+ */
+function _mask(source, mask, output, offset, length) {
+  for (let i = 0; i < length; i++) {
+    output[offset + i] = source[i] ^ mask[i & 3];
+  }
+}
+
+/**
+ * Unmasks a buffer using the given mask.
+ *
+ * @param {Buffer} buffer The buffer to unmask
+ * @param {Buffer} mask The mask to use
+ * @public
+ */
+function _unmask(buffer, mask) {
+  for (let i = 0; i < buffer.length; i++) {
+    buffer[i] ^= mask[i & 3];
+  }
+}
+
+/**
+ * Converts a buffer to an `ArrayBuffer`.
+ *
+ * @param {Buffer} buf The buffer to convert
+ * @return {ArrayBuffer} Converted buffer
+ * @public
+ */
+function toArrayBuffer$2(buf) {
+  if (buf.length === buf.buffer.byteLength) {
+    return buf.buffer;
+  }
+
+  return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.length);
+}
+
+/**
+ * Converts `data` to a `Buffer`.
+ *
+ * @param {*} data The data to convert
+ * @return {Buffer} The buffer
+ * @throws {TypeError}
+ * @public
+ */
+function toBuffer$2(data) {
+  toBuffer$2.readOnly = true;
+
+  if (Buffer.isBuffer(data)) return data;
+
+  let buf;
+
+  if (data instanceof ArrayBuffer) {
+    buf = new FastBuffer$2(data);
+  } else if (ArrayBuffer.isView(data)) {
+    buf = new FastBuffer$2(data.buffer, data.byteOffset, data.byteLength);
+  } else {
+    buf = Buffer.from(data);
+    toBuffer$2.readOnly = false;
+  }
+
+  return buf;
+}
+
+bufferUtil$1.exports = {
+  concat: concat$1,
+  mask: _mask,
+  toArrayBuffer: toArrayBuffer$2,
+  toBuffer: toBuffer$2,
+  unmask: _unmask
+};
+
+/* istanbul ignore else  */
+if (!process.env.WS_NO_BUFFER_UTIL) {
+  try {
+    const bufferUtil = require$$1$3;
+
+    mask = bufferUtil$1.exports.mask = function (source, mask, output, offset, length) {
+      if (length < 48) _mask(source, mask, output, offset, length);
+      else bufferUtil.mask(source, mask, output, offset, length);
+    };
+
+    unmask$1 = bufferUtil$1.exports.unmask = function (buffer, mask) {
+      if (buffer.length < 32) _unmask(buffer, mask);
+      else bufferUtil.unmask(buffer, mask);
+    };
+  } catch (e) {
+    // Continue regardless of the error.
+  }
+}
+
+var bufferUtilExports = bufferUtil$1.exports;
+
+const kDone = Symbol('kDone');
+const kRun = Symbol('kRun');
+
+/**
+ * A very simple job queue with adjustable concurrency. Adapted from
+ * https://github.com/STRML/async-limiter
+ */
+let Limiter$1 = class Limiter {
+  /**
+   * Creates a new `Limiter`.
+   *
+   * @param {Number} [concurrency=Infinity] The maximum number of jobs allowed
+   *     to run concurrently
+   */
+  constructor(concurrency) {
+    this[kDone] = () => {
+      this.pending--;
+      this[kRun]();
+    };
+    this.concurrency = concurrency || Infinity;
+    this.jobs = [];
+    this.pending = 0;
+  }
+
+  /**
+   * Adds a job to the queue.
+   *
+   * @param {Function} job The job to run
+   * @public
+   */
+  add(job) {
+    this.jobs.push(job);
+    this[kRun]();
+  }
+
+  /**
+   * Removes a job from the queue and runs it if possible.
+   *
+   * @private
+   */
+  [kRun]() {
+    if (this.pending === this.concurrency) return;
+
+    if (this.jobs.length) {
+      const job = this.jobs.shift();
+
+      this.pending++;
+      job(this[kDone]);
+    }
+  }
+};
+
+var limiter = Limiter$1;
+
+const zlib = require$$0$2;
+
+const bufferUtil = bufferUtilExports;
+const Limiter = limiter;
+const { kStatusCode: kStatusCode$2 } = constants;
+
+const FastBuffer$1 = Buffer[Symbol.species];
+const TRAILER = Buffer.from([0x00, 0x00, 0xff, 0xff]);
+const kPerMessageDeflate = Symbol('permessage-deflate');
+const kTotalLength = Symbol('total-length');
+const kCallback = Symbol('callback');
+const kBuffers = Symbol('buffers');
+const kError$1 = Symbol('error');
+
+//
+// We limit zlib concurrency, which prevents severe memory fragmentation
+// as documented in https://github.com/nodejs/node/issues/8871#issuecomment-250915913
+// and https://github.com/websockets/ws/issues/1202
+//
+// Intentionally global; it's the global thread pool that's an issue.
+//
+let zlibLimiter;
+
+/**
+ * permessage-deflate implementation.
+ */
+let PerMessageDeflate$4 = class PerMessageDeflate {
+  /**
+   * Creates a PerMessageDeflate instance.
+   *
+   * @param {Object} [options] Configuration options
+   * @param {(Boolean|Number)} [options.clientMaxWindowBits] Advertise support
+   *     for, or request, a custom client window size
+   * @param {Boolean} [options.clientNoContextTakeover=false] Advertise/
+   *     acknowledge disabling of client context takeover
+   * @param {Number} [options.concurrencyLimit=10] The number of concurrent
+   *     calls to zlib
+   * @param {(Boolean|Number)} [options.serverMaxWindowBits] Request/confirm the
+   *     use of a custom server window size
+   * @param {Boolean} [options.serverNoContextTakeover=false] Request/accept
+   *     disabling of server context takeover
+   * @param {Number} [options.threshold=1024] Size (in bytes) below which
+   *     messages should not be compressed if context takeover is disabled
+   * @param {Object} [options.zlibDeflateOptions] Options to pass to zlib on
+   *     deflate
+   * @param {Object} [options.zlibInflateOptions] Options to pass to zlib on
+   *     inflate
+   * @param {Boolean} [isServer=false] Create the instance in either server or
+   *     client mode
+   * @param {Number} [maxPayload=0] The maximum allowed message length
+   */
+  constructor(options, isServer, maxPayload) {
+    this._maxPayload = maxPayload | 0;
+    this._options = options || {};
+    this._threshold =
+      this._options.threshold !== undefined ? this._options.threshold : 1024;
+    this._isServer = !!isServer;
+    this._deflate = null;
+    this._inflate = null;
+
+    this.params = null;
+
+    if (!zlibLimiter) {
+      const concurrency =
+        this._options.concurrencyLimit !== undefined
+          ? this._options.concurrencyLimit
+          : 10;
+      zlibLimiter = new Limiter(concurrency);
+    }
+  }
+
+  /**
+   * @type {String}
+   */
+  static get extensionName() {
+    return 'permessage-deflate';
+  }
+
+  /**
+   * Create an extension negotiation offer.
+   *
+   * @return {Object} Extension parameters
+   * @public
+   */
+  offer() {
+    const params = {};
+
+    if (this._options.serverNoContextTakeover) {
+      params.server_no_context_takeover = true;
+    }
+    if (this._options.clientNoContextTakeover) {
+      params.client_no_context_takeover = true;
+    }
+    if (this._options.serverMaxWindowBits) {
+      params.server_max_window_bits = this._options.serverMaxWindowBits;
+    }
+    if (this._options.clientMaxWindowBits) {
+      params.client_max_window_bits = this._options.clientMaxWindowBits;
+    } else if (this._options.clientMaxWindowBits == null) {
+      params.client_max_window_bits = true;
+    }
+
+    return params;
+  }
+
+  /**
+   * Accept an extension negotiation offer/response.
+   *
+   * @param {Array} configurations The extension negotiation offers/reponse
+   * @return {Object} Accepted configuration
+   * @public
+   */
+  accept(configurations) {
+    configurations = this.normalizeParams(configurations);
+
+    this.params = this._isServer
+      ? this.acceptAsServer(configurations)
+      : this.acceptAsClient(configurations);
+
+    return this.params;
+  }
+
+  /**
+   * Releases all resources used by the extension.
+   *
+   * @public
+   */
+  cleanup() {
+    if (this._inflate) {
+      this._inflate.close();
+      this._inflate = null;
+    }
+
+    if (this._deflate) {
+      const callback = this._deflate[kCallback];
+
+      this._deflate.close();
+      this._deflate = null;
+
+      if (callback) {
+        callback(
+          new Error(
+            'The deflate stream was closed while data was being processed'
+          )
+        );
+      }
+    }
+  }
+
+  /**
+   *  Accept an extension negotiation offer.
+   *
+   * @param {Array} offers The extension negotiation offers
+   * @return {Object} Accepted configuration
+   * @private
+   */
+  acceptAsServer(offers) {
+    const opts = this._options;
+    const accepted = offers.find((params) => {
+      if (
+        (opts.serverNoContextTakeover === false &&
+          params.server_no_context_takeover) ||
+        (params.server_max_window_bits &&
+          (opts.serverMaxWindowBits === false ||
+            (typeof opts.serverMaxWindowBits === 'number' &&
+              opts.serverMaxWindowBits > params.server_max_window_bits))) ||
+        (typeof opts.clientMaxWindowBits === 'number' &&
+          !params.client_max_window_bits)
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (!accepted) {
+      throw new Error('None of the extension offers can be accepted');
+    }
+
+    if (opts.serverNoContextTakeover) {
+      accepted.server_no_context_takeover = true;
+    }
+    if (opts.clientNoContextTakeover) {
+      accepted.client_no_context_takeover = true;
+    }
+    if (typeof opts.serverMaxWindowBits === 'number') {
+      accepted.server_max_window_bits = opts.serverMaxWindowBits;
+    }
+    if (typeof opts.clientMaxWindowBits === 'number') {
+      accepted.client_max_window_bits = opts.clientMaxWindowBits;
+    } else if (
+      accepted.client_max_window_bits === true ||
+      opts.clientMaxWindowBits === false
+    ) {
+      delete accepted.client_max_window_bits;
+    }
+
+    return accepted;
+  }
+
+  /**
+   * Accept the extension negotiation response.
+   *
+   * @param {Array} response The extension negotiation response
+   * @return {Object} Accepted configuration
+   * @private
+   */
+  acceptAsClient(response) {
+    const params = response[0];
+
+    if (
+      this._options.clientNoContextTakeover === false &&
+      params.client_no_context_takeover
+    ) {
+      throw new Error('Unexpected parameter "client_no_context_takeover"');
+    }
+
+    if (!params.client_max_window_bits) {
+      if (typeof this._options.clientMaxWindowBits === 'number') {
+        params.client_max_window_bits = this._options.clientMaxWindowBits;
+      }
+    } else if (
+      this._options.clientMaxWindowBits === false ||
+      (typeof this._options.clientMaxWindowBits === 'number' &&
+        params.client_max_window_bits > this._options.clientMaxWindowBits)
+    ) {
+      throw new Error(
+        'Unexpected or invalid parameter "client_max_window_bits"'
+      );
+    }
+
+    return params;
+  }
+
+  /**
+   * Normalize parameters.
+   *
+   * @param {Array} configurations The extension negotiation offers/reponse
+   * @return {Array} The offers/response with normalized parameters
+   * @private
+   */
+  normalizeParams(configurations) {
+    configurations.forEach((params) => {
+      Object.keys(params).forEach((key) => {
+        let value = params[key];
+
+        if (value.length > 1) {
+          throw new Error(`Parameter "${key}" must have only a single value`);
+        }
+
+        value = value[0];
+
+        if (key === 'client_max_window_bits') {
+          if (value !== true) {
+            const num = +value;
+            if (!Number.isInteger(num) || num < 8 || num > 15) {
+              throw new TypeError(
+                `Invalid value for parameter "${key}": ${value}`
+              );
+            }
+            value = num;
+          } else if (!this._isServer) {
+            throw new TypeError(
+              `Invalid value for parameter "${key}": ${value}`
+            );
+          }
+        } else if (key === 'server_max_window_bits') {
+          const num = +value;
+          if (!Number.isInteger(num) || num < 8 || num > 15) {
+            throw new TypeError(
+              `Invalid value for parameter "${key}": ${value}`
+            );
+          }
+          value = num;
+        } else if (
+          key === 'client_no_context_takeover' ||
+          key === 'server_no_context_takeover'
+        ) {
+          if (value !== true) {
+            throw new TypeError(
+              `Invalid value for parameter "${key}": ${value}`
+            );
+          }
+        } else {
+          throw new Error(`Unknown parameter "${key}"`);
+        }
+
+        params[key] = value;
+      });
+    });
+
+    return configurations;
+  }
+
+  /**
+   * Decompress data. Concurrency limited.
+   *
+   * @param {Buffer} data Compressed data
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @public
+   */
+  decompress(data, fin, callback) {
+    zlibLimiter.add((done) => {
+      this._decompress(data, fin, (err, result) => {
+        done();
+        callback(err, result);
+      });
+    });
+  }
+
+  /**
+   * Compress data. Concurrency limited.
+   *
+   * @param {(Buffer|String)} data Data to compress
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @public
+   */
+  compress(data, fin, callback) {
+    zlibLimiter.add((done) => {
+      this._compress(data, fin, (err, result) => {
+        done();
+        callback(err, result);
+      });
+    });
+  }
+
+  /**
+   * Decompress data.
+   *
+   * @param {Buffer} data Compressed data
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @private
+   */
+  _decompress(data, fin, callback) {
+    const endpoint = this._isServer ? 'client' : 'server';
+
+    if (!this._inflate) {
+      const key = `${endpoint}_max_window_bits`;
+      const windowBits =
+        typeof this.params[key] !== 'number'
+          ? zlib.Z_DEFAULT_WINDOWBITS
+          : this.params[key];
+
+      this._inflate = zlib.createInflateRaw({
+        ...this._options.zlibInflateOptions,
+        windowBits
+      });
+      this._inflate[kPerMessageDeflate] = this;
+      this._inflate[kTotalLength] = 0;
+      this._inflate[kBuffers] = [];
+      this._inflate.on('error', inflateOnError);
+      this._inflate.on('data', inflateOnData);
+    }
+
+    this._inflate[kCallback] = callback;
+
+    this._inflate.write(data);
+    if (fin) this._inflate.write(TRAILER);
+
+    this._inflate.flush(() => {
+      const err = this._inflate[kError$1];
+
+      if (err) {
+        this._inflate.close();
+        this._inflate = null;
+        callback(err);
+        return;
+      }
+
+      const data = bufferUtil.concat(
+        this._inflate[kBuffers],
+        this._inflate[kTotalLength]
+      );
+
+      if (this._inflate._readableState.endEmitted) {
+        this._inflate.close();
+        this._inflate = null;
+      } else {
+        this._inflate[kTotalLength] = 0;
+        this._inflate[kBuffers] = [];
+
+        if (fin && this.params[`${endpoint}_no_context_takeover`]) {
+          this._inflate.reset();
+        }
+      }
+
+      callback(null, data);
+    });
+  }
+
+  /**
+   * Compress data.
+   *
+   * @param {(Buffer|String)} data Data to compress
+   * @param {Boolean} fin Specifies whether or not this is the last fragment
+   * @param {Function} callback Callback
+   * @private
+   */
+  _compress(data, fin, callback) {
+    const endpoint = this._isServer ? 'server' : 'client';
+
+    if (!this._deflate) {
+      const key = `${endpoint}_max_window_bits`;
+      const windowBits =
+        typeof this.params[key] !== 'number'
+          ? zlib.Z_DEFAULT_WINDOWBITS
+          : this.params[key];
+
+      this._deflate = zlib.createDeflateRaw({
+        ...this._options.zlibDeflateOptions,
+        windowBits
+      });
+
+      this._deflate[kTotalLength] = 0;
+      this._deflate[kBuffers] = [];
+
+      this._deflate.on('data', deflateOnData);
+    }
+
+    this._deflate[kCallback] = callback;
+
+    this._deflate.write(data);
+    this._deflate.flush(zlib.Z_SYNC_FLUSH, () => {
+      if (!this._deflate) {
+        //
+        // The deflate stream was closed while data was being processed.
+        //
+        return;
+      }
+
+      let data = bufferUtil.concat(
+        this._deflate[kBuffers],
+        this._deflate[kTotalLength]
+      );
+
+      if (fin) {
+        data = new FastBuffer$1(data.buffer, data.byteOffset, data.length - 4);
+      }
+
+      //
+      // Ensure that the callback will not be called again in
+      // `PerMessageDeflate#cleanup()`.
+      //
+      this._deflate[kCallback] = null;
+
+      this._deflate[kTotalLength] = 0;
+      this._deflate[kBuffers] = [];
+
+      if (fin && this.params[`${endpoint}_no_context_takeover`]) {
+        this._deflate.reset();
+      }
+
+      callback(null, data);
+    });
+  }
+};
+
+var permessageDeflate = PerMessageDeflate$4;
+
+/**
+ * The listener of the `zlib.DeflateRaw` stream `'data'` event.
+ *
+ * @param {Buffer} chunk A chunk of data
+ * @private
+ */
+function deflateOnData(chunk) {
+  this[kBuffers].push(chunk);
+  this[kTotalLength] += chunk.length;
+}
+
+/**
+ * The listener of the `zlib.InflateRaw` stream `'data'` event.
+ *
+ * @param {Buffer} chunk A chunk of data
+ * @private
+ */
+function inflateOnData(chunk) {
+  this[kTotalLength] += chunk.length;
+
+  if (
+    this[kPerMessageDeflate]._maxPayload < 1 ||
+    this[kTotalLength] <= this[kPerMessageDeflate]._maxPayload
+  ) {
+    this[kBuffers].push(chunk);
+    return;
+  }
+
+  this[kError$1] = new RangeError('Max payload size exceeded');
+  this[kError$1].code = 'WS_ERR_UNSUPPORTED_MESSAGE_LENGTH';
+  this[kError$1][kStatusCode$2] = 1009;
+  this.removeListener('data', inflateOnData);
+  this.reset();
+}
+
+/**
+ * The listener of the `zlib.InflateRaw` stream `'error'` event.
+ *
+ * @param {Error} err The emitted error
+ * @private
+ */
+function inflateOnError(err) {
+  //
+  // There is no need to call `Zlib#close()` as the handle is automatically
+  // closed when an error is emitted.
+  //
+  this[kPerMessageDeflate]._inflate = null;
+  err[kStatusCode$2] = 1007;
+  this[kCallback](err);
+}
+
+var validation = {exports: {}};
+
+var isValidUTF8_1;
+
+const { isUtf8 } = require$$0;
+
+//
+// Allowed token characters:
+//
+// '!', '#', '$', '%', '&', ''', '*', '+', '-',
+// '.', 0-9, A-Z, '^', '_', '`', a-z, '|', '~'
+//
+// tokenChars[32] === 0 // ' '
+// tokenChars[33] === 1 // '!'
+// tokenChars[34] === 0 // '"'
+// ...
+//
+// prettier-ignore
+const tokenChars$2 = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0 - 15
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 16 - 31
+  0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, // 32 - 47
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, // 48 - 63
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 64 - 79
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, // 80 - 95
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 96 - 111
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0 // 112 - 127
+];
+
+/**
+ * Checks if a status code is allowed in a close frame.
+ *
+ * @param {Number} code The status code
+ * @return {Boolean} `true` if the status code is valid, else `false`
+ * @public
+ */
+function isValidStatusCode$2(code) {
+  return (
+    (code >= 1000 &&
+      code <= 1014 &&
+      code !== 1004 &&
+      code !== 1005 &&
+      code !== 1006) ||
+    (code >= 3000 && code <= 4999)
+  );
+}
+
+/**
+ * Checks if a given buffer contains only correct UTF-8.
+ * Ported from https://www.cl.cam.ac.uk/%7Emgk25/ucs/utf8_check.c by
+ * Markus Kuhn.
+ *
+ * @param {Buffer} buf The buffer to check
+ * @return {Boolean} `true` if `buf` contains only correct UTF-8, else `false`
+ * @public
+ */
+function _isValidUTF8(buf) {
+  const len = buf.length;
+  let i = 0;
+
+  while (i < len) {
+    if ((buf[i] & 0x80) === 0) {
+      // 0xxxxxxx
+      i++;
+    } else if ((buf[i] & 0xe0) === 0xc0) {
+      // 110xxxxx 10xxxxxx
+      if (
+        i + 1 === len ||
+        (buf[i + 1] & 0xc0) !== 0x80 ||
+        (buf[i] & 0xfe) === 0xc0 // Overlong
+      ) {
+        return false;
+      }
+
+      i += 2;
+    } else if ((buf[i] & 0xf0) === 0xe0) {
+      // 1110xxxx 10xxxxxx 10xxxxxx
+      if (
+        i + 2 >= len ||
+        (buf[i + 1] & 0xc0) !== 0x80 ||
+        (buf[i + 2] & 0xc0) !== 0x80 ||
+        (buf[i] === 0xe0 && (buf[i + 1] & 0xe0) === 0x80) || // Overlong
+        (buf[i] === 0xed && (buf[i + 1] & 0xe0) === 0xa0) // Surrogate (U+D800 - U+DFFF)
+      ) {
+        return false;
+      }
+
+      i += 3;
+    } else if ((buf[i] & 0xf8) === 0xf0) {
+      // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+      if (
+        i + 3 >= len ||
+        (buf[i + 1] & 0xc0) !== 0x80 ||
+        (buf[i + 2] & 0xc0) !== 0x80 ||
+        (buf[i + 3] & 0xc0) !== 0x80 ||
+        (buf[i] === 0xf0 && (buf[i + 1] & 0xf0) === 0x80) || // Overlong
+        (buf[i] === 0xf4 && buf[i + 1] > 0x8f) ||
+        buf[i] > 0xf4 // > U+10FFFF
+      ) {
+        return false;
+      }
+
+      i += 4;
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+validation.exports = {
+  isValidStatusCode: isValidStatusCode$2,
+  isValidUTF8: _isValidUTF8,
+  tokenChars: tokenChars$2
+};
+
+if (isUtf8) {
+  isValidUTF8_1 = validation.exports.isValidUTF8 = function (buf) {
+    return buf.length < 24 ? _isValidUTF8(buf) : isUtf8(buf);
+  };
+} /* istanbul ignore else  */ else if (!process.env.WS_NO_UTF_8_VALIDATE) {
+  try {
+    const isValidUTF8 = require$$1$2;
+
+    isValidUTF8_1 = validation.exports.isValidUTF8 = function (buf) {
+      return buf.length < 32 ? _isValidUTF8(buf) : isValidUTF8(buf);
+    };
+  } catch (e) {
+    // Continue regardless of the error.
+  }
+}
+
+var validationExports = validation.exports;
+
+const { Writable } = require$$2$1;
+
+const PerMessageDeflate$3 = permessageDeflate;
+const {
+  BINARY_TYPES: BINARY_TYPES$1,
+  EMPTY_BUFFER: EMPTY_BUFFER$2,
+  kStatusCode: kStatusCode$1,
+  kWebSocket: kWebSocket$2
+} = constants;
+const { concat, toArrayBuffer: toArrayBuffer$1, unmask } = bufferUtilExports;
+const { isValidStatusCode: isValidStatusCode$1, isValidUTF8 } = validationExports;
+
+const FastBuffer = Buffer[Symbol.species];
+
+const GET_INFO = 0;
+const GET_PAYLOAD_LENGTH_16 = 1;
+const GET_PAYLOAD_LENGTH_64 = 2;
+const GET_MASK = 3;
+const GET_DATA = 4;
+const INFLATING = 5;
+const DEFER_EVENT = 6;
+
+/**
+ * HyBi Receiver implementation.
+ *
+ * @extends Writable
+ */
+let Receiver$1 = class Receiver extends Writable {
+  /**
+   * Creates a Receiver instance.
+   *
+   * @param {Object} [options] Options object
+   * @param {Boolean} [options.allowSynchronousEvents=true] Specifies whether
+   *     any of the `'message'`, `'ping'`, and `'pong'` events can be emitted
+   *     multiple times in the same tick
+   * @param {String} [options.binaryType=nodebuffer] The type for binary data
+   * @param {Object} [options.extensions] An object containing the negotiated
+   *     extensions
+   * @param {Boolean} [options.isServer=false] Specifies whether to operate in
+   *     client or server mode
+   * @param {Number} [options.maxPayload=0] The maximum allowed message length
+   * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+   *     not to skip UTF-8 validation for text and close messages
+   */
+  constructor(options = {}) {
+    super();
+
+    this._allowSynchronousEvents =
+      options.allowSynchronousEvents !== undefined
+        ? options.allowSynchronousEvents
+        : true;
+    this._binaryType = options.binaryType || BINARY_TYPES$1[0];
+    this._extensions = options.extensions || {};
+    this._isServer = !!options.isServer;
+    this._maxPayload = options.maxPayload | 0;
+    this._skipUTF8Validation = !!options.skipUTF8Validation;
+    this[kWebSocket$2] = undefined;
+
+    this._bufferedBytes = 0;
+    this._buffers = [];
+
+    this._compressed = false;
+    this._payloadLength = 0;
+    this._mask = undefined;
+    this._fragmented = 0;
+    this._masked = false;
+    this._fin = false;
+    this._opcode = 0;
+
+    this._totalPayloadLength = 0;
+    this._messageLength = 0;
+    this._fragments = [];
+
+    this._errored = false;
+    this._loop = false;
+    this._state = GET_INFO;
+  }
+
+  /**
+   * Implements `Writable.prototype._write()`.
+   *
+   * @param {Buffer} chunk The chunk of data to write
+   * @param {String} encoding The character encoding of `chunk`
+   * @param {Function} cb Callback
+   * @private
+   */
+  _write(chunk, encoding, cb) {
+    if (this._opcode === 0x08 && this._state == GET_INFO) return cb();
+
+    this._bufferedBytes += chunk.length;
+    this._buffers.push(chunk);
+    this.startLoop(cb);
+  }
+
+  /**
+   * Consumes `n` bytes from the buffered data.
+   *
+   * @param {Number} n The number of bytes to consume
+   * @return {Buffer} The consumed bytes
+   * @private
+   */
+  consume(n) {
+    this._bufferedBytes -= n;
+
+    if (n === this._buffers[0].length) return this._buffers.shift();
+
+    if (n < this._buffers[0].length) {
+      const buf = this._buffers[0];
+      this._buffers[0] = new FastBuffer(
+        buf.buffer,
+        buf.byteOffset + n,
+        buf.length - n
+      );
+
+      return new FastBuffer(buf.buffer, buf.byteOffset, n);
+    }
+
+    const dst = Buffer.allocUnsafe(n);
+
+    do {
+      const buf = this._buffers[0];
+      const offset = dst.length - n;
+
+      if (n >= buf.length) {
+        dst.set(this._buffers.shift(), offset);
+      } else {
+        dst.set(new Uint8Array(buf.buffer, buf.byteOffset, n), offset);
+        this._buffers[0] = new FastBuffer(
+          buf.buffer,
+          buf.byteOffset + n,
+          buf.length - n
+        );
+      }
+
+      n -= buf.length;
+    } while (n > 0);
+
+    return dst;
+  }
+
+  /**
+   * Starts the parsing loop.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  startLoop(cb) {
+    this._loop = true;
+
+    do {
+      switch (this._state) {
+        case GET_INFO:
+          this.getInfo(cb);
+          break;
+        case GET_PAYLOAD_LENGTH_16:
+          this.getPayloadLength16(cb);
+          break;
+        case GET_PAYLOAD_LENGTH_64:
+          this.getPayloadLength64(cb);
+          break;
+        case GET_MASK:
+          this.getMask();
+          break;
+        case GET_DATA:
+          this.getData(cb);
+          break;
+        case INFLATING:
+        case DEFER_EVENT:
+          this._loop = false;
+          return;
+      }
+    } while (this._loop);
+
+    if (!this._errored) cb();
+  }
+
+  /**
+   * Reads the first two bytes of a frame.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getInfo(cb) {
+    if (this._bufferedBytes < 2) {
+      this._loop = false;
+      return;
+    }
+
+    const buf = this.consume(2);
+
+    if ((buf[0] & 0x30) !== 0x00) {
+      const error = this.createError(
+        RangeError,
+        'RSV2 and RSV3 must be clear',
+        true,
+        1002,
+        'WS_ERR_UNEXPECTED_RSV_2_3'
+      );
+
+      cb(error);
+      return;
+    }
+
+    const compressed = (buf[0] & 0x40) === 0x40;
+
+    if (compressed && !this._extensions[PerMessageDeflate$3.extensionName]) {
+      const error = this.createError(
+        RangeError,
+        'RSV1 must be clear',
+        true,
+        1002,
+        'WS_ERR_UNEXPECTED_RSV_1'
+      );
+
+      cb(error);
+      return;
+    }
+
+    this._fin = (buf[0] & 0x80) === 0x80;
+    this._opcode = buf[0] & 0x0f;
+    this._payloadLength = buf[1] & 0x7f;
+
+    if (this._opcode === 0x00) {
+      if (compressed) {
+        const error = this.createError(
+          RangeError,
+          'RSV1 must be clear',
+          true,
+          1002,
+          'WS_ERR_UNEXPECTED_RSV_1'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (!this._fragmented) {
+        const error = this.createError(
+          RangeError,
+          'invalid opcode 0',
+          true,
+          1002,
+          'WS_ERR_INVALID_OPCODE'
+        );
+
+        cb(error);
+        return;
+      }
+
+      this._opcode = this._fragmented;
+    } else if (this._opcode === 0x01 || this._opcode === 0x02) {
+      if (this._fragmented) {
+        const error = this.createError(
+          RangeError,
+          `invalid opcode ${this._opcode}`,
+          true,
+          1002,
+          'WS_ERR_INVALID_OPCODE'
+        );
+
+        cb(error);
+        return;
+      }
+
+      this._compressed = compressed;
+    } else if (this._opcode > 0x07 && this._opcode < 0x0b) {
+      if (!this._fin) {
+        const error = this.createError(
+          RangeError,
+          'FIN must be set',
+          true,
+          1002,
+          'WS_ERR_EXPECTED_FIN'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (compressed) {
+        const error = this.createError(
+          RangeError,
+          'RSV1 must be clear',
+          true,
+          1002,
+          'WS_ERR_UNEXPECTED_RSV_1'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (
+        this._payloadLength > 0x7d ||
+        (this._opcode === 0x08 && this._payloadLength === 1)
+      ) {
+        const error = this.createError(
+          RangeError,
+          `invalid payload length ${this._payloadLength}`,
+          true,
+          1002,
+          'WS_ERR_INVALID_CONTROL_PAYLOAD_LENGTH'
+        );
+
+        cb(error);
+        return;
+      }
+    } else {
+      const error = this.createError(
+        RangeError,
+        `invalid opcode ${this._opcode}`,
+        true,
+        1002,
+        'WS_ERR_INVALID_OPCODE'
+      );
+
+      cb(error);
+      return;
+    }
+
+    if (!this._fin && !this._fragmented) this._fragmented = this._opcode;
+    this._masked = (buf[1] & 0x80) === 0x80;
+
+    if (this._isServer) {
+      if (!this._masked) {
+        const error = this.createError(
+          RangeError,
+          'MASK must be set',
+          true,
+          1002,
+          'WS_ERR_EXPECTED_MASK'
+        );
+
+        cb(error);
+        return;
+      }
+    } else if (this._masked) {
+      const error = this.createError(
+        RangeError,
+        'MASK must be clear',
+        true,
+        1002,
+        'WS_ERR_UNEXPECTED_MASK'
+      );
+
+      cb(error);
+      return;
+    }
+
+    if (this._payloadLength === 126) this._state = GET_PAYLOAD_LENGTH_16;
+    else if (this._payloadLength === 127) this._state = GET_PAYLOAD_LENGTH_64;
+    else this.haveLength(cb);
+  }
+
+  /**
+   * Gets extended payload length (7+16).
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getPayloadLength16(cb) {
+    if (this._bufferedBytes < 2) {
+      this._loop = false;
+      return;
+    }
+
+    this._payloadLength = this.consume(2).readUInt16BE(0);
+    this.haveLength(cb);
+  }
+
+  /**
+   * Gets extended payload length (7+64).
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getPayloadLength64(cb) {
+    if (this._bufferedBytes < 8) {
+      this._loop = false;
+      return;
+    }
+
+    const buf = this.consume(8);
+    const num = buf.readUInt32BE(0);
+
+    //
+    // The maximum safe integer in JavaScript is 2^53 - 1. An error is returned
+    // if payload length is greater than this number.
+    //
+    if (num > Math.pow(2, 53 - 32) - 1) {
+      const error = this.createError(
+        RangeError,
+        'Unsupported WebSocket frame: payload length > 2^53 - 1',
+        false,
+        1009,
+        'WS_ERR_UNSUPPORTED_DATA_PAYLOAD_LENGTH'
+      );
+
+      cb(error);
+      return;
+    }
+
+    this._payloadLength = num * Math.pow(2, 32) + buf.readUInt32BE(4);
+    this.haveLength(cb);
+  }
+
+  /**
+   * Payload length has been read.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  haveLength(cb) {
+    if (this._payloadLength && this._opcode < 0x08) {
+      this._totalPayloadLength += this._payloadLength;
+      if (this._totalPayloadLength > this._maxPayload && this._maxPayload > 0) {
+        const error = this.createError(
+          RangeError,
+          'Max payload size exceeded',
+          false,
+          1009,
+          'WS_ERR_UNSUPPORTED_MESSAGE_LENGTH'
+        );
+
+        cb(error);
+        return;
+      }
+    }
+
+    if (this._masked) this._state = GET_MASK;
+    else this._state = GET_DATA;
+  }
+
+  /**
+   * Reads mask bytes.
+   *
+   * @private
+   */
+  getMask() {
+    if (this._bufferedBytes < 4) {
+      this._loop = false;
+      return;
+    }
+
+    this._mask = this.consume(4);
+    this._state = GET_DATA;
+  }
+
+  /**
+   * Reads data bytes.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  getData(cb) {
+    let data = EMPTY_BUFFER$2;
+
+    if (this._payloadLength) {
+      if (this._bufferedBytes < this._payloadLength) {
+        this._loop = false;
+        return;
+      }
+
+      data = this.consume(this._payloadLength);
+
+      if (
+        this._masked &&
+        (this._mask[0] | this._mask[1] | this._mask[2] | this._mask[3]) !== 0
+      ) {
+        unmask(data, this._mask);
+      }
+    }
+
+    if (this._opcode > 0x07) {
+      this.controlMessage(data, cb);
+      return;
+    }
+
+    if (this._compressed) {
+      this._state = INFLATING;
+      this.decompress(data, cb);
+      return;
+    }
+
+    if (data.length) {
+      //
+      // This message is not compressed so its length is the sum of the payload
+      // length of all fragments.
+      //
+      this._messageLength = this._totalPayloadLength;
+      this._fragments.push(data);
+    }
+
+    this.dataMessage(cb);
+  }
+
+  /**
+   * Decompresses data.
+   *
+   * @param {Buffer} data Compressed data
+   * @param {Function} cb Callback
+   * @private
+   */
+  decompress(data, cb) {
+    const perMessageDeflate = this._extensions[PerMessageDeflate$3.extensionName];
+
+    perMessageDeflate.decompress(data, this._fin, (err, buf) => {
+      if (err) return cb(err);
+
+      if (buf.length) {
+        this._messageLength += buf.length;
+        if (this._messageLength > this._maxPayload && this._maxPayload > 0) {
+          const error = this.createError(
+            RangeError,
+            'Max payload size exceeded',
+            false,
+            1009,
+            'WS_ERR_UNSUPPORTED_MESSAGE_LENGTH'
+          );
+
+          cb(error);
+          return;
+        }
+
+        this._fragments.push(buf);
+      }
+
+      this.dataMessage(cb);
+      if (this._state === GET_INFO) this.startLoop(cb);
+    });
+  }
+
+  /**
+   * Handles a data message.
+   *
+   * @param {Function} cb Callback
+   * @private
+   */
+  dataMessage(cb) {
+    if (!this._fin) {
+      this._state = GET_INFO;
+      return;
+    }
+
+    const messageLength = this._messageLength;
+    const fragments = this._fragments;
+
+    this._totalPayloadLength = 0;
+    this._messageLength = 0;
+    this._fragmented = 0;
+    this._fragments = [];
+
+    if (this._opcode === 2) {
+      let data;
+
+      if (this._binaryType === 'nodebuffer') {
+        data = concat(fragments, messageLength);
+      } else if (this._binaryType === 'arraybuffer') {
+        data = toArrayBuffer$1(concat(fragments, messageLength));
+      } else {
+        data = fragments;
+      }
+
+      if (this._allowSynchronousEvents) {
+        this.emit('message', data, true);
+        this._state = GET_INFO;
+      } else {
+        this._state = DEFER_EVENT;
+        setImmediate(() => {
+          this.emit('message', data, true);
+          this._state = GET_INFO;
+          this.startLoop(cb);
+        });
+      }
+    } else {
+      const buf = concat(fragments, messageLength);
+
+      if (!this._skipUTF8Validation && !isValidUTF8(buf)) {
+        const error = this.createError(
+          Error,
+          'invalid UTF-8 sequence',
+          true,
+          1007,
+          'WS_ERR_INVALID_UTF8'
+        );
+
+        cb(error);
+        return;
+      }
+
+      if (this._state === INFLATING || this._allowSynchronousEvents) {
+        this.emit('message', buf, false);
+        this._state = GET_INFO;
+      } else {
+        this._state = DEFER_EVENT;
+        setImmediate(() => {
+          this.emit('message', buf, false);
+          this._state = GET_INFO;
+          this.startLoop(cb);
+        });
+      }
+    }
+  }
+
+  /**
+   * Handles a control message.
+   *
+   * @param {Buffer} data Data to handle
+   * @return {(Error|RangeError|undefined)} A possible error
+   * @private
+   */
+  controlMessage(data, cb) {
+    if (this._opcode === 0x08) {
+      if (data.length === 0) {
+        this._loop = false;
+        this.emit('conclude', 1005, EMPTY_BUFFER$2);
+        this.end();
+      } else {
+        const code = data.readUInt16BE(0);
+
+        if (!isValidStatusCode$1(code)) {
+          const error = this.createError(
+            RangeError,
+            `invalid status code ${code}`,
+            true,
+            1002,
+            'WS_ERR_INVALID_CLOSE_CODE'
+          );
+
+          cb(error);
+          return;
+        }
+
+        const buf = new FastBuffer(
+          data.buffer,
+          data.byteOffset + 2,
+          data.length - 2
+        );
+
+        if (!this._skipUTF8Validation && !isValidUTF8(buf)) {
+          const error = this.createError(
+            Error,
+            'invalid UTF-8 sequence',
+            true,
+            1007,
+            'WS_ERR_INVALID_UTF8'
+          );
+
+          cb(error);
+          return;
+        }
+
+        this._loop = false;
+        this.emit('conclude', code, buf);
+        this.end();
+      }
+
+      this._state = GET_INFO;
+      return;
+    }
+
+    if (this._allowSynchronousEvents) {
+      this.emit(this._opcode === 0x09 ? 'ping' : 'pong', data);
+      this._state = GET_INFO;
+    } else {
+      this._state = DEFER_EVENT;
+      setImmediate(() => {
+        this.emit(this._opcode === 0x09 ? 'ping' : 'pong', data);
+        this._state = GET_INFO;
+        this.startLoop(cb);
+      });
+    }
+  }
+
+  /**
+   * Builds an error object.
+   *
+   * @param {function(new:Error|RangeError)} ErrorCtor The error constructor
+   * @param {String} message The error message
+   * @param {Boolean} prefix Specifies whether or not to add a default prefix to
+   *     `message`
+   * @param {Number} statusCode The status code
+   * @param {String} errorCode The exposed error code
+   * @return {(Error|RangeError)} The error
+   * @private
+   */
+  createError(ErrorCtor, message, prefix, statusCode, errorCode) {
+    this._loop = false;
+    this._errored = true;
+
+    const err = new ErrorCtor(
+      prefix ? `Invalid WebSocket frame: ${message}` : message
+    );
+
+    Error.captureStackTrace(err, this.createError);
+    err.code = errorCode;
+    err[kStatusCode$1] = statusCode;
+    return err;
+  }
+};
+
+var receiver = Receiver$1;
+
+const receiver_default = /*@__PURE__*/getDefaultExportFromCjs(receiver);
+
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex" }] */
+
+const { Duplex: Duplex$2 } = require$$2$1;
+const { randomFillSync } = require$$3$1;
+
+const PerMessageDeflate$2 = permessageDeflate;
+const { EMPTY_BUFFER: EMPTY_BUFFER$1 } = constants;
+const { isValidStatusCode } = validationExports;
+const { mask: applyMask, toBuffer: toBuffer$1 } = bufferUtilExports;
+
+const kByteLength = Symbol('kByteLength');
+const maskBuffer = Buffer.alloc(4);
+const RANDOM_POOL_SIZE = 8 * 1024;
+let randomPool;
+let randomPoolPointer = RANDOM_POOL_SIZE;
+
+/**
+ * HyBi Sender implementation.
+ */
+let Sender$1 = class Sender {
+  /**
+   * Creates a Sender instance.
+   *
+   * @param {Duplex} socket The connection socket
+   * @param {Object} [extensions] An object containing the negotiated extensions
+   * @param {Function} [generateMask] The function used to generate the masking
+   *     key
+   */
+  constructor(socket, extensions, generateMask) {
+    this._extensions = extensions || {};
+
+    if (generateMask) {
+      this._generateMask = generateMask;
+      this._maskBuffer = Buffer.alloc(4);
+    }
+
+    this._socket = socket;
+
+    this._firstFragment = true;
+    this._compress = false;
+
+    this._bufferedBytes = 0;
+    this._deflating = false;
+    this._queue = [];
+  }
+
+  /**
+   * Frames a piece of data according to the HyBi WebSocket protocol.
+   *
+   * @param {(Buffer|String)} data The data to frame
+   * @param {Object} options Options object
+   * @param {Boolean} [options.fin=false] Specifies whether or not to set the
+   *     FIN bit
+   * @param {Function} [options.generateMask] The function used to generate the
+   *     masking key
+   * @param {Boolean} [options.mask=false] Specifies whether or not to mask
+   *     `data`
+   * @param {Buffer} [options.maskBuffer] The buffer used to store the masking
+   *     key
+   * @param {Number} options.opcode The opcode
+   * @param {Boolean} [options.readOnly=false] Specifies whether `data` can be
+   *     modified
+   * @param {Boolean} [options.rsv1=false] Specifies whether or not to set the
+   *     RSV1 bit
+   * @return {(Buffer|String)[]} The framed data
+   * @public
+   */
+  static frame(data, options) {
+    let mask;
+    let merge = false;
+    let offset = 2;
+    let skipMasking = false;
+
+    if (options.mask) {
+      mask = options.maskBuffer || maskBuffer;
+
+      if (options.generateMask) {
+        options.generateMask(mask);
+      } else {
+        if (randomPoolPointer === RANDOM_POOL_SIZE) {
+          /* istanbul ignore else  */
+          if (randomPool === undefined) {
+            //
+            // This is lazily initialized because server-sent frames must not
+            // be masked so it may never be used.
+            //
+            randomPool = Buffer.alloc(RANDOM_POOL_SIZE);
+          }
+
+          randomFillSync(randomPool, 0, RANDOM_POOL_SIZE);
+          randomPoolPointer = 0;
+        }
+
+        mask[0] = randomPool[randomPoolPointer++];
+        mask[1] = randomPool[randomPoolPointer++];
+        mask[2] = randomPool[randomPoolPointer++];
+        mask[3] = randomPool[randomPoolPointer++];
+      }
+
+      skipMasking = (mask[0] | mask[1] | mask[2] | mask[3]) === 0;
+      offset = 6;
+    }
+
+    let dataLength;
+
+    if (typeof data === 'string') {
+      if (
+        (!options.mask || skipMasking) &&
+        options[kByteLength] !== undefined
+      ) {
+        dataLength = options[kByteLength];
+      } else {
+        data = Buffer.from(data);
+        dataLength = data.length;
+      }
+    } else {
+      dataLength = data.length;
+      merge = options.mask && options.readOnly && !skipMasking;
+    }
+
+    let payloadLength = dataLength;
+
+    if (dataLength >= 65536) {
+      offset += 8;
+      payloadLength = 127;
+    } else if (dataLength > 125) {
+      offset += 2;
+      payloadLength = 126;
+    }
+
+    const target = Buffer.allocUnsafe(merge ? dataLength + offset : offset);
+
+    target[0] = options.fin ? options.opcode | 0x80 : options.opcode;
+    if (options.rsv1) target[0] |= 0x40;
+
+    target[1] = payloadLength;
+
+    if (payloadLength === 126) {
+      target.writeUInt16BE(dataLength, 2);
+    } else if (payloadLength === 127) {
+      target[2] = target[3] = 0;
+      target.writeUIntBE(dataLength, 4, 6);
+    }
+
+    if (!options.mask) return [target, data];
+
+    target[1] |= 0x80;
+    target[offset - 4] = mask[0];
+    target[offset - 3] = mask[1];
+    target[offset - 2] = mask[2];
+    target[offset - 1] = mask[3];
+
+    if (skipMasking) return [target, data];
+
+    if (merge) {
+      applyMask(data, mask, target, offset, dataLength);
+      return [target];
+    }
+
+    applyMask(data, mask, data, 0, dataLength);
+    return [target, data];
+  }
+
+  /**
+   * Sends a close message to the other peer.
+   *
+   * @param {Number} [code] The status code component of the body
+   * @param {(String|Buffer)} [data] The message component of the body
+   * @param {Boolean} [mask=false] Specifies whether or not to mask the message
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  close(code, data, mask, cb) {
+    let buf;
+
+    if (code === undefined) {
+      buf = EMPTY_BUFFER$1;
+    } else if (typeof code !== 'number' || !isValidStatusCode(code)) {
+      throw new TypeError('First argument must be a valid error code number');
+    } else if (data === undefined || !data.length) {
+      buf = Buffer.allocUnsafe(2);
+      buf.writeUInt16BE(code, 0);
+    } else {
+      const length = Buffer.byteLength(data);
+
+      if (length > 123) {
+        throw new RangeError('The message must not be greater than 123 bytes');
+      }
+
+      buf = Buffer.allocUnsafe(2 + length);
+      buf.writeUInt16BE(code, 0);
+
+      if (typeof data === 'string') {
+        buf.write(data, 2);
+      } else {
+        buf.set(data, 2);
+      }
+    }
+
+    const options = {
+      [kByteLength]: buf.length,
+      fin: true,
+      generateMask: this._generateMask,
+      mask,
+      maskBuffer: this._maskBuffer,
+      opcode: 0x08,
+      readOnly: false,
+      rsv1: false
+    };
+
+    if (this._deflating) {
+      this.enqueue([this.dispatch, buf, false, options, cb]);
+    } else {
+      this.sendFrame(Sender.frame(buf, options), cb);
+    }
+  }
+
+  /**
+   * Sends a ping message to the other peer.
+   *
+   * @param {*} data The message to send
+   * @param {Boolean} [mask=false] Specifies whether or not to mask `data`
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  ping(data, mask, cb) {
+    let byteLength;
+    let readOnly;
+
+    if (typeof data === 'string') {
+      byteLength = Buffer.byteLength(data);
+      readOnly = false;
+    } else {
+      data = toBuffer$1(data);
+      byteLength = data.length;
+      readOnly = toBuffer$1.readOnly;
+    }
+
+    if (byteLength > 125) {
+      throw new RangeError('The data size must not be greater than 125 bytes');
+    }
+
+    const options = {
+      [kByteLength]: byteLength,
+      fin: true,
+      generateMask: this._generateMask,
+      mask,
+      maskBuffer: this._maskBuffer,
+      opcode: 0x09,
+      readOnly,
+      rsv1: false
+    };
+
+    if (this._deflating) {
+      this.enqueue([this.dispatch, data, false, options, cb]);
+    } else {
+      this.sendFrame(Sender.frame(data, options), cb);
+    }
+  }
+
+  /**
+   * Sends a pong message to the other peer.
+   *
+   * @param {*} data The message to send
+   * @param {Boolean} [mask=false] Specifies whether or not to mask `data`
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  pong(data, mask, cb) {
+    let byteLength;
+    let readOnly;
+
+    if (typeof data === 'string') {
+      byteLength = Buffer.byteLength(data);
+      readOnly = false;
+    } else {
+      data = toBuffer$1(data);
+      byteLength = data.length;
+      readOnly = toBuffer$1.readOnly;
+    }
+
+    if (byteLength > 125) {
+      throw new RangeError('The data size must not be greater than 125 bytes');
+    }
+
+    const options = {
+      [kByteLength]: byteLength,
+      fin: true,
+      generateMask: this._generateMask,
+      mask,
+      maskBuffer: this._maskBuffer,
+      opcode: 0x0a,
+      readOnly,
+      rsv1: false
+    };
+
+    if (this._deflating) {
+      this.enqueue([this.dispatch, data, false, options, cb]);
+    } else {
+      this.sendFrame(Sender.frame(data, options), cb);
+    }
+  }
+
+  /**
+   * Sends a data message to the other peer.
+   *
+   * @param {*} data The message to send
+   * @param {Object} options Options object
+   * @param {Boolean} [options.binary=false] Specifies whether `data` is binary
+   *     or text
+   * @param {Boolean} [options.compress=false] Specifies whether or not to
+   *     compress `data`
+   * @param {Boolean} [options.fin=false] Specifies whether the fragment is the
+   *     last one
+   * @param {Boolean} [options.mask=false] Specifies whether or not to mask
+   *     `data`
+   * @param {Function} [cb] Callback
+   * @public
+   */
+  send(data, options, cb) {
+    const perMessageDeflate = this._extensions[PerMessageDeflate$2.extensionName];
+    let opcode = options.binary ? 2 : 1;
+    let rsv1 = options.compress;
+
+    let byteLength;
+    let readOnly;
+
+    if (typeof data === 'string') {
+      byteLength = Buffer.byteLength(data);
+      readOnly = false;
+    } else {
+      data = toBuffer$1(data);
+      byteLength = data.length;
+      readOnly = toBuffer$1.readOnly;
+    }
+
+    if (this._firstFragment) {
+      this._firstFragment = false;
+      if (
+        rsv1 &&
+        perMessageDeflate &&
+        perMessageDeflate.params[
+          perMessageDeflate._isServer
+            ? 'server_no_context_takeover'
+            : 'client_no_context_takeover'
+        ]
+      ) {
+        rsv1 = byteLength >= perMessageDeflate._threshold;
+      }
+      this._compress = rsv1;
+    } else {
+      rsv1 = false;
+      opcode = 0;
+    }
+
+    if (options.fin) this._firstFragment = true;
+
+    if (perMessageDeflate) {
+      const opts = {
+        [kByteLength]: byteLength,
+        fin: options.fin,
+        generateMask: this._generateMask,
+        mask: options.mask,
+        maskBuffer: this._maskBuffer,
+        opcode,
+        readOnly,
+        rsv1
+      };
+
+      if (this._deflating) {
+        this.enqueue([this.dispatch, data, this._compress, opts, cb]);
+      } else {
+        this.dispatch(data, this._compress, opts, cb);
+      }
+    } else {
+      this.sendFrame(
+        Sender.frame(data, {
+          [kByteLength]: byteLength,
+          fin: options.fin,
+          generateMask: this._generateMask,
+          mask: options.mask,
+          maskBuffer: this._maskBuffer,
+          opcode,
+          readOnly,
+          rsv1: false
+        }),
+        cb
+      );
+    }
+  }
+
+  /**
+   * Dispatches a message.
+   *
+   * @param {(Buffer|String)} data The message to send
+   * @param {Boolean} [compress=false] Specifies whether or not to compress
+   *     `data`
+   * @param {Object} options Options object
+   * @param {Boolean} [options.fin=false] Specifies whether or not to set the
+   *     FIN bit
+   * @param {Function} [options.generateMask] The function used to generate the
+   *     masking key
+   * @param {Boolean} [options.mask=false] Specifies whether or not to mask
+   *     `data`
+   * @param {Buffer} [options.maskBuffer] The buffer used to store the masking
+   *     key
+   * @param {Number} options.opcode The opcode
+   * @param {Boolean} [options.readOnly=false] Specifies whether `data` can be
+   *     modified
+   * @param {Boolean} [options.rsv1=false] Specifies whether or not to set the
+   *     RSV1 bit
+   * @param {Function} [cb] Callback
+   * @private
+   */
+  dispatch(data, compress, options, cb) {
+    if (!compress) {
+      this.sendFrame(Sender.frame(data, options), cb);
+      return;
+    }
+
+    const perMessageDeflate = this._extensions[PerMessageDeflate$2.extensionName];
+
+    this._bufferedBytes += options[kByteLength];
+    this._deflating = true;
+    perMessageDeflate.compress(data, options.fin, (_, buf) => {
+      if (this._socket.destroyed) {
+        const err = new Error(
+          'The socket was closed while data was being compressed'
+        );
+
+        if (typeof cb === 'function') cb(err);
+
+        for (let i = 0; i < this._queue.length; i++) {
+          const params = this._queue[i];
+          const callback = params[params.length - 1];
+
+          if (typeof callback === 'function') callback(err);
+        }
+
+        return;
+      }
+
+      this._bufferedBytes -= options[kByteLength];
+      this._deflating = false;
+      options.readOnly = false;
+      this.sendFrame(Sender.frame(buf, options), cb);
+      this.dequeue();
+    });
+  }
+
+  /**
+   * Executes queued send operations.
+   *
+   * @private
+   */
+  dequeue() {
+    while (!this._deflating && this._queue.length) {
+      const params = this._queue.shift();
+
+      this._bufferedBytes -= params[3][kByteLength];
+      Reflect.apply(params[0], this, params.slice(1));
+    }
+  }
+
+  /**
+   * Enqueues a send operation.
+   *
+   * @param {Array} params Send operation parameters.
+   * @private
+   */
+  enqueue(params) {
+    this._bufferedBytes += params[3][kByteLength];
+    this._queue.push(params);
+  }
+
+  /**
+   * Sends a frame.
+   *
+   * @param {Buffer[]} list The frame to send
+   * @param {Function} [cb] Callback
+   * @private
+   */
+  sendFrame(list, cb) {
+    if (list.length === 2) {
+      this._socket.cork();
+      this._socket.write(list[0]);
+      this._socket.write(list[1], cb);
+      this._socket.uncork();
+    } else {
+      this._socket.write(list[0], cb);
+    }
+  }
+};
+
+var sender = Sender$1;
+
+const sender_default = /*@__PURE__*/getDefaultExportFromCjs(sender);
+
+const { kForOnEventAttribute: kForOnEventAttribute$1, kListener: kListener$1 } = constants;
+
+const kCode = Symbol('kCode');
+const kData = Symbol('kData');
+const kError = Symbol('kError');
+const kMessage = Symbol('kMessage');
+const kReason = Symbol('kReason');
+const kTarget = Symbol('kTarget');
+const kType = Symbol('kType');
+const kWasClean = Symbol('kWasClean');
+
+/**
+ * Class representing an event.
+ */
+class Event {
+  /**
+   * Create a new `Event`.
+   *
+   * @param {String} type The name of the event
+   * @throws {TypeError} If the `type` argument is not specified
+   */
+  constructor(type) {
+    this[kTarget] = null;
+    this[kType] = type;
+  }
+
+  /**
+   * @type {*}
+   */
+  get target() {
+    return this[kTarget];
+  }
+
+  /**
+   * @type {String}
+   */
+  get type() {
+    return this[kType];
+  }
+}
+
+Object.defineProperty(Event.prototype, 'target', { enumerable: true });
+Object.defineProperty(Event.prototype, 'type', { enumerable: true });
+
+/**
+ * Class representing a close event.
+ *
+ * @extends Event
+ */
+class CloseEvent extends Event {
+  /**
+   * Create a new `CloseEvent`.
+   *
+   * @param {String} type The name of the event
+   * @param {Object} [options] A dictionary object that allows for setting
+   *     attributes via object members of the same name
+   * @param {Number} [options.code=0] The status code explaining why the
+   *     connection was closed
+   * @param {String} [options.reason=''] A human-readable string explaining why
+   *     the connection was closed
+   * @param {Boolean} [options.wasClean=false] Indicates whether or not the
+   *     connection was cleanly closed
+   */
+  constructor(type, options = {}) {
+    super(type);
+
+    this[kCode] = options.code === undefined ? 0 : options.code;
+    this[kReason] = options.reason === undefined ? '' : options.reason;
+    this[kWasClean] = options.wasClean === undefined ? false : options.wasClean;
+  }
+
+  /**
+   * @type {Number}
+   */
+  get code() {
+    return this[kCode];
+  }
+
+  /**
+   * @type {String}
+   */
+  get reason() {
+    return this[kReason];
+  }
+
+  /**
+   * @type {Boolean}
+   */
+  get wasClean() {
+    return this[kWasClean];
+  }
+}
+
+Object.defineProperty(CloseEvent.prototype, 'code', { enumerable: true });
+Object.defineProperty(CloseEvent.prototype, 'reason', { enumerable: true });
+Object.defineProperty(CloseEvent.prototype, 'wasClean', { enumerable: true });
+
+/**
+ * Class representing an error event.
+ *
+ * @extends Event
+ */
+class ErrorEvent extends Event {
+  /**
+   * Create a new `ErrorEvent`.
+   *
+   * @param {String} type The name of the event
+   * @param {Object} [options] A dictionary object that allows for setting
+   *     attributes via object members of the same name
+   * @param {*} [options.error=null] The error that generated this event
+   * @param {String} [options.message=''] The error message
+   */
+  constructor(type, options = {}) {
+    super(type);
+
+    this[kError] = options.error === undefined ? null : options.error;
+    this[kMessage] = options.message === undefined ? '' : options.message;
+  }
+
+  /**
+   * @type {*}
+   */
+  get error() {
+    return this[kError];
+  }
+
+  /**
+   * @type {String}
+   */
+  get message() {
+    return this[kMessage];
+  }
+}
+
+Object.defineProperty(ErrorEvent.prototype, 'error', { enumerable: true });
+Object.defineProperty(ErrorEvent.prototype, 'message', { enumerable: true });
+
+/**
+ * Class representing a message event.
+ *
+ * @extends Event
+ */
+class MessageEvent extends Event {
+  /**
+   * Create a new `MessageEvent`.
+   *
+   * @param {String} type The name of the event
+   * @param {Object} [options] A dictionary object that allows for setting
+   *     attributes via object members of the same name
+   * @param {*} [options.data=null] The message content
+   */
+  constructor(type, options = {}) {
+    super(type);
+
+    this[kData] = options.data === undefined ? null : options.data;
+  }
+
+  /**
+   * @type {*}
+   */
+  get data() {
+    return this[kData];
+  }
+}
+
+Object.defineProperty(MessageEvent.prototype, 'data', { enumerable: true });
+
+/**
+ * This provides methods for emulating the `EventTarget` interface. It's not
+ * meant to be used directly.
+ *
+ * @mixin
+ */
+const EventTarget = {
+  /**
+   * Register an event listener.
+   *
+   * @param {String} type A string representing the event type to listen for
+   * @param {(Function|Object)} handler The listener to add
+   * @param {Object} [options] An options object specifies characteristics about
+   *     the event listener
+   * @param {Boolean} [options.once=false] A `Boolean` indicating that the
+   *     listener should be invoked at most once after being added. If `true`,
+   *     the listener would be automatically removed when invoked.
+   * @public
+   */
+  addEventListener(type, handler, options = {}) {
+    for (const listener of this.listeners(type)) {
+      if (
+        !options[kForOnEventAttribute$1] &&
+        listener[kListener$1] === handler &&
+        !listener[kForOnEventAttribute$1]
+      ) {
+        return;
+      }
+    }
+
+    let wrapper;
+
+    if (type === 'message') {
+      wrapper = function onMessage(data, isBinary) {
+        const event = new MessageEvent('message', {
+          data: isBinary ? data : data.toString()
+        });
+
+        event[kTarget] = this;
+        callListener(handler, this, event);
+      };
+    } else if (type === 'close') {
+      wrapper = function onClose(code, message) {
+        const event = new CloseEvent('close', {
+          code,
+          reason: message.toString(),
+          wasClean: this._closeFrameReceived && this._closeFrameSent
+        });
+
+        event[kTarget] = this;
+        callListener(handler, this, event);
+      };
+    } else if (type === 'error') {
+      wrapper = function onError(error) {
+        const event = new ErrorEvent('error', {
+          error,
+          message: error.message
+        });
+
+        event[kTarget] = this;
+        callListener(handler, this, event);
+      };
+    } else if (type === 'open') {
+      wrapper = function onOpen() {
+        const event = new Event('open');
+
+        event[kTarget] = this;
+        callListener(handler, this, event);
+      };
+    } else {
+      return;
+    }
+
+    wrapper[kForOnEventAttribute$1] = !!options[kForOnEventAttribute$1];
+    wrapper[kListener$1] = handler;
+
+    if (options.once) {
+      this.once(type, wrapper);
+    } else {
+      this.on(type, wrapper);
+    }
+  },
+
+  /**
+   * Remove an event listener.
+   *
+   * @param {String} type A string representing the event type to remove
+   * @param {(Function|Object)} handler The listener to remove
+   * @public
+   */
+  removeEventListener(type, handler) {
+    for (const listener of this.listeners(type)) {
+      if (listener[kListener$1] === handler && !listener[kForOnEventAttribute$1]) {
+        this.removeListener(type, listener);
+        break;
+      }
+    }
+  }
+};
+
+var eventTarget = {
+  EventTarget};
+
+/**
+ * Call an event listener
+ *
+ * @param {(Function|Object)} listener The listener to call
+ * @param {*} thisArg The value to use as `this`` when calling the listener
+ * @param {Event} event The event to pass to the listener
+ * @private
+ */
+function callListener(listener, thisArg, event) {
+  if (typeof listener === 'object' && listener.handleEvent) {
+    listener.handleEvent.call(listener, event);
+  } else {
+    listener.call(thisArg, event);
+  }
+}
+
+const { tokenChars: tokenChars$1 } = validationExports;
+
+/**
+ * Adds an offer to the map of extension offers or a parameter to the map of
+ * parameters.
+ *
+ * @param {Object} dest The map of extension offers or parameters
+ * @param {String} name The extension or parameter name
+ * @param {(Object|Boolean|String)} elem The extension parameters or the
+ *     parameter value
+ * @private
+ */
+function push(dest, name, elem) {
+  if (dest[name] === undefined) dest[name] = [elem];
+  else dest[name].push(elem);
+}
+
+/**
+ * Parses the `Sec-WebSocket-Extensions` header into an object.
+ *
+ * @param {String} header The field value of the header
+ * @return {Object} The parsed object
+ * @public
+ */
+function parse$3(header) {
+  const offers = Object.create(null);
+  let params = Object.create(null);
+  let mustUnescape = false;
+  let isEscaping = false;
+  let inQuotes = false;
+  let extensionName;
+  let paramName;
+  let start = -1;
+  let code = -1;
+  let end = -1;
+  let i = 0;
+
+  for (; i < header.length; i++) {
+    code = header.charCodeAt(i);
+
+    if (extensionName === undefined) {
+      if (end === -1 && tokenChars$1[code] === 1) {
+        if (start === -1) start = i;
+      } else if (
+        i !== 0 &&
+        (code === 0x20 /* ' ' */ || code === 0x09) /* '\t' */
+      ) {
+        if (end === -1 && start !== -1) end = i;
+      } else if (code === 0x3b /* ';' */ || code === 0x2c /* ',' */) {
+        if (start === -1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+
+        if (end === -1) end = i;
+        const name = header.slice(start, end);
+        if (code === 0x2c) {
+          push(offers, name, params);
+          params = Object.create(null);
+        } else {
+          extensionName = name;
+        }
+
+        start = end = -1;
+      } else {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+    } else if (paramName === undefined) {
+      if (end === -1 && tokenChars$1[code] === 1) {
+        if (start === -1) start = i;
+      } else if (code === 0x20 || code === 0x09) {
+        if (end === -1 && start !== -1) end = i;
+      } else if (code === 0x3b || code === 0x2c) {
+        if (start === -1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+
+        if (end === -1) end = i;
+        push(params, header.slice(start, end), true);
+        if (code === 0x2c) {
+          push(offers, extensionName, params);
+          params = Object.create(null);
+          extensionName = undefined;
+        }
+
+        start = end = -1;
+      } else if (code === 0x3d /* '=' */ && start !== -1 && end === -1) {
+        paramName = header.slice(start, i);
+        start = end = -1;
+      } else {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+    } else {
+      //
+      // The value of a quoted-string after unescaping must conform to the
+      // token ABNF, so only token characters are valid.
+      // Ref: https://tools.ietf.org/html/rfc6455#section-9.1
+      //
+      if (isEscaping) {
+        if (tokenChars$1[code] !== 1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+        if (start === -1) start = i;
+        else if (!mustUnescape) mustUnescape = true;
+        isEscaping = false;
+      } else if (inQuotes) {
+        if (tokenChars$1[code] === 1) {
+          if (start === -1) start = i;
+        } else if (code === 0x22 /* '"' */ && start !== -1) {
+          inQuotes = false;
+          end = i;
+        } else if (code === 0x5c /* '\' */) {
+          isEscaping = true;
+        } else {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+      } else if (code === 0x22 && header.charCodeAt(i - 1) === 0x3d) {
+        inQuotes = true;
+      } else if (end === -1 && tokenChars$1[code] === 1) {
+        if (start === -1) start = i;
+      } else if (start !== -1 && (code === 0x20 || code === 0x09)) {
+        if (end === -1) end = i;
+      } else if (code === 0x3b || code === 0x2c) {
+        if (start === -1) {
+          throw new SyntaxError(`Unexpected character at index ${i}`);
+        }
+
+        if (end === -1) end = i;
+        let value = header.slice(start, end);
+        if (mustUnescape) {
+          value = value.replace(/\\/g, '');
+          mustUnescape = false;
+        }
+        push(params, paramName, value);
+        if (code === 0x2c) {
+          push(offers, extensionName, params);
+          params = Object.create(null);
+          extensionName = undefined;
+        }
+
+        paramName = undefined;
+        start = end = -1;
+      } else {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+    }
+  }
+
+  if (start === -1 || inQuotes || code === 0x20 || code === 0x09) {
+    throw new SyntaxError('Unexpected end of input');
+  }
+
+  if (end === -1) end = i;
+  const token = header.slice(start, end);
+  if (extensionName === undefined) {
+    push(offers, token, params);
+  } else {
+    if (paramName === undefined) {
+      push(params, token, true);
+    } else if (mustUnescape) {
+      push(params, paramName, token.replace(/\\/g, ''));
+    } else {
+      push(params, paramName, token);
+    }
+    push(offers, extensionName, params);
+  }
+
+  return offers;
+}
+
+/**
+ * Builds the `Sec-WebSocket-Extensions` header field value.
+ *
+ * @param {Object} extensions The map of extensions and parameters to format
+ * @return {String} A string representing the given object
+ * @public
+ */
+function format$1(extensions) {
+  return Object.keys(extensions)
+    .map((extension) => {
+      let configurations = extensions[extension];
+      if (!Array.isArray(configurations)) configurations = [configurations];
+      return configurations
+        .map((params) => {
+          return [extension]
+            .concat(
+              Object.keys(params).map((k) => {
+                let values = params[k];
+                if (!Array.isArray(values)) values = [values];
+                return values
+                  .map((v) => (v === true ? k : `${k}=${v}`))
+                  .join('; ');
+              })
+            )
+            .join('; ');
+        })
+        .join(', ');
+    })
+    .join(', ');
+}
+
+var extension$1 = { format: format$1, parse: parse$3 };
+
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex|Readable$", "caughtErrors": "none" }] */
+
+const EventEmitter$1 = require$$0$3;
+const https = require$$1$1;
+const http$1 = require$$1$4;
+const net = require$$3;
+const tls = require$$4;
+const { randomBytes, createHash: createHash$1 } = require$$3$1;
+const { Duplex: Duplex$1, Readable } = require$$2$1;
+const { URL: URL$1 } = require$$7;
+
+const PerMessageDeflate$1 = permessageDeflate;
+const Receiver = receiver;
+const Sender = sender;
+const {
+  BINARY_TYPES,
+  EMPTY_BUFFER,
+  GUID: GUID$1,
+  kForOnEventAttribute,
+  kListener,
+  kStatusCode,
+  kWebSocket: kWebSocket$1,
+  NOOP
+} = constants;
+const {
+  EventTarget: { addEventListener, removeEventListener }
+} = eventTarget;
+const { format, parse: parse$2 } = extension$1;
+const { toBuffer } = bufferUtilExports;
+
+const closeTimeout = 30 * 1000;
+const kAborted = Symbol('kAborted');
+const protocolVersions = [8, 13];
+const readyStates = ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'];
+const subprotocolRegex = /^[!#$%&'*+\-.0-9A-Z^_`|a-z~]+$/;
+
+/**
+ * Class representing a WebSocket.
+ *
+ * @extends EventEmitter
+ */
+let WebSocket$2 = class WebSocket extends EventEmitter$1 {
+  /**
+   * Create a new `WebSocket`.
+   *
+   * @param {(String|URL)} address The URL to which to connect
+   * @param {(String|String[])} [protocols] The subprotocols
+   * @param {Object} [options] Connection options
+   */
+  constructor(address, protocols, options) {
+    super();
+
+    this._binaryType = BINARY_TYPES[0];
+    this._closeCode = 1006;
+    this._closeFrameReceived = false;
+    this._closeFrameSent = false;
+    this._closeMessage = EMPTY_BUFFER;
+    this._closeTimer = null;
+    this._extensions = {};
+    this._paused = false;
+    this._protocol = '';
+    this._readyState = WebSocket.CONNECTING;
+    this._receiver = null;
+    this._sender = null;
+    this._socket = null;
+
+    if (address !== null) {
+      this._bufferedAmount = 0;
+      this._isServer = false;
+      this._redirects = 0;
+
+      if (protocols === undefined) {
+        protocols = [];
+      } else if (!Array.isArray(protocols)) {
+        if (typeof protocols === 'object' && protocols !== null) {
+          options = protocols;
+          protocols = [];
+        } else {
+          protocols = [protocols];
+        }
+      }
+
+      initAsClient(this, address, protocols, options);
+    } else {
+      this._autoPong = options.autoPong;
+      this._isServer = true;
+    }
+  }
+
+  /**
+   * This deviates from the WHATWG interface since ws doesn't support the
+   * required default "blob" type (instead we define a custom "nodebuffer"
+   * type).
+   *
+   * @type {String}
+   */
+  get binaryType() {
+    return this._binaryType;
+  }
+
+  set binaryType(type) {
+    if (!BINARY_TYPES.includes(type)) return;
+
+    this._binaryType = type;
+
+    //
+    // Allow to change `binaryType` on the fly.
+    //
+    if (this._receiver) this._receiver._binaryType = type;
+  }
+
+  /**
+   * @type {Number}
+   */
+  get bufferedAmount() {
+    if (!this._socket) return this._bufferedAmount;
+
+    return this._socket._writableState.length + this._sender._bufferedBytes;
+  }
+
+  /**
+   * @type {String}
+   */
+  get extensions() {
+    return Object.keys(this._extensions).join();
+  }
+
+  /**
+   * @type {Boolean}
+   */
+  get isPaused() {
+    return this._paused;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onclose() {
+    return null;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onerror() {
+    return null;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onopen() {
+    return null;
+  }
+
+  /**
+   * @type {Function}
+   */
+  /* istanbul ignore next */
+  get onmessage() {
+    return null;
+  }
+
+  /**
+   * @type {String}
+   */
+  get protocol() {
+    return this._protocol;
+  }
+
+  /**
+   * @type {Number}
+   */
+  get readyState() {
+    return this._readyState;
+  }
+
+  /**
+   * @type {String}
+   */
+  get url() {
+    return this._url;
+  }
+
+  /**
+   * Set up the socket and the internal resources.
+   *
+   * @param {Duplex} socket The network socket between the server and client
+   * @param {Buffer} head The first packet of the upgraded stream
+   * @param {Object} options Options object
+   * @param {Boolean} [options.allowSynchronousEvents=false] Specifies whether
+   *     any of the `'message'`, `'ping'`, and `'pong'` events can be emitted
+   *     multiple times in the same tick
+   * @param {Function} [options.generateMask] The function used to generate the
+   *     masking key
+   * @param {Number} [options.maxPayload=0] The maximum allowed message size
+   * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+   *     not to skip UTF-8 validation for text and close messages
+   * @private
+   */
+  setSocket(socket, head, options) {
+    const receiver = new Receiver({
+      allowSynchronousEvents: options.allowSynchronousEvents,
+      binaryType: this.binaryType,
+      extensions: this._extensions,
+      isServer: this._isServer,
+      maxPayload: options.maxPayload,
+      skipUTF8Validation: options.skipUTF8Validation
+    });
+
+    this._sender = new Sender(socket, this._extensions, options.generateMask);
+    this._receiver = receiver;
+    this._socket = socket;
+
+    receiver[kWebSocket$1] = this;
+    socket[kWebSocket$1] = this;
+
+    receiver.on('conclude', receiverOnConclude);
+    receiver.on('drain', receiverOnDrain);
+    receiver.on('error', receiverOnError);
+    receiver.on('message', receiverOnMessage);
+    receiver.on('ping', receiverOnPing);
+    receiver.on('pong', receiverOnPong);
+
+    //
+    // These methods may not be available if `socket` is just a `Duplex`.
+    //
+    if (socket.setTimeout) socket.setTimeout(0);
+    if (socket.setNoDelay) socket.setNoDelay();
+
+    if (head.length > 0) socket.unshift(head);
+
+    socket.on('close', socketOnClose);
+    socket.on('data', socketOnData);
+    socket.on('end', socketOnEnd);
+    socket.on('error', socketOnError$1);
+
+    this._readyState = WebSocket.OPEN;
+    this.emit('open');
+  }
+
+  /**
+   * Emit the `'close'` event.
+   *
+   * @private
+   */
+  emitClose() {
+    if (!this._socket) {
+      this._readyState = WebSocket.CLOSED;
+      this.emit('close', this._closeCode, this._closeMessage);
+      return;
+    }
+
+    if (this._extensions[PerMessageDeflate$1.extensionName]) {
+      this._extensions[PerMessageDeflate$1.extensionName].cleanup();
+    }
+
+    this._receiver.removeAllListeners();
+    this._readyState = WebSocket.CLOSED;
+    this.emit('close', this._closeCode, this._closeMessage);
+  }
+
+  /**
+   * Start a closing handshake.
+   *
+   *          +----------+   +-----------+   +----------+
+   *     - - -|ws.close()|-->|close frame|-->|ws.close()|- - -
+   *    |     +----------+   +-----------+   +----------+     |
+   *          +----------+   +-----------+         |
+   * CLOSING  |ws.close()|<--|close frame|<--+-----+       CLOSING
+   *          +----------+   +-----------+   |
+   *    |           |                        |   +---+        |
+   *                +------------------------+-->|fin| - - - -
+   *    |         +---+                      |   +---+
+   *     - - - - -|fin|<---------------------+
+   *              +---+
+   *
+   * @param {Number} [code] Status code explaining why the connection is closing
+   * @param {(String|Buffer)} [data] The reason why the connection is
+   *     closing
+   * @public
+   */
+  close(code, data) {
+    if (this.readyState === WebSocket.CLOSED) return;
+    if (this.readyState === WebSocket.CONNECTING) {
+      const msg = 'WebSocket was closed before the connection was established';
+      abortHandshake$1(this, this._req, msg);
+      return;
+    }
+
+    if (this.readyState === WebSocket.CLOSING) {
+      if (
+        this._closeFrameSent &&
+        (this._closeFrameReceived || this._receiver._writableState.errorEmitted)
+      ) {
+        this._socket.end();
+      }
+
+      return;
+    }
+
+    this._readyState = WebSocket.CLOSING;
+    this._sender.close(code, data, !this._isServer, (err) => {
+      //
+      // This error is handled by the `'error'` listener on the socket. We only
+      // want to know if the close frame has been sent here.
+      //
+      if (err) return;
+
+      this._closeFrameSent = true;
+
+      if (
+        this._closeFrameReceived ||
+        this._receiver._writableState.errorEmitted
+      ) {
+        this._socket.end();
+      }
+    });
+
+    //
+    // Specify a timeout for the closing handshake to complete.
+    //
+    this._closeTimer = setTimeout(
+      this._socket.destroy.bind(this._socket),
+      closeTimeout
+    );
+  }
+
+  /**
+   * Pause the socket.
+   *
+   * @public
+   */
+  pause() {
+    if (
+      this.readyState === WebSocket.CONNECTING ||
+      this.readyState === WebSocket.CLOSED
+    ) {
+      return;
+    }
+
+    this._paused = true;
+    this._socket.pause();
+  }
+
+  /**
+   * Send a ping.
+   *
+   * @param {*} [data] The data to send
+   * @param {Boolean} [mask] Indicates whether or not to mask `data`
+   * @param {Function} [cb] Callback which is executed when the ping is sent
+   * @public
+   */
+  ping(data, mask, cb) {
+    if (this.readyState === WebSocket.CONNECTING) {
+      throw new Error('WebSocket is not open: readyState 0 (CONNECTING)');
+    }
+
+    if (typeof data === 'function') {
+      cb = data;
+      data = mask = undefined;
+    } else if (typeof mask === 'function') {
+      cb = mask;
+      mask = undefined;
+    }
+
+    if (typeof data === 'number') data = data.toString();
+
+    if (this.readyState !== WebSocket.OPEN) {
+      sendAfterClose(this, data, cb);
+      return;
+    }
+
+    if (mask === undefined) mask = !this._isServer;
+    this._sender.ping(data || EMPTY_BUFFER, mask, cb);
+  }
+
+  /**
+   * Send a pong.
+   *
+   * @param {*} [data] The data to send
+   * @param {Boolean} [mask] Indicates whether or not to mask `data`
+   * @param {Function} [cb] Callback which is executed when the pong is sent
+   * @public
+   */
+  pong(data, mask, cb) {
+    if (this.readyState === WebSocket.CONNECTING) {
+      throw new Error('WebSocket is not open: readyState 0 (CONNECTING)');
+    }
+
+    if (typeof data === 'function') {
+      cb = data;
+      data = mask = undefined;
+    } else if (typeof mask === 'function') {
+      cb = mask;
+      mask = undefined;
+    }
+
+    if (typeof data === 'number') data = data.toString();
+
+    if (this.readyState !== WebSocket.OPEN) {
+      sendAfterClose(this, data, cb);
+      return;
+    }
+
+    if (mask === undefined) mask = !this._isServer;
+    this._sender.pong(data || EMPTY_BUFFER, mask, cb);
+  }
+
+  /**
+   * Resume the socket.
+   *
+   * @public
+   */
+  resume() {
+    if (
+      this.readyState === WebSocket.CONNECTING ||
+      this.readyState === WebSocket.CLOSED
+    ) {
+      return;
+    }
+
+    this._paused = false;
+    if (!this._receiver._writableState.needDrain) this._socket.resume();
+  }
+
+  /**
+   * Send a data message.
+   *
+   * @param {*} data The message to send
+   * @param {Object} [options] Options object
+   * @param {Boolean} [options.binary] Specifies whether `data` is binary or
+   *     text
+   * @param {Boolean} [options.compress] Specifies whether or not to compress
+   *     `data`
+   * @param {Boolean} [options.fin=true] Specifies whether the fragment is the
+   *     last one
+   * @param {Boolean} [options.mask] Specifies whether or not to mask `data`
+   * @param {Function} [cb] Callback which is executed when data is written out
+   * @public
+   */
+  send(data, options, cb) {
+    if (this.readyState === WebSocket.CONNECTING) {
+      throw new Error('WebSocket is not open: readyState 0 (CONNECTING)');
+    }
+
+    if (typeof options === 'function') {
+      cb = options;
+      options = {};
+    }
+
+    if (typeof data === 'number') data = data.toString();
+
+    if (this.readyState !== WebSocket.OPEN) {
+      sendAfterClose(this, data, cb);
+      return;
+    }
+
+    const opts = {
+      binary: typeof data !== 'string',
+      mask: !this._isServer,
+      compress: true,
+      fin: true,
+      ...options
+    };
+
+    if (!this._extensions[PerMessageDeflate$1.extensionName]) {
+      opts.compress = false;
+    }
+
+    this._sender.send(data || EMPTY_BUFFER, opts, cb);
+  }
+
+  /**
+   * Forcibly close the connection.
+   *
+   * @public
+   */
+  terminate() {
+    if (this.readyState === WebSocket.CLOSED) return;
+    if (this.readyState === WebSocket.CONNECTING) {
+      const msg = 'WebSocket was closed before the connection was established';
+      abortHandshake$1(this, this._req, msg);
+      return;
+    }
+
+    if (this._socket) {
+      this._readyState = WebSocket.CLOSING;
+      this._socket.destroy();
+    }
+  }
+};
+
+/**
+ * @constant {Number} CONNECTING
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$2, 'CONNECTING', {
+  enumerable: true,
+  value: readyStates.indexOf('CONNECTING')
+});
+
+/**
+ * @constant {Number} CONNECTING
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$2.prototype, 'CONNECTING', {
+  enumerable: true,
+  value: readyStates.indexOf('CONNECTING')
+});
+
+/**
+ * @constant {Number} OPEN
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$2, 'OPEN', {
+  enumerable: true,
+  value: readyStates.indexOf('OPEN')
+});
+
+/**
+ * @constant {Number} OPEN
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$2.prototype, 'OPEN', {
+  enumerable: true,
+  value: readyStates.indexOf('OPEN')
+});
+
+/**
+ * @constant {Number} CLOSING
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$2, 'CLOSING', {
+  enumerable: true,
+  value: readyStates.indexOf('CLOSING')
+});
+
+/**
+ * @constant {Number} CLOSING
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$2.prototype, 'CLOSING', {
+  enumerable: true,
+  value: readyStates.indexOf('CLOSING')
+});
+
+/**
+ * @constant {Number} CLOSED
+ * @memberof WebSocket
+ */
+Object.defineProperty(WebSocket$2, 'CLOSED', {
+  enumerable: true,
+  value: readyStates.indexOf('CLOSED')
+});
+
+/**
+ * @constant {Number} CLOSED
+ * @memberof WebSocket.prototype
+ */
+Object.defineProperty(WebSocket$2.prototype, 'CLOSED', {
+  enumerable: true,
+  value: readyStates.indexOf('CLOSED')
+});
+
+[
+  'binaryType',
+  'bufferedAmount',
+  'extensions',
+  'isPaused',
+  'protocol',
+  'readyState',
+  'url'
+].forEach((property) => {
+  Object.defineProperty(WebSocket$2.prototype, property, { enumerable: true });
+});
+
+//
+// Add the `onopen`, `onerror`, `onclose`, and `onmessage` attributes.
+// See https://html.spec.whatwg.org/multipage/comms.html#the-websocket-interface
+//
+['open', 'error', 'close', 'message'].forEach((method) => {
+  Object.defineProperty(WebSocket$2.prototype, `on${method}`, {
+    enumerable: true,
+    get() {
+      for (const listener of this.listeners(method)) {
+        if (listener[kForOnEventAttribute]) return listener[kListener];
+      }
+
+      return null;
+    },
+    set(handler) {
+      for (const listener of this.listeners(method)) {
+        if (listener[kForOnEventAttribute]) {
+          this.removeListener(method, listener);
+          break;
+        }
+      }
+
+      if (typeof handler !== 'function') return;
+
+      this.addEventListener(method, handler, {
+        [kForOnEventAttribute]: true
+      });
+    }
+  });
+});
+
+WebSocket$2.prototype.addEventListener = addEventListener;
+WebSocket$2.prototype.removeEventListener = removeEventListener;
+
+var websocket = WebSocket$2;
+
+/**
+ * Initialize a WebSocket client.
+ *
+ * @param {WebSocket} websocket The client to initialize
+ * @param {(String|URL)} address The URL to which to connect
+ * @param {Array} protocols The subprotocols
+ * @param {Object} [options] Connection options
+ * @param {Boolean} [options.allowSynchronousEvents=true] Specifies whether any
+ *     of the `'message'`, `'ping'`, and `'pong'` events can be emitted multiple
+ *     times in the same tick
+ * @param {Boolean} [options.autoPong=true] Specifies whether or not to
+ *     automatically send a pong in response to a ping
+ * @param {Function} [options.finishRequest] A function which can be used to
+ *     customize the headers of each http request before it is sent
+ * @param {Boolean} [options.followRedirects=false] Whether or not to follow
+ *     redirects
+ * @param {Function} [options.generateMask] The function used to generate the
+ *     masking key
+ * @param {Number} [options.handshakeTimeout] Timeout in milliseconds for the
+ *     handshake request
+ * @param {Number} [options.maxPayload=104857600] The maximum allowed message
+ *     size
+ * @param {Number} [options.maxRedirects=10] The maximum number of redirects
+ *     allowed
+ * @param {String} [options.origin] Value of the `Origin` or
+ *     `Sec-WebSocket-Origin` header
+ * @param {(Boolean|Object)} [options.perMessageDeflate=true] Enable/disable
+ *     permessage-deflate
+ * @param {Number} [options.protocolVersion=13] Value of the
+ *     `Sec-WebSocket-Version` header
+ * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+ *     not to skip UTF-8 validation for text and close messages
+ * @private
+ */
+function initAsClient(websocket, address, protocols, options) {
+  const opts = {
+    allowSynchronousEvents: true,
+    autoPong: true,
+    protocolVersion: protocolVersions[1],
+    maxPayload: 100 * 1024 * 1024,
+    skipUTF8Validation: false,
+    perMessageDeflate: true,
+    followRedirects: false,
+    maxRedirects: 10,
+    ...options,
+    socketPath: undefined,
+    hostname: undefined,
+    protocol: undefined,
+    timeout: undefined,
+    method: 'GET',
+    host: undefined,
+    path: undefined,
+    port: undefined
+  };
+
+  websocket._autoPong = opts.autoPong;
+
+  if (!protocolVersions.includes(opts.protocolVersion)) {
+    throw new RangeError(
+      `Unsupported protocol version: ${opts.protocolVersion} ` +
+        `(supported versions: ${protocolVersions.join(', ')})`
+    );
+  }
+
+  let parsedUrl;
+
+  if (address instanceof URL$1) {
+    parsedUrl = address;
+  } else {
+    try {
+      parsedUrl = new URL$1(address);
+    } catch (e) {
+      throw new SyntaxError(`Invalid URL: ${address}`);
+    }
+  }
+
+  if (parsedUrl.protocol === 'http:') {
+    parsedUrl.protocol = 'ws:';
+  } else if (parsedUrl.protocol === 'https:') {
+    parsedUrl.protocol = 'wss:';
+  }
+
+  websocket._url = parsedUrl.href;
+
+  const isSecure = parsedUrl.protocol === 'wss:';
+  const isIpcUrl = parsedUrl.protocol === 'ws+unix:';
+  let invalidUrlMessage;
+
+  if (parsedUrl.protocol !== 'ws:' && !isSecure && !isIpcUrl) {
+    invalidUrlMessage =
+      'The URL\'s protocol must be one of "ws:", "wss:", ' +
+      '"http:", "https", or "ws+unix:"';
+  } else if (isIpcUrl && !parsedUrl.pathname) {
+    invalidUrlMessage = "The URL's pathname is empty";
+  } else if (parsedUrl.hash) {
+    invalidUrlMessage = 'The URL contains a fragment identifier';
+  }
+
+  if (invalidUrlMessage) {
+    const err = new SyntaxError(invalidUrlMessage);
+
+    if (websocket._redirects === 0) {
+      throw err;
+    } else {
+      emitErrorAndClose(websocket, err);
+      return;
+    }
+  }
+
+  const defaultPort = isSecure ? 443 : 80;
+  const key = randomBytes(16).toString('base64');
+  const request = isSecure ? https.request : http$1.request;
+  const protocolSet = new Set();
+  let perMessageDeflate;
+
+  opts.createConnection =
+    opts.createConnection || (isSecure ? tlsConnect : netConnect);
+  opts.defaultPort = opts.defaultPort || defaultPort;
+  opts.port = parsedUrl.port || defaultPort;
+  opts.host = parsedUrl.hostname.startsWith('[')
+    ? parsedUrl.hostname.slice(1, -1)
+    : parsedUrl.hostname;
+  opts.headers = {
+    ...opts.headers,
+    'Sec-WebSocket-Version': opts.protocolVersion,
+    'Sec-WebSocket-Key': key,
+    Connection: 'Upgrade',
+    Upgrade: 'websocket'
+  };
+  opts.path = parsedUrl.pathname + parsedUrl.search;
+  opts.timeout = opts.handshakeTimeout;
+
+  if (opts.perMessageDeflate) {
+    perMessageDeflate = new PerMessageDeflate$1(
+      opts.perMessageDeflate !== true ? opts.perMessageDeflate : {},
+      false,
+      opts.maxPayload
+    );
+    opts.headers['Sec-WebSocket-Extensions'] = format({
+      [PerMessageDeflate$1.extensionName]: perMessageDeflate.offer()
+    });
+  }
+  if (protocols.length) {
+    for (const protocol of protocols) {
+      if (
+        typeof protocol !== 'string' ||
+        !subprotocolRegex.test(protocol) ||
+        protocolSet.has(protocol)
+      ) {
+        throw new SyntaxError(
+          'An invalid or duplicated subprotocol was specified'
+        );
+      }
+
+      protocolSet.add(protocol);
+    }
+
+    opts.headers['Sec-WebSocket-Protocol'] = protocols.join(',');
+  }
+  if (opts.origin) {
+    if (opts.protocolVersion < 13) {
+      opts.headers['Sec-WebSocket-Origin'] = opts.origin;
+    } else {
+      opts.headers.Origin = opts.origin;
+    }
+  }
+  if (parsedUrl.username || parsedUrl.password) {
+    opts.auth = `${parsedUrl.username}:${parsedUrl.password}`;
+  }
+
+  if (isIpcUrl) {
+    const parts = opts.path.split(':');
+
+    opts.socketPath = parts[0];
+    opts.path = parts[1];
+  }
+
+  let req;
+
+  if (opts.followRedirects) {
+    if (websocket._redirects === 0) {
+      websocket._originalIpc = isIpcUrl;
+      websocket._originalSecure = isSecure;
+      websocket._originalHostOrSocketPath = isIpcUrl
+        ? opts.socketPath
+        : parsedUrl.host;
+
+      const headers = options && options.headers;
+
+      //
+      // Shallow copy the user provided options so that headers can be changed
+      // without mutating the original object.
+      //
+      options = { ...options, headers: {} };
+
+      if (headers) {
+        for (const [key, value] of Object.entries(headers)) {
+          options.headers[key.toLowerCase()] = value;
+        }
+      }
+    } else if (websocket.listenerCount('redirect') === 0) {
+      const isSameHost = isIpcUrl
+        ? websocket._originalIpc
+          ? opts.socketPath === websocket._originalHostOrSocketPath
+          : false
+        : websocket._originalIpc
+          ? false
+          : parsedUrl.host === websocket._originalHostOrSocketPath;
+
+      if (!isSameHost || (websocket._originalSecure && !isSecure)) {
+        //
+        // Match curl 7.77.0 behavior and drop the following headers. These
+        // headers are also dropped when following a redirect to a subdomain.
+        //
+        delete opts.headers.authorization;
+        delete opts.headers.cookie;
+
+        if (!isSameHost) delete opts.headers.host;
+
+        opts.auth = undefined;
+      }
+    }
+
+    //
+    // Match curl 7.77.0 behavior and make the first `Authorization` header win.
+    // If the `Authorization` header is set, then there is nothing to do as it
+    // will take precedence.
+    //
+    if (opts.auth && !options.headers.authorization) {
+      options.headers.authorization =
+        'Basic ' + Buffer.from(opts.auth).toString('base64');
+    }
+
+    req = websocket._req = request(opts);
+
+    if (websocket._redirects) {
+      //
+      // Unlike what is done for the `'upgrade'` event, no early exit is
+      // triggered here if the user calls `websocket.close()` or
+      // `websocket.terminate()` from a listener of the `'redirect'` event. This
+      // is because the user can also call `request.destroy()` with an error
+      // before calling `websocket.close()` or `websocket.terminate()` and this
+      // would result in an error being emitted on the `request` object with no
+      // `'error'` event listeners attached.
+      //
+      websocket.emit('redirect', websocket.url, req);
+    }
+  } else {
+    req = websocket._req = request(opts);
+  }
+
+  if (opts.timeout) {
+    req.on('timeout', () => {
+      abortHandshake$1(websocket, req, 'Opening handshake has timed out');
+    });
+  }
+
+  req.on('error', (err) => {
+    if (req === null || req[kAborted]) return;
+
+    req = websocket._req = null;
+    emitErrorAndClose(websocket, err);
+  });
+
+  req.on('response', (res) => {
+    const location = res.headers.location;
+    const statusCode = res.statusCode;
+
+    if (
+      location &&
+      opts.followRedirects &&
+      statusCode >= 300 &&
+      statusCode < 400
+    ) {
+      if (++websocket._redirects > opts.maxRedirects) {
+        abortHandshake$1(websocket, req, 'Maximum redirects exceeded');
+        return;
+      }
+
+      req.abort();
+
+      let addr;
+
+      try {
+        addr = new URL$1(location, address);
+      } catch (e) {
+        const err = new SyntaxError(`Invalid URL: ${location}`);
+        emitErrorAndClose(websocket, err);
+        return;
+      }
+
+      initAsClient(websocket, addr, protocols, options);
+    } else if (!websocket.emit('unexpected-response', req, res)) {
+      abortHandshake$1(
+        websocket,
+        req,
+        `Unexpected server response: ${res.statusCode}`
+      );
+    }
+  });
+
+  req.on('upgrade', (res, socket, head) => {
+    websocket.emit('upgrade', res);
+
+    //
+    // The user may have closed the connection from a listener of the
+    // `'upgrade'` event.
+    //
+    if (websocket.readyState !== WebSocket$2.CONNECTING) return;
+
+    req = websocket._req = null;
+
+    const upgrade = res.headers.upgrade;
+
+    if (upgrade === undefined || upgrade.toLowerCase() !== 'websocket') {
+      abortHandshake$1(websocket, socket, 'Invalid Upgrade header');
+      return;
+    }
+
+    const digest = createHash$1('sha1')
+      .update(key + GUID$1)
+      .digest('base64');
+
+    if (res.headers['sec-websocket-accept'] !== digest) {
+      abortHandshake$1(websocket, socket, 'Invalid Sec-WebSocket-Accept header');
+      return;
+    }
+
+    const serverProt = res.headers['sec-websocket-protocol'];
+    let protError;
+
+    if (serverProt !== undefined) {
+      if (!protocolSet.size) {
+        protError = 'Server sent a subprotocol but none was requested';
+      } else if (!protocolSet.has(serverProt)) {
+        protError = 'Server sent an invalid subprotocol';
+      }
+    } else if (protocolSet.size) {
+      protError = 'Server sent no subprotocol';
+    }
+
+    if (protError) {
+      abortHandshake$1(websocket, socket, protError);
+      return;
+    }
+
+    if (serverProt) websocket._protocol = serverProt;
+
+    const secWebSocketExtensions = res.headers['sec-websocket-extensions'];
+
+    if (secWebSocketExtensions !== undefined) {
+      if (!perMessageDeflate) {
+        const message =
+          'Server sent a Sec-WebSocket-Extensions header but no extension ' +
+          'was requested';
+        abortHandshake$1(websocket, socket, message);
+        return;
+      }
+
+      let extensions;
+
+      try {
+        extensions = parse$2(secWebSocketExtensions);
+      } catch (err) {
+        const message = 'Invalid Sec-WebSocket-Extensions header';
+        abortHandshake$1(websocket, socket, message);
+        return;
+      }
+
+      const extensionNames = Object.keys(extensions);
+
+      if (
+        extensionNames.length !== 1 ||
+        extensionNames[0] !== PerMessageDeflate$1.extensionName
+      ) {
+        const message = 'Server indicated an extension that was not requested';
+        abortHandshake$1(websocket, socket, message);
+        return;
+      }
+
+      try {
+        perMessageDeflate.accept(extensions[PerMessageDeflate$1.extensionName]);
+      } catch (err) {
+        const message = 'Invalid Sec-WebSocket-Extensions header';
+        abortHandshake$1(websocket, socket, message);
+        return;
+      }
+
+      websocket._extensions[PerMessageDeflate$1.extensionName] =
+        perMessageDeflate;
+    }
+
+    websocket.setSocket(socket, head, {
+      allowSynchronousEvents: opts.allowSynchronousEvents,
+      generateMask: opts.generateMask,
+      maxPayload: opts.maxPayload,
+      skipUTF8Validation: opts.skipUTF8Validation
+    });
+  });
+
+  if (opts.finishRequest) {
+    opts.finishRequest(req, websocket);
+  } else {
+    req.end();
+  }
+}
+
+/**
+ * Emit the `'error'` and `'close'` events.
+ *
+ * @param {WebSocket} websocket The WebSocket instance
+ * @param {Error} The error to emit
+ * @private
+ */
+function emitErrorAndClose(websocket, err) {
+  websocket._readyState = WebSocket$2.CLOSING;
+  websocket.emit('error', err);
+  websocket.emitClose();
+}
+
+/**
+ * Create a `net.Socket` and initiate a connection.
+ *
+ * @param {Object} options Connection options
+ * @return {net.Socket} The newly created socket used to start the connection
+ * @private
+ */
+function netConnect(options) {
+  options.path = options.socketPath;
+  return net.connect(options);
+}
+
+/**
+ * Create a `tls.TLSSocket` and initiate a connection.
+ *
+ * @param {Object} options Connection options
+ * @return {tls.TLSSocket} The newly created socket used to start the connection
+ * @private
+ */
+function tlsConnect(options) {
+  options.path = undefined;
+
+  if (!options.servername && options.servername !== '') {
+    options.servername = net.isIP(options.host) ? '' : options.host;
+  }
+
+  return tls.connect(options);
+}
+
+/**
+ * Abort the handshake and emit an error.
+ *
+ * @param {WebSocket} websocket The WebSocket instance
+ * @param {(http.ClientRequest|net.Socket|tls.Socket)} stream The request to
+ *     abort or the socket to destroy
+ * @param {String} message The error message
+ * @private
+ */
+function abortHandshake$1(websocket, stream, message) {
+  websocket._readyState = WebSocket$2.CLOSING;
+
+  const err = new Error(message);
+  Error.captureStackTrace(err, abortHandshake$1);
+
+  if (stream.setHeader) {
+    stream[kAborted] = true;
+    stream.abort();
+
+    if (stream.socket && !stream.socket.destroyed) {
+      //
+      // On Node.js >= 14.3.0 `request.abort()` does not destroy the socket if
+      // called after the request completed. See
+      // https://github.com/websockets/ws/issues/1869.
+      //
+      stream.socket.destroy();
+    }
+
+    process.nextTick(emitErrorAndClose, websocket, err);
+  } else {
+    stream.destroy(err);
+    stream.once('error', websocket.emit.bind(websocket, 'error'));
+    stream.once('close', websocket.emitClose.bind(websocket));
+  }
+}
+
+/**
+ * Handle cases where the `ping()`, `pong()`, or `send()` methods are called
+ * when the `readyState` attribute is `CLOSING` or `CLOSED`.
+ *
+ * @param {WebSocket} websocket The WebSocket instance
+ * @param {*} [data] The data to send
+ * @param {Function} [cb] Callback
+ * @private
+ */
+function sendAfterClose(websocket, data, cb) {
+  if (data) {
+    const length = toBuffer(data).length;
+
+    //
+    // The `_bufferedAmount` property is used only when the peer is a client and
+    // the opening handshake fails. Under these circumstances, in fact, the
+    // `setSocket()` method is not called, so the `_socket` and `_sender`
+    // properties are set to `null`.
+    //
+    if (websocket._socket) websocket._sender._bufferedBytes += length;
+    else websocket._bufferedAmount += length;
+  }
+
+  if (cb) {
+    const err = new Error(
+      `WebSocket is not open: readyState ${websocket.readyState} ` +
+        `(${readyStates[websocket.readyState]})`
+    );
+    process.nextTick(cb, err);
+  }
+}
+
+/**
+ * The listener of the `Receiver` `'conclude'` event.
+ *
+ * @param {Number} code The status code
+ * @param {Buffer} reason The reason for closing
+ * @private
+ */
+function receiverOnConclude(code, reason) {
+  const websocket = this[kWebSocket$1];
+
+  websocket._closeFrameReceived = true;
+  websocket._closeMessage = reason;
+  websocket._closeCode = code;
+
+  if (websocket._socket[kWebSocket$1] === undefined) return;
+
+  websocket._socket.removeListener('data', socketOnData);
+  process.nextTick(resume, websocket._socket);
+
+  if (code === 1005) websocket.close();
+  else websocket.close(code, reason);
+}
+
+/**
+ * The listener of the `Receiver` `'drain'` event.
+ *
+ * @private
+ */
+function receiverOnDrain() {
+  const websocket = this[kWebSocket$1];
+
+  if (!websocket.isPaused) websocket._socket.resume();
+}
+
+/**
+ * The listener of the `Receiver` `'error'` event.
+ *
+ * @param {(RangeError|Error)} err The emitted error
+ * @private
+ */
+function receiverOnError(err) {
+  const websocket = this[kWebSocket$1];
+
+  if (websocket._socket[kWebSocket$1] !== undefined) {
+    websocket._socket.removeListener('data', socketOnData);
+
+    //
+    // On Node.js < 14.0.0 the `'error'` event is emitted synchronously. See
+    // https://github.com/websockets/ws/issues/1940.
+    //
+    process.nextTick(resume, websocket._socket);
+
+    websocket.close(err[kStatusCode]);
+  }
+
+  websocket.emit('error', err);
+}
+
+/**
+ * The listener of the `Receiver` `'finish'` event.
+ *
+ * @private
+ */
+function receiverOnFinish() {
+  this[kWebSocket$1].emitClose();
+}
+
+/**
+ * The listener of the `Receiver` `'message'` event.
+ *
+ * @param {Buffer|ArrayBuffer|Buffer[])} data The message
+ * @param {Boolean} isBinary Specifies whether the message is binary or not
+ * @private
+ */
+function receiverOnMessage(data, isBinary) {
+  this[kWebSocket$1].emit('message', data, isBinary);
+}
+
+/**
+ * The listener of the `Receiver` `'ping'` event.
+ *
+ * @param {Buffer} data The data included in the ping frame
+ * @private
+ */
+function receiverOnPing(data) {
+  const websocket = this[kWebSocket$1];
+
+  if (websocket._autoPong) websocket.pong(data, !this._isServer, NOOP);
+  websocket.emit('ping', data);
+}
+
+/**
+ * The listener of the `Receiver` `'pong'` event.
+ *
+ * @param {Buffer} data The data included in the pong frame
+ * @private
+ */
+function receiverOnPong(data) {
+  this[kWebSocket$1].emit('pong', data);
+}
+
+/**
+ * Resume a readable stream
+ *
+ * @param {Readable} stream The readable stream
+ * @private
+ */
+function resume(stream) {
+  stream.resume();
+}
+
+/**
+ * The listener of the socket `'close'` event.
+ *
+ * @private
+ */
+function socketOnClose() {
+  const websocket = this[kWebSocket$1];
+
+  this.removeListener('close', socketOnClose);
+  this.removeListener('data', socketOnData);
+  this.removeListener('end', socketOnEnd);
+
+  websocket._readyState = WebSocket$2.CLOSING;
+
+  let chunk;
+
+  //
+  // The close frame might not have been received or the `'end'` event emitted,
+  // for example, if the socket was destroyed due to an error. Ensure that the
+  // `receiver` stream is closed after writing any remaining buffered data to
+  // it. If the readable side of the socket is in flowing mode then there is no
+  // buffered data as everything has been already written and `readable.read()`
+  // will return `null`. If instead, the socket is paused, any possible buffered
+  // data will be read as a single chunk.
+  //
+  if (
+    !this._readableState.endEmitted &&
+    !websocket._closeFrameReceived &&
+    !websocket._receiver._writableState.errorEmitted &&
+    (chunk = websocket._socket.read()) !== null
+  ) {
+    websocket._receiver.write(chunk);
+  }
+
+  websocket._receiver.end();
+
+  this[kWebSocket$1] = undefined;
+
+  clearTimeout(websocket._closeTimer);
+
+  if (
+    websocket._receiver._writableState.finished ||
+    websocket._receiver._writableState.errorEmitted
+  ) {
+    websocket.emitClose();
+  } else {
+    websocket._receiver.on('error', receiverOnFinish);
+    websocket._receiver.on('finish', receiverOnFinish);
+  }
+}
+
+/**
+ * The listener of the socket `'data'` event.
+ *
+ * @param {Buffer} chunk A chunk of data
+ * @private
+ */
+function socketOnData(chunk) {
+  if (!this[kWebSocket$1]._receiver.write(chunk)) {
+    this.pause();
+  }
+}
+
+/**
+ * The listener of the socket `'end'` event.
+ *
+ * @private
+ */
+function socketOnEnd() {
+  const websocket = this[kWebSocket$1];
+
+  websocket._readyState = WebSocket$2.CLOSING;
+  websocket._receiver.end();
+  this.end();
+}
+
+/**
+ * The listener of the socket `'error'` event.
+ *
+ * @private
+ */
+function socketOnError$1() {
+  const websocket = this[kWebSocket$1];
+
+  this.removeListener('error', socketOnError$1);
+  this.on('error', NOOP);
+
+  if (websocket) {
+    websocket._readyState = WebSocket$2.CLOSING;
+    this.destroy();
+  }
+}
+
+const WebSocket$3 = /*@__PURE__*/getDefaultExportFromCjs(websocket);
+
+const { tokenChars } = validationExports;
+
+/**
+ * Parses the `Sec-WebSocket-Protocol` header into a set of subprotocol names.
+ *
+ * @param {String} header The field value of the header
+ * @return {Set} The subprotocol names
+ * @public
+ */
+function parse$1(header) {
+  const protocols = new Set();
+  let start = -1;
+  let end = -1;
+  let i = 0;
+
+  for (i; i < header.length; i++) {
+    const code = header.charCodeAt(i);
+
+    if (end === -1 && tokenChars[code] === 1) {
+      if (start === -1) start = i;
+    } else if (
+      i !== 0 &&
+      (code === 0x20 /* ' ' */ || code === 0x09) /* '\t' */
+    ) {
+      if (end === -1 && start !== -1) end = i;
+    } else if (code === 0x2c /* ',' */) {
+      if (start === -1) {
+        throw new SyntaxError(`Unexpected character at index ${i}`);
+      }
+
+      if (end === -1) end = i;
+
+      const protocol = header.slice(start, end);
+
+      if (protocols.has(protocol)) {
+        throw new SyntaxError(`The "${protocol}" subprotocol is duplicated`);
+      }
+
+      protocols.add(protocol);
+      start = end = -1;
+    } else {
+      throw new SyntaxError(`Unexpected character at index ${i}`);
+    }
+  }
+
+  if (start === -1 || end !== -1) {
+    throw new SyntaxError('Unexpected end of input');
+  }
+
+  const protocol = header.slice(start, i);
+
+  if (protocols.has(protocol)) {
+    throw new SyntaxError(`The "${protocol}" subprotocol is duplicated`);
+  }
+
+  protocols.add(protocol);
+  return protocols;
+}
+
+var subprotocol$1 = { parse: parse$1 };
+
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^Duplex$", "caughtErrors": "none" }] */
+
+const EventEmitter = require$$0$3;
+const http = require$$1$4;
+const { Duplex } = require$$2$1;
+const { createHash } = require$$3$1;
+
+const extension = extension$1;
+const PerMessageDeflate = permessageDeflate;
+const subprotocol = subprotocol$1;
+const WebSocket$1 = websocket;
+const { GUID, kWebSocket } = constants;
+
+const keyRegex = /^[+/0-9A-Za-z]{22}==$/;
+
+const RUNNING = 0;
+const CLOSING = 1;
+const CLOSED = 2;
+
+/**
+ * Class representing a WebSocket server.
+ *
+ * @extends EventEmitter
+ */
+class WebSocketServer extends EventEmitter {
+  /**
+   * Create a `WebSocketServer` instance.
+   *
+   * @param {Object} options Configuration options
+   * @param {Boolean} [options.allowSynchronousEvents=true] Specifies whether
+   *     any of the `'message'`, `'ping'`, and `'pong'` events can be emitted
+   *     multiple times in the same tick
+   * @param {Boolean} [options.autoPong=true] Specifies whether or not to
+   *     automatically send a pong in response to a ping
+   * @param {Number} [options.backlog=511] The maximum length of the queue of
+   *     pending connections
+   * @param {Boolean} [options.clientTracking=true] Specifies whether or not to
+   *     track clients
+   * @param {Function} [options.handleProtocols] A hook to handle protocols
+   * @param {String} [options.host] The hostname where to bind the server
+   * @param {Number} [options.maxPayload=104857600] The maximum allowed message
+   *     size
+   * @param {Boolean} [options.noServer=false] Enable no server mode
+   * @param {String} [options.path] Accept only connections matching this path
+   * @param {(Boolean|Object)} [options.perMessageDeflate=false] Enable/disable
+   *     permessage-deflate
+   * @param {Number} [options.port] The port where to bind the server
+   * @param {(http.Server|https.Server)} [options.server] A pre-created HTTP/S
+   *     server to use
+   * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
+   *     not to skip UTF-8 validation for text and close messages
+   * @param {Function} [options.verifyClient] A hook to reject connections
+   * @param {Function} [options.WebSocket=WebSocket] Specifies the `WebSocket`
+   *     class to use. It must be the `WebSocket` class or class that extends it
+   * @param {Function} [callback] A listener for the `listening` event
+   */
+  constructor(options, callback) {
+    super();
+
+    options = {
+      allowSynchronousEvents: true,
+      autoPong: true,
+      maxPayload: 100 * 1024 * 1024,
+      skipUTF8Validation: false,
+      perMessageDeflate: false,
+      handleProtocols: null,
+      clientTracking: true,
+      verifyClient: null,
+      noServer: false,
+      backlog: null, // use default (511 as implemented in net.js)
+      server: null,
+      host: null,
+      path: null,
+      port: null,
+      WebSocket: WebSocket$1,
+      ...options
+    };
+
+    if (
+      (options.port == null && !options.server && !options.noServer) ||
+      (options.port != null && (options.server || options.noServer)) ||
+      (options.server && options.noServer)
+    ) {
+      throw new TypeError(
+        'One and only one of the "port", "server", or "noServer" options ' +
+          'must be specified'
+      );
+    }
+
+    if (options.port != null) {
+      this._server = http.createServer((req, res) => {
+        const body = http.STATUS_CODES[426];
+
+        res.writeHead(426, {
+          'Content-Length': body.length,
+          'Content-Type': 'text/plain'
+        });
+        res.end(body);
+      });
+      this._server.listen(
+        options.port,
+        options.host,
+        options.backlog,
+        callback
+      );
+    } else if (options.server) {
+      this._server = options.server;
+    }
+
+    if (this._server) {
+      const emitConnection = this.emit.bind(this, 'connection');
+
+      this._removeListeners = addListeners(this._server, {
+        listening: this.emit.bind(this, 'listening'),
+        error: this.emit.bind(this, 'error'),
+        upgrade: (req, socket, head) => {
+          this.handleUpgrade(req, socket, head, emitConnection);
+        }
+      });
+    }
+
+    if (options.perMessageDeflate === true) options.perMessageDeflate = {};
+    if (options.clientTracking) {
+      this.clients = new Set();
+      this._shouldEmitClose = false;
+    }
+
+    this.options = options;
+    this._state = RUNNING;
+  }
+
+  /**
+   * Returns the bound address, the address family name, and port of the server
+   * as reported by the operating system if listening on an IP socket.
+   * If the server is listening on a pipe or UNIX domain socket, the name is
+   * returned as a string.
+   *
+   * @return {(Object|String|null)} The address of the server
+   * @public
+   */
+  address() {
+    if (this.options.noServer) {
+      throw new Error('The server is operating in "noServer" mode');
+    }
+
+    if (!this._server) return null;
+    return this._server.address();
+  }
+
+  /**
+   * Stop the server from accepting new connections and emit the `'close'` event
+   * when all existing connections are closed.
+   *
+   * @param {Function} [cb] A one-time listener for the `'close'` event
+   * @public
+   */
+  close(cb) {
+    if (this._state === CLOSED) {
+      if (cb) {
+        this.once('close', () => {
+          cb(new Error('The server is not running'));
+        });
+      }
+
+      process.nextTick(emitClose, this);
+      return;
+    }
+
+    if (cb) this.once('close', cb);
+
+    if (this._state === CLOSING) return;
+    this._state = CLOSING;
+
+    if (this.options.noServer || this.options.server) {
+      if (this._server) {
+        this._removeListeners();
+        this._removeListeners = this._server = null;
+      }
+
+      if (this.clients) {
+        if (!this.clients.size) {
+          process.nextTick(emitClose, this);
+        } else {
+          this._shouldEmitClose = true;
+        }
+      } else {
+        process.nextTick(emitClose, this);
+      }
+    } else {
+      const server = this._server;
+
+      this._removeListeners();
+      this._removeListeners = this._server = null;
+
+      //
+      // The HTTP/S server was created internally. Close it, and rely on its
+      // `'close'` event.
+      //
+      server.close(() => {
+        emitClose(this);
+      });
+    }
+  }
+
+  /**
+   * See if a given request should be handled by this server instance.
+   *
+   * @param {http.IncomingMessage} req Request object to inspect
+   * @return {Boolean} `true` if the request is valid, else `false`
+   * @public
+   */
+  shouldHandle(req) {
+    if (this.options.path) {
+      const index = req.url.indexOf('?');
+      const pathname = index !== -1 ? req.url.slice(0, index) : req.url;
+
+      if (pathname !== this.options.path) return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Handle a HTTP Upgrade request.
+   *
+   * @param {http.IncomingMessage} req The request object
+   * @param {Duplex} socket The network socket between the server and client
+   * @param {Buffer} head The first packet of the upgraded stream
+   * @param {Function} cb Callback
+   * @public
+   */
+  handleUpgrade(req, socket, head, cb) {
+    socket.on('error', socketOnError);
+
+    const key = req.headers['sec-websocket-key'];
+    const upgrade = req.headers.upgrade;
+    const version = +req.headers['sec-websocket-version'];
+
+    if (req.method !== 'GET') {
+      const message = 'Invalid HTTP method';
+      abortHandshakeOrEmitwsClientError(this, req, socket, 405, message);
+      return;
+    }
+
+    if (upgrade === undefined || upgrade.toLowerCase() !== 'websocket') {
+      const message = 'Invalid Upgrade header';
+      abortHandshakeOrEmitwsClientError(this, req, socket, 400, message);
+      return;
+    }
+
+    if (key === undefined || !keyRegex.test(key)) {
+      const message = 'Missing or invalid Sec-WebSocket-Key header';
+      abortHandshakeOrEmitwsClientError(this, req, socket, 400, message);
+      return;
+    }
+
+    if (version !== 8 && version !== 13) {
+      const message = 'Missing or invalid Sec-WebSocket-Version header';
+      abortHandshakeOrEmitwsClientError(this, req, socket, 400, message);
+      return;
+    }
+
+    if (!this.shouldHandle(req)) {
+      abortHandshake(socket, 400);
+      return;
+    }
+
+    const secWebSocketProtocol = req.headers['sec-websocket-protocol'];
+    let protocols = new Set();
+
+    if (secWebSocketProtocol !== undefined) {
+      try {
+        protocols = subprotocol.parse(secWebSocketProtocol);
+      } catch (err) {
+        const message = 'Invalid Sec-WebSocket-Protocol header';
+        abortHandshakeOrEmitwsClientError(this, req, socket, 400, message);
+        return;
+      }
+    }
+
+    const secWebSocketExtensions = req.headers['sec-websocket-extensions'];
+    const extensions = {};
+
+    if (
+      this.options.perMessageDeflate &&
+      secWebSocketExtensions !== undefined
+    ) {
+      const perMessageDeflate = new PerMessageDeflate(
+        this.options.perMessageDeflate,
+        true,
+        this.options.maxPayload
+      );
+
+      try {
+        const offers = extension.parse(secWebSocketExtensions);
+
+        if (offers[PerMessageDeflate.extensionName]) {
+          perMessageDeflate.accept(offers[PerMessageDeflate.extensionName]);
+          extensions[PerMessageDeflate.extensionName] = perMessageDeflate;
+        }
+      } catch (err) {
+        const message =
+          'Invalid or unacceptable Sec-WebSocket-Extensions header';
+        abortHandshakeOrEmitwsClientError(this, req, socket, 400, message);
+        return;
+      }
+    }
+
+    //
+    // Optionally call external client verification handler.
+    //
+    if (this.options.verifyClient) {
+      const info = {
+        origin:
+          req.headers[`${version === 8 ? 'sec-websocket-origin' : 'origin'}`],
+        secure: !!(req.socket.authorized || req.socket.encrypted),
+        req
+      };
+
+      if (this.options.verifyClient.length === 2) {
+        this.options.verifyClient(info, (verified, code, message, headers) => {
+          if (!verified) {
+            return abortHandshake(socket, code || 401, message, headers);
+          }
+
+          this.completeUpgrade(
+            extensions,
+            key,
+            protocols,
+            req,
+            socket,
+            head,
+            cb
+          );
+        });
+        return;
+      }
+
+      if (!this.options.verifyClient(info)) return abortHandshake(socket, 401);
+    }
+
+    this.completeUpgrade(extensions, key, protocols, req, socket, head, cb);
+  }
+
+  /**
+   * Upgrade the connection to WebSocket.
+   *
+   * @param {Object} extensions The accepted extensions
+   * @param {String} key The value of the `Sec-WebSocket-Key` header
+   * @param {Set} protocols The subprotocols
+   * @param {http.IncomingMessage} req The request object
+   * @param {Duplex} socket The network socket between the server and client
+   * @param {Buffer} head The first packet of the upgraded stream
+   * @param {Function} cb Callback
+   * @throws {Error} If called more than once with the same socket
+   * @private
+   */
+  completeUpgrade(extensions, key, protocols, req, socket, head, cb) {
+    //
+    // Destroy the socket if the client has already sent a FIN packet.
+    //
+    if (!socket.readable || !socket.writable) return socket.destroy();
+
+    if (socket[kWebSocket]) {
+      throw new Error(
+        'server.handleUpgrade() was called more than once with the same ' +
+          'socket, possibly due to a misconfiguration'
+      );
+    }
+
+    if (this._state > RUNNING) return abortHandshake(socket, 503);
+
+    const digest = createHash('sha1')
+      .update(key + GUID)
+      .digest('base64');
+
+    const headers = [
+      'HTTP/1.1 101 Switching Protocols',
+      'Upgrade: websocket',
+      'Connection: Upgrade',
+      `Sec-WebSocket-Accept: ${digest}`
+    ];
+
+    const ws = new this.options.WebSocket(null, undefined, this.options);
+
+    if (protocols.size) {
+      //
+      // Optionally call external protocol selection handler.
+      //
+      const protocol = this.options.handleProtocols
+        ? this.options.handleProtocols(protocols, req)
+        : protocols.values().next().value;
+
+      if (protocol) {
+        headers.push(`Sec-WebSocket-Protocol: ${protocol}`);
+        ws._protocol = protocol;
+      }
+    }
+
+    if (extensions[PerMessageDeflate.extensionName]) {
+      const params = extensions[PerMessageDeflate.extensionName].params;
+      const value = extension.format({
+        [PerMessageDeflate.extensionName]: [params]
+      });
+      headers.push(`Sec-WebSocket-Extensions: ${value}`);
+      ws._extensions = extensions;
+    }
+
+    //
+    // Allow external modification/inspection of handshake headers.
+    //
+    this.emit('headers', headers, req);
+
+    socket.write(headers.concat('\r\n').join('\r\n'));
+    socket.removeListener('error', socketOnError);
+
+    ws.setSocket(socket, head, {
+      allowSynchronousEvents: this.options.allowSynchronousEvents,
+      maxPayload: this.options.maxPayload,
+      skipUTF8Validation: this.options.skipUTF8Validation
+    });
+
+    if (this.clients) {
+      this.clients.add(ws);
+      ws.on('close', () => {
+        this.clients.delete(ws);
+
+        if (this._shouldEmitClose && !this.clients.size) {
+          process.nextTick(emitClose, this);
+        }
+      });
+    }
+
+    cb(ws, req);
+  }
+}
+
+var websocketServer = WebSocketServer;
+
+/**
+ * Add event listeners on an `EventEmitter` using a map of <event, listener>
+ * pairs.
+ *
+ * @param {EventEmitter} server The event emitter
+ * @param {Object.<String, Function>} map The listeners to add
+ * @return {Function} A function that will remove the added listeners when
+ *     called
+ * @private
+ */
+function addListeners(server, map) {
+  for (const event of Object.keys(map)) server.on(event, map[event]);
+
+  return function removeListeners() {
+    for (const event of Object.keys(map)) {
+      server.removeListener(event, map[event]);
+    }
+  };
+}
+
+/**
+ * Emit a `'close'` event on an `EventEmitter`.
+ *
+ * @param {EventEmitter} server The event emitter
+ * @private
+ */
+function emitClose(server) {
+  server._state = CLOSED;
+  server.emit('close');
+}
+
+/**
+ * Handle socket errors.
+ *
+ * @private
+ */
+function socketOnError() {
+  this.destroy();
+}
+
+/**
+ * Close the connection when preconditions are not fulfilled.
+ *
+ * @param {Duplex} socket The socket of the upgrade request
+ * @param {Number} code The HTTP response status code
+ * @param {String} [message] The HTTP response body
+ * @param {Object} [headers] Additional HTTP response headers
+ * @private
+ */
+function abortHandshake(socket, code, message, headers) {
+  //
+  // The socket is writable unless the user destroyed or ended it before calling
+  // `server.handleUpgrade()` or in the `verifyClient` function, which is a user
+  // error. Handling this does not make much sense as the worst that can happen
+  // is that some of the data written by the user might be discarded due to the
+  // call to `socket.end()` below, which triggers an `'error'` event that in
+  // turn causes the socket to be destroyed.
+  //
+  message = message || http.STATUS_CODES[code];
+  headers = {
+    Connection: 'close',
+    'Content-Type': 'text/html',
+    'Content-Length': Buffer.byteLength(message),
+    ...headers
+  };
+
+  socket.once('finish', socket.destroy);
+
+  socket.end(
+    `HTTP/1.1 ${code} ${http.STATUS_CODES[code]}\r\n` +
+      Object.keys(headers)
+        .map((h) => `${h}: ${headers[h]}`)
+        .join('\r\n') +
+      '\r\n\r\n' +
+      message
+  );
+}
+
+/**
+ * Emit a `'wsClientError'` event on a `WebSocketServer` if there is at least
+ * one listener for it, otherwise call `abortHandshake()`.
+ *
+ * @param {WebSocketServer} server The WebSocket server
+ * @param {http.IncomingMessage} req The request object
+ * @param {Duplex} socket The socket of the upgrade request
+ * @param {Number} code The HTTP response status code
+ * @param {String} message The HTTP response body
+ * @private
+ */
+function abortHandshakeOrEmitwsClientError(server, req, socket, code, message) {
+  if (server.listenerCount('wsClientError')) {
+    const err = new Error(message);
+    Error.captureStackTrace(err, abortHandshakeOrEmitwsClientError);
+
+    server.emit('wsClientError', err, socket, req);
+  } else {
+    abortHandshake(socket, code, message);
+  }
+}
+
+const websocketServer_default = /*@__PURE__*/getDefaultExportFromCjs(websocketServer);
+
+const wrapper = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  Receiver: receiver_default,
+  Sender: sender_default,
+  WebSocket: WebSocket$3,
+  WebSocketServer: websocketServer_default,
+  createWebSocketStream: stream_default,
+  default: WebSocket$3
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const require$$2 = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(wrapper);
+
 var _a;
 Object.defineProperty(inMemoryAdapter, "__esModule", { value: true });
 inMemoryAdapter.SessionAwareAdapter = inMemoryAdapter.Adapter = void 0;
-const events_1 = require$$8;
+const events_1 = require$$0$3;
 const yeast_1 = yeast$1;
 const WebSocket = require$$2;
 const canPreComputeFrame = typeof ((_a = WebSocket === null || WebSocket === void 0 ? void 0 : WebSocket.Sender) === null || _a === void 0 ? void 0 : _a.frame) === "function";
@@ -29954,7 +39289,7 @@ var clusterAdapter = {};
 	exports$1.ClusterAdapterWithHeartbeat = exports$1.ClusterAdapter = exports$1.MessageType = void 0;
 	const in_memory_adapter_1 = inMemoryAdapter;
 	const debug_1 = require$$13;
-	const crypto_1 = require$$2$3;
+	const crypto_1 = require$$3$1;
 	const debug = (0, debug_1.debug)("socket.io-adapter");
 	const EMITTER_UID = "emitter";
 	const DEFAULT_TIMEOUT = 5000;
@@ -30887,15 +40222,15 @@ var dist = dist$2.exports;
 	};
 	Object.defineProperty(exports$1, "__esModule", { value: true });
 	exports$1.Namespace = exports$1.Socket = exports$1.Server = void 0;
-	const http = require$$0$2;
+	const http = require$$1$4;
 	const fs_1 = require$$1;
-	const zlib_1 = require$$2$2;
+	const zlib_1 = require$$0$2;
 	const accepts = accepts$2;
-	const stream_1 = require$$4;
+	const stream_1 = require$$2$1;
 	const path = require$$5;
 	const engine_io_1 = require$$6;
 	const client_1 = client;
-	const events_1 = require$$8;
+	const events_1 = require$$0$3;
 	const namespace_1 = namespace;
 	Object.defineProperty(exports$1, "Namespace", { enumerable: true, get: function () { return namespace_1.Namespace; } });
 	const parent_namespace_1 = parentNamespace;
@@ -32597,861 +41932,861 @@ const assets = {
   "/_nuxt/0JwXLbdW.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"13f0-kjdELbO7f7qQNHul6L01oU9MaOo\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.223Z",
     "size": 5104,
     "path": "../public/_nuxt/0JwXLbdW.js"
   },
   "/_nuxt/8aee2ZTh.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"75e-SeJV9Smjndi8hBqJ4IuiEt8DAcY\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.223Z",
     "size": 1886,
     "path": "../public/_nuxt/8aee2ZTh.js"
   },
   "/_nuxt/8smeP2F2.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"250-CPnADmYx/AnACdCdZklbTr2IUKo\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 592,
     "path": "../public/_nuxt/8smeP2F2.js"
   },
   "/_nuxt/9LjQvTqj.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1a8c-k6TwgMFl7GYIWlj8GosIY0gS0nA\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.223Z",
     "size": 6796,
     "path": "../public/_nuxt/9LjQvTqj.js"
   },
   "/_nuxt/B-X30aoF.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-pdeiaxGfeEK2QnUISadccljMgfM\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 78,
     "path": "../public/_nuxt/B-X30aoF.js"
   },
   "/_nuxt/B1BO9a0J.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"165b-ReZGcheiMOmsmKfqC9toVWOobGE\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.223Z",
     "size": 5723,
     "path": "../public/_nuxt/B1BO9a0J.js"
   },
   "/_nuxt/B2mp1wD8.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"8db-mt0+cSepOhG2eduStBRWogl/gtA\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.223Z",
     "size": 2267,
     "path": "../public/_nuxt/B2mp1wD8.js"
   },
   "/_nuxt/B3Z3RBrt.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"43c7-HaxCOnkwxuhkFJhQzn7UwGbVUi8\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 17351,
     "path": "../public/_nuxt/B3Z3RBrt.js"
   },
   "/_nuxt/B49HIcoT.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"6334-K7YAXO53DaYwCOyplcBQHl/RCOo\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 25396,
     "path": "../public/_nuxt/B49HIcoT.js"
   },
   "/_nuxt/BALXvQ8s.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2f52-US8A8Kk4KuG0z9fG7QVV968nsXc\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 12114,
     "path": "../public/_nuxt/BALXvQ8s.js"
   },
   "/_nuxt/BCw_uuzn.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"a0d-/yrKWRvpg1oL2duy5dDfz2S0Eqs\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 2573,
     "path": "../public/_nuxt/BCw_uuzn.js"
   },
   "/_nuxt/BEBU9Hil.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2da1-Q8JyN64Vev1+GqhiCagPyJc5sm4\"",
-    "mtime": "2025-12-27T08:33:32.047Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 11681,
     "path": "../public/_nuxt/BEBU9Hil.js"
   },
   "/_nuxt/BFsmL2mK.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1c07-kZkEd6nW+bEIDcAH/nf3SUQKQXw\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 7175,
     "path": "../public/_nuxt/BFsmL2mK.js"
   },
   "/_nuxt/BHSDNIxN.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"d9c-f7R2zWCnBeTpA6W6DfSQhb4Lhw8\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 3484,
     "path": "../public/_nuxt/BHSDNIxN.js"
   },
   "/_nuxt/BJCjXCMr.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"110-MnHUe3glZd+oMpc1aTR/FFe4SxA\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 272,
     "path": "../public/_nuxt/BJCjXCMr.js"
   },
   "/_nuxt/BKpWv-2O.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-czRqwgPrUqKa6beUtS0Mmg3u1XM\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 78,
     "path": "../public/_nuxt/BKpWv-2O.js"
   },
   "/_nuxt/BOBs1G3d.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1d20-nPglM6NlVz5YngwtAWfZipJKNCw\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 7456,
     "path": "../public/_nuxt/BOBs1G3d.js"
   },
   "/_nuxt/BQPERQYg.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1e36-CRhVLJp6RMXLB7abD4IeHbbkaTQ\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 7734,
     "path": "../public/_nuxt/BQPERQYg.js"
   },
   "/_nuxt/BTopoM6U.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"90-Vsi2vzKSFNwCby2DNfj1fyN58J8\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 144,
     "path": "../public/_nuxt/BTopoM6U.js"
   },
   "/_nuxt/BTqLQgnH.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-mvyvFla/ok8Ttbo+JzZp2LEDbHc\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 78,
     "path": "../public/_nuxt/BTqLQgnH.js"
   },
   "/_nuxt/BZUAIYhA.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"256-5BQ8w0zjel6S4Zz3e5qRVlyiBtU\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 598,
     "path": "../public/_nuxt/BZUAIYhA.js"
   },
   "/_nuxt/B_w0QKyd.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1fb2-DHJGELXKkBkWKD62c9Ybafi08WE\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 8114,
     "path": "../public/_nuxt/B_w0QKyd.js"
   },
   "/_nuxt/Bc4y1aXM.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"33eb-j6UrbD4vXRi18kujWMRgJl1NHDo\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 13291,
     "path": "../public/_nuxt/Bc4y1aXM.js"
   },
   "/_nuxt/BcKj8Aeq.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-ynOujaDuP/BCvsnVNw9CHu2309k\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 78,
     "path": "../public/_nuxt/BcKj8Aeq.js"
   },
   "/_nuxt/BdJkXebB.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"b33-uTzp7fA05KKT77vrU3FZ+dAg6Os\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.224Z",
     "size": 2867,
     "path": "../public/_nuxt/BdJkXebB.js"
   },
   "/_nuxt/BdNG13rv.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"24d6-gOc4PubjNnOJ+irWBGSMmz1SF+c\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 9430,
     "path": "../public/_nuxt/BdNG13rv.js"
   },
   "/_nuxt/Be9nsAj3.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2deb-PfRQQ2HqLBrl5jnxjv3viGe/oC8\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 11755,
     "path": "../public/_nuxt/Be9nsAj3.js"
   },
   "/_nuxt/BeJ1R-XH.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b43-Gk+2h3Cmwd4DTGNYk5brJRztzNk\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 6979,
     "path": "../public/_nuxt/BeJ1R-XH.js"
   },
   "/_nuxt/BgJoX-5C.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"e8-oXYN/XYhtjmeTz1PCZj/AN6acN4\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 232,
     "path": "../public/_nuxt/BgJoX-5C.js"
   },
   "/_nuxt/BiBmy0vu.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"5c30-i/fk/gr4lfslrzTxJr77jprTfKo\"",
-    "mtime": "2025-12-27T08:33:32.048Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 23600,
     "path": "../public/_nuxt/BiBmy0vu.js"
   },
   "/_nuxt/BmYQ950h.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1389-uLENR0KNTifqszbxbenIESBzY/8\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 5001,
     "path": "../public/_nuxt/BmYQ950h.js"
   },
   "/_nuxt/Bo53vrEk.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"d3e-0+FwyaioCw2PD79kkZP6RWOCZss\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 3390,
     "path": "../public/_nuxt/Bo53vrEk.js"
   },
   "/_nuxt/Bw0amrgs.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1711-OEb7TtYm8r6LOBWq5LfAKGp1joE\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 5905,
     "path": "../public/_nuxt/Bw0amrgs.js"
   },
   "/_nuxt/BwweZmaY.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-MxGe8CyxvgvLv+4SgdzdhTCEdQU\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 78,
     "path": "../public/_nuxt/BwweZmaY.js"
   },
   "/_nuxt/C-BNIxyI.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1152-OtoJnL2O9aO+pxFPY1MU6XcCk8c\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 4434,
     "path": "../public/_nuxt/C-BNIxyI.js"
   },
   "/_nuxt/C-arVmPL.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1e25-GrRbFpXb9dRM6JDswFcElYBGrrY\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 7717,
     "path": "../public/_nuxt/C-arVmPL.js"
   },
   "/_nuxt/C2YKbQDp.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b03-XZw7rIPHEFr9rGJb+6SK8nitEbk\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 6915,
     "path": "../public/_nuxt/C2YKbQDp.js"
   },
   "/_nuxt/C4BNzpKP.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"27c4-8AWy7kU2AgHkIGv5ERZ/VUYDTpo\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 10180,
     "path": "../public/_nuxt/C4BNzpKP.js"
   },
   "/_nuxt/C51Wn5Mq.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"155-mOnZvMUBV9RCULjfg826IteKi78\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 341,
     "path": "../public/_nuxt/C51Wn5Mq.js"
   },
   "/_nuxt/C5VP7iu_.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"86e-mgClQucCyS+tUXoKM+zXierk8eI\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 2158,
     "path": "../public/_nuxt/C5VP7iu_.js"
   },
   "/_nuxt/C6b0ety_.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2848-+yZg5/djM53fYYHpmtfzA1QQPrQ\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 10312,
     "path": "../public/_nuxt/C6b0ety_.js"
   },
   "/_nuxt/C7vjBmAo.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"9f8-sttIaTCAKJMmcrO58vixgxji4Eo\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 2552,
     "path": "../public/_nuxt/C7vjBmAo.js"
   },
   "/_nuxt/C8uZPu3n.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"13a0-Sgrcd999VrFRk6QIYKd1JqKRFw0\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 5024,
     "path": "../public/_nuxt/C8uZPu3n.js"
   },
   "/_nuxt/CDjH4OLA.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2bdb-jic3CTi3g1WbI9wdHb0oBgTHPx4\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 11227,
     "path": "../public/_nuxt/CDjH4OLA.js"
   },
   "/_nuxt/CIjPKTSB.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"59ff-LzCPMhvhoOqQCBuaVyxeo24OcnE\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 23039,
     "path": "../public/_nuxt/CIjPKTSB.js"
   },
   "/_nuxt/CPO0it5h.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1585-e/YMUIDkUjTZJRjVmmiVPU04WRA\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 5509,
     "path": "../public/_nuxt/CPO0it5h.js"
   },
   "/_nuxt/CPo-A71o.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"a0a-nBGbpN8utEfhU/a9ykiO6QTyDp8\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.225Z",
     "size": 2570,
     "path": "../public/_nuxt/CPo-A71o.js"
   },
   "/_nuxt/CPokQ-Z0.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1831-wFr3ZSlODtKTLlkWsUpFK9aZiTc\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 6193,
     "path": "../public/_nuxt/CPokQ-Z0.js"
   },
   "/_nuxt/CRIXk28M.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-HfDOenTqKVmXmDs8kmeqnGZPf4Q\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 78,
     "path": "../public/_nuxt/CRIXk28M.js"
   },
   "/_nuxt/CTEk1XwB.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-uev5DGETjvSeTC97V1Qjc43Keb4\"",
-    "mtime": "2025-12-27T08:33:32.049Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 78,
     "path": "../public/_nuxt/CTEk1XwB.js"
   },
   "/_nuxt/CWJWjr3c.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"3a6b-lWcRpoUSV3lVOhxZH2mXNo87/To\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 14955,
     "path": "../public/_nuxt/CWJWjr3c.js"
   },
   "/_nuxt/CX4WDIMJ.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"33906-wMYzHPlGOrJwBRt+DR2Gx15USTk\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 211206,
     "path": "../public/_nuxt/CX4WDIMJ.js"
   },
   "/_nuxt/CYB17nq9.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"acc-kIWdj1VKACY+tMPqqGHA2+gK3uU\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 2764,
     "path": "../public/_nuxt/CYB17nq9.js"
   },
   "/_nuxt/C_uIs32I.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"347f-bjLvJ5nFhyrcomLUru/BQuMkqXI\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 13439,
     "path": "../public/_nuxt/C_uIs32I.js"
   },
   "/_nuxt/CaK-Jlu2.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"111d-It4SGzXULeU9NgwwFJBeBaKkynU\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 4381,
     "path": "../public/_nuxt/CaK-Jlu2.js"
   },
   "/_nuxt/CasXnXPt.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"cf5-ms9yx51kssp2Gy4mPTlDNrC5ik0\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 3317,
     "path": "../public/_nuxt/CasXnXPt.js"
   },
   "/_nuxt/Cb3Vbygw.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"64-1d0DBDIvxmUSJu0l68hNQQyQJ84\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 100,
     "path": "../public/_nuxt/Cb3Vbygw.js"
   },
   "/_nuxt/CeAJt_oh.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"19287-s8SUmnWdpRZBxjs1/2r+hOqfrkE\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 103047,
     "path": "../public/_nuxt/CeAJt_oh.js"
   },
   "/_nuxt/CfAzB1GA.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"a6b-enAr1jc9/mu+0S1yLW4lLxVw2xM\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 2667,
     "path": "../public/_nuxt/CfAzB1GA.js"
   },
   "/_nuxt/CfuytIrk.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2df0-iGK6inJsM6bdiwk537fDZNlfzow\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 11760,
     "path": "../public/_nuxt/CfuytIrk.js"
   },
   "/_nuxt/CiM0_A9B.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"410d-7u24RpjrtclZ8sUvj8TrG4k2vCk\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 16653,
     "path": "../public/_nuxt/CiM0_A9B.js"
   },
   "/_nuxt/CjwhNx0b.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"49a9-tv6chodic4+RTKhrbrsTkt8eb60\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 18857,
     "path": "../public/_nuxt/CjwhNx0b.js"
   },
   "/_nuxt/CkyQOW3s.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2075-MnQwVuv2ViyihRqhfk8QHwNwIZU\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 8309,
     "path": "../public/_nuxt/CkyQOW3s.js"
   },
   "/_nuxt/CllNs7J-.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"507-4FfAuRvdMRt4hN2JeJ1BmsueyMU\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 1287,
     "path": "../public/_nuxt/CllNs7J-.js"
   },
   "/_nuxt/CmxfT9SS.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2b1d-KyKuDtabUNZO1e7mIddLTINFv+k\"",
-    "mtime": "2025-12-27T08:33:32.050Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 11037,
     "path": "../public/_nuxt/CmxfT9SS.js"
   },
   "/_nuxt/CqRDv-_f.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1f4a-79ck41FFa5HRf6zGdyvMWIY+nF8\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 8010,
     "path": "../public/_nuxt/CqRDv-_f.js"
   },
   "/_nuxt/CtteXIPZ.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1d4b-n+6XLx7jf+hymyeeImj/RfeD//I\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 7499,
     "path": "../public/_nuxt/CtteXIPZ.js"
   },
   "/_nuxt/Cxo8nhUx.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"9fe-2q7U8QlnZi8+T+Mfab5ZIaDTtAk\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 2558,
     "path": "../public/_nuxt/Cxo8nhUx.js"
   },
   "/_nuxt/CyzirTAB.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"44ae-LPpRP10srj+kvd0D+aDz3p667kc\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.226Z",
     "size": 17582,
     "path": "../public/_nuxt/CyzirTAB.js"
   },
   "/_nuxt/D4wADBKf.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"b91-x/IAjQCLS+2C5ggdAfzS9iJwBb0\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 2961,
     "path": "../public/_nuxt/D4wADBKf.js"
   },
   "/_nuxt/D7CgXfyH.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"14d14-iNX4E8VHSMKHYyL6F65V5nZ37wc\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 85268,
     "path": "../public/_nuxt/D7CgXfyH.js"
   },
   "/_nuxt/D8WKMr8o.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"28b5-j//1PN/ijVIl6jDfUxCh84HGKfg\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 10421,
     "path": "../public/_nuxt/D8WKMr8o.js"
   },
   "/_nuxt/DBq6vxy0.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-3pIE3GvddfDNKRBng2IpsDb+OiA\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/DBq6vxy0.js"
   },
   "/_nuxt/DCX2gqgQ.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2cc5-uQhDNANzTG67xQ0sS2qeGnC5tek\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 11461,
     "path": "../public/_nuxt/DCX2gqgQ.js"
   },
   "/_nuxt/DClwBoeE.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-VHjLaTFu+qbii7DFMw5g1Xs+EPw\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/DClwBoeE.js"
   },
   "/_nuxt/DDbQURS5.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"16e4-2uu5gtyYT2oKu+zJgCTfDf41cFw\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 5860,
     "path": "../public/_nuxt/DDbQURS5.js"
   },
   "/_nuxt/DDxt_u6O.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"d6-adHr6PNgNZycFmWoZyAl935WE3A\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 214,
     "path": "../public/_nuxt/DDxt_u6O.js"
   },
   "/_nuxt/DE0tsH7x.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"d86-Muitx8FXarD/8QZwv468fxmFVMo\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 3462,
     "path": "../public/_nuxt/DE0tsH7x.js"
   },
   "/_nuxt/DE9j9Y27.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1658-N9yuhbtt/WmvdWt5h0sWAeXJOyw\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 5720,
     "path": "../public/_nuxt/DE9j9Y27.js"
   },
   "/_nuxt/DJ1b1eKD.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-c+EvgVnxl42Cl3GgrZ64Cg38/A4\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/DJ1b1eKD.js"
   },
   "/_nuxt/DOCv56iD.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-9cWT0pm41JDzkj2Ib8kMKXDLdZQ\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/DOCv56iD.js"
   },
   "/_nuxt/DOaAHroO.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-AATiIAUrS8nJdcY0gqmre2BmeA0\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/DOaAHroO.js"
   },
   "/_nuxt/DVLQ4A6n.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1070-gz2kcNSW/1CAXQWIoJdawK8p0mA\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 4208,
     "path": "../public/_nuxt/DVLQ4A6n.js"
   },
   "/_nuxt/DWL7QY8Q.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-8Au9UBmjdCuW001xDbhM1OK/9wM\"",
-    "mtime": "2025-12-27T08:33:32.051Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/DWL7QY8Q.js"
   },
   "/_nuxt/DaQcxvqW.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2d8b-VUzdWAUbNQ65MSaHz2bV7oppFgA\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 11659,
     "path": "../public/_nuxt/DaQcxvqW.js"
   },
   "/_nuxt/Dac6oD3c.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1118-yPUHGZZQQF4NH3yTZGY1VFqYlsc\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 4376,
     "path": "../public/_nuxt/Dac6oD3c.js"
   },
   "/_nuxt/DbIPe0gX.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b96-KssgJiCcP4sEPzc/mruiWakJgXg\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 7062,
     "path": "../public/_nuxt/DbIPe0gX.js"
   },
   "/_nuxt/Dd9IFq5w.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-V9syLhTJ60nku+NklabR4lrQJjM\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.227Z",
     "size": 78,
     "path": "../public/_nuxt/Dd9IFq5w.js"
   },
   "/_nuxt/DfgEv0ug.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"64-pDgUm2bmIDJVeYJ+/B4aqUthTpY\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 100,
     "path": "../public/_nuxt/DfgEv0ug.js"
   },
   "/_nuxt/Dfn2J_7j.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1025-jBCY2A2q1dxNDk782fULr81Jk5s\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 4133,
     "path": "../public/_nuxt/Dfn2J_7j.js"
   },
   "/_nuxt/DhtnrIcc.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-O35sImZb1Xo4SgmtlML3B3kbjp8\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 78,
     "path": "../public/_nuxt/DhtnrIcc.js"
   },
   "/_nuxt/DjKcNith.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b7c-CfqBOCo0Fi+zT4KO5UUfMSfxZSM\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 7036,
     "path": "../public/_nuxt/DjKcNith.js"
   },
   "/_nuxt/DjwPAIHw.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"45c-p7janz67RU9db+I8C5MkRmVlyL0\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 1116,
     "path": "../public/_nuxt/DjwPAIHw.js"
   },
   "/_nuxt/Dm9QA4UA.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"cce-fTFUfLmlnZvN9cJJIPMpj13bC9M\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 3278,
     "path": "../public/_nuxt/Dm9QA4UA.js"
   },
   "/_nuxt/DwxO8qxn.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"32a-YzWTD/9Ab895i6xPCmWDBzyD+XI\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 810,
     "path": "../public/_nuxt/DwxO8qxn.js"
   },
   "/_nuxt/DxDEv_3r.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"a2a-25yo3iWcg1ZHg0N+fqwkJdGOpms\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 2602,
     "path": "../public/_nuxt/DxDEv_3r.js"
   },
   "/_nuxt/Dz_cw2Mu.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"267e-U2NZHLqUy0kjix/RPA2Ri/wPpwQ\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 9854,
     "path": "../public/_nuxt/Dz_cw2Mu.js"
   },
   "/_nuxt/DzoPbhfs.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1f1a-WB2CiDIx4/FOUEPhLYlrIk7dUsI\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 7962,
     "path": "../public/_nuxt/DzoPbhfs.js"
   },
   "/_nuxt/EIWeQM0D.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"b5c-kIVNZfJqhZZ9lzg09Lt5yahwkL8\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 2908,
     "path": "../public/_nuxt/EIWeQM0D.js"
   },
   "/_nuxt/H1WKJ1ey.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"ac5-VLb/GSfhNrNsdg3Q9uUkjElhXwc\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 2757,
     "path": "../public/_nuxt/H1WKJ1ey.js"
   },
   "/_nuxt/LiZfZJ8V.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"282-XUFM75EvjkBL/7r0nKyrjia8KsE\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 642,
     "path": "../public/_nuxt/LiZfZJ8V.js"
   },
   "/_nuxt/MEG3hhrh.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"248-pYxjyPbKEWIvgemQ0PlV4TYMfRo\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 584,
     "path": "../public/_nuxt/MEG3hhrh.js"
   },
   "/_nuxt/NoIg-Coj.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"4e-OpIeyjK7MWntDFq0UfF0rcc6BTk\"",
-    "mtime": "2025-12-27T08:33:32.052Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 78,
     "path": "../public/_nuxt/NoIg-Coj.js"
   },
   "/_nuxt/PItv745k.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1850-6Qa7QWSL0p+lAtrzdQ3pW8wf/T0\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 6224,
     "path": "../public/_nuxt/PItv745k.js"
   },
   "/_nuxt/PJD1JfRC.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1606-2imETT2wQ+y+QgIMEW/Xl/BgRQQ\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 5638,
     "path": "../public/_nuxt/PJD1JfRC.js"
   },
   "/_nuxt/Qwhilmll.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"3616-q2CXlJ/B4/vavSJGKKxnqTsT+Wo\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 13846,
     "path": "../public/_nuxt/Qwhilmll.js"
   },
   "/_nuxt/RichTextEditor.9N-AczwR.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"35d-16ezpV9kQ3ACp9OAennGdDokKbg\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.228Z",
     "size": 861,
     "path": "../public/_nuxt/RichTextEditor.9N-AczwR.css"
   },
   "/_nuxt/_slug_.CGAP6FWb.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"4f5-cTvGHHQrKxkAKLuS2gh7EuwUiWY\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 1269,
     "path": "../public/_nuxt/_slug_.CGAP6FWb.css"
   },
   "/_nuxt/about.CscaCdTE.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"286-r2cYeAvqcBQ30dyTG0VHsg6rFsQ\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 646,
     "path": "../public/_nuxt/about.CscaCdTE.css"
   },
   "/_nuxt/cL3ZD5Hb.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"87b-xEMmXYiEHdQW1WO0DDAq+HOHVYY\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 2171,
     "path": "../public/_nuxt/cL3ZD5Hb.js"
   },
   "/_nuxt/careers.tQ6S07Om.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"286-LztnEgkmHL8f2CBhYd7Lmk2A5D0\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 646,
     "path": "../public/_nuxt/careers.tQ6S07Om.css"
   },
   "/_nuxt/contact.BQWmQK7z.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"286-hvl2Fy9Ah5R3InVzJY4cJtXC4+4\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 646,
     "path": "../public/_nuxt/contact.BQWmQK7z.css"
   },
   "/_nuxt/entry.DLS_FDRg.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"aa0c-RShZy5EyPTM04vZCg8iMt3r0kQg\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 43532,
     "path": "../public/_nuxt/entry.DLS_FDRg.css"
   },
   "/_nuxt/help.DlSzpRFm.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"286-RHCPwk3rTGZU4UuDBT+KWRWZ6gU\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 646,
     "path": "../public/_nuxt/help.DlSzpRFm.css"
   },
   "/_nuxt/index.C94WdXjb.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"ac-6Iy0kKNjx6DA7pn/EmXNxX2HN0o\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 172,
     "path": "../public/_nuxt/index.C94WdXjb.css"
   },
   "/_nuxt/index.CA3aPy--.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"e7-Gob4Pyj1F3df2nHgIUjnFeg2kbk\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 231,
     "path": "../public/_nuxt/index.CA3aPy--.css"
   },
   "/_nuxt/jfJEL8rP.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"427a-GVfOIEs9j+8rGcqeGonYQMLrup0\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 17018,
     "path": "../public/_nuxt/jfJEL8rP.js"
   },
   "/_nuxt/m998VyF-.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"5751-egftUFtSIvJBzVg2o+i2njXr9HE\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 22353,
     "path": "../public/_nuxt/m998VyF-.js"
   },
   "/_nuxt/rQp7WoB7.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1364-H/bTnzZFU8W+ydtn8INZJOmwf2U\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 4964,
     "path": "../public/_nuxt/rQp7WoB7.js"
   },
   "/_nuxt/rSZ_nZDf.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"fc9-nNtYfkJxz4q9qO8R17ONtfcPKTU\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 4041,
     "path": "../public/_nuxt/rSZ_nZDf.js"
   },
   "/_nuxt/support.7nip7fuj.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"286-BpLsFZdOT17eA16qj1dKumEM9sI\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 646,
     "path": "../public/_nuxt/support.7nip7fuj.css"
   },
   "/_nuxt/v-KwyajG.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"5ab86-6v8RrFyFEI6WblCxU7ClXztFvF4\"",
-    "mtime": "2025-12-27T08:33:32.054Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 371590,
     "path": "../public/_nuxt/v-KwyajG.js"
   },
   "/_nuxt/xJo2gTVb.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2cd-9VMn52b/m7sM5zl0oJrKCvLwS+0\"",
-    "mtime": "2025-12-27T08:33:32.053Z",
+    "mtime": "2025-12-27T08:35:15.229Z",
     "size": 717,
     "path": "../public/_nuxt/xJo2gTVb.js"
   },
@@ -33464,59 +42799,59 @@ const assets = {
   },
   "/_nuxt/builds/latest.json": {
     "type": "application/json",
-    "etag": "\"47-xSwC6//N4J86Me6B5I6LvwmTlyw\"",
-    "mtime": "2025-12-27T08:33:32.031Z",
+    "etag": "\"47-TyK+2O/ioPbKmokZknRu0Umiarw\"",
+    "mtime": "2025-12-27T08:35:15.211Z",
     "size": 71,
     "path": "../public/_nuxt/builds/latest.json"
   },
   "/uploads/courses/1/thumbnail.png": {
     "type": "image/png",
     "etag": "\"40beb-3UURiio74LxC4tSrULv6UoMI9S0\"",
-    "mtime": "2025-12-27T08:33:32.058Z",
+    "mtime": "2025-12-27T08:35:15.233Z",
     "size": 265195,
     "path": "../public/uploads/courses/1/thumbnail.png"
+  },
+  "/uploads/courses/7/thumbnail.png": {
+    "type": "image/png",
+    "etag": "\"805f9-OnBfTtnNqO0IEOSfrFaUu7TL8EQ\"",
+    "mtime": "2025-12-27T08:35:15.234Z",
+    "size": 525817,
+    "path": "../public/uploads/courses/7/thumbnail.png"
   },
   "/uploads/courses/_unmapped/1766238411723-82u7nqfw8a7.jpeg": {
     "type": "image/jpeg",
     "etag": "\"d2fd-ryBYWON8BLJI1GpA7HAwZOQIwqI\"",
-    "mtime": "2025-12-27T08:33:32.060Z",
+    "mtime": "2025-12-27T08:35:15.235Z",
     "size": 54013,
     "path": "../public/uploads/courses/_unmapped/1766238411723-82u7nqfw8a7.jpeg"
   },
   "/uploads/courses/_unmapped/1766238429948-wutivqmymgc.jpg": {
     "type": "image/jpeg",
     "etag": "\"4fd0-+Bm/QXsOzR3v5yXiitNla4hr6Xs\"",
-    "mtime": "2025-12-27T08:33:32.057Z",
+    "mtime": "2025-12-27T08:35:15.234Z",
     "size": 20432,
     "path": "../public/uploads/courses/_unmapped/1766238429948-wutivqmymgc.jpg"
   },
   "/uploads/courses/_unmapped/1766330431095-jshytm39who.png": {
     "type": "image/png",
     "etag": "\"805f9-OnBfTtnNqO0IEOSfrFaUu7TL8EQ\"",
-    "mtime": "2025-12-27T08:33:32.059Z",
+    "mtime": "2025-12-27T08:35:15.234Z",
     "size": 525817,
     "path": "../public/uploads/courses/_unmapped/1766330431095-jshytm39who.png"
   },
   "/uploads/courses/_unmapped/1766330640831-0xnt8fswz2d.png": {
     "type": "image/png",
     "etag": "\"805f9-OnBfTtnNqO0IEOSfrFaUu7TL8EQ\"",
-    "mtime": "2025-12-27T08:33:32.058Z",
+    "mtime": "2025-12-27T08:35:15.234Z",
     "size": 525817,
     "path": "../public/uploads/courses/_unmapped/1766330640831-0xnt8fswz2d.png"
   },
-  "/uploads/courses/7/thumbnail.png": {
-    "type": "image/png",
-    "etag": "\"805f9-OnBfTtnNqO0IEOSfrFaUu7TL8EQ\"",
-    "mtime": "2025-12-27T08:33:32.058Z",
-    "size": 525817,
-    "path": "../public/uploads/courses/7/thumbnail.png"
-  },
-  "/_nuxt/builds/meta/b628a974-2ecc-4d1a-8583-ad6a8462df1d.json": {
+  "/_nuxt/builds/meta/6c94b584-f607-4669-bbe6-5913cf2853ca.json": {
     "type": "application/json",
-    "etag": "\"8b-6D7SCIhMPPx+QU9Q0PDS9QsZhZc\"",
-    "mtime": "2025-12-27T08:33:32.025Z",
+    "etag": "\"8b-W1F+ubjlwzo2haTDkjZwuCOxh+g\"",
+    "mtime": "2025-12-27T08:35:15.208Z",
     "size": 139,
-    "path": "../public/_nuxt/builds/meta/b628a974-2ecc-4d1a-8583-ad6a8462df1d.json"
+    "path": "../public/_nuxt/builds/meta/6c94b584-f607-4669-bbe6-5913cf2853ca.json"
   }
 };
 
@@ -34276,7 +43611,7 @@ function GracefulShutdown(server, opts) {
   function destroy(socket, force = false) {
     if (socket._isIdle && isShuttingDown || force) {
       socket.destroy();
-      if (socket.server instanceof http.Server) {
+      if (socket.server instanceof http$4.Server) {
         delete connections[socket._connectionId];
       } else {
         delete secureConnections[socket._connectionId];

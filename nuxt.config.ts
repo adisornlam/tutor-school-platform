@@ -112,6 +112,7 @@ export default defineNuxtConfig({
         'socket.io-client',
         'engine.io',
         'engine.io-client',
+        'ws', // WebSocket library used by engine.io
         'base64id', // dependency of socket.io/engine.io
         // Core HTTP packages that may not be available
         'accepts',
