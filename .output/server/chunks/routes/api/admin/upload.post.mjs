@@ -22,7 +22,6 @@ import 'node:fs';
 import 'node:path';
 import 'querystring';
 import 'timers';
-import 'vary';
 import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';

@@ -119,6 +119,7 @@ export default defineNuxtConfig({
         'negotiator', // dependency of accepts
         'mime-types', // dependency of accepts
         'mime-db', // dependency of mime-types
+        'vary', // dependency of accepts/cors
         'h3',
         'cookie', // dependency of h3
         'cors', // CORS handling (used by socket.io or h3)
