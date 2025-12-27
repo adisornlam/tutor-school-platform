@@ -28,7 +28,7 @@ export function getDatabase() {
     } else {
       // ใช้ TCP connection
       connectionConfig.host = config.dbHost || 'localhost'
-      connectionConfig.port = config.dbPort || 3306
+      connectionConfig.port = config.dbPort || 3307
       console.log('[Database] ✅ Using TCP connection:', `${connectionConfig.host}:${connectionConfig.port}`)
     }
     

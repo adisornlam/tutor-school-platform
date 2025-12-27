@@ -26,11 +26,23 @@ Node.js application ต้องรองรับทั้ง:
 
 ### ขั้นตอนที่ 1: ตรวจสอบ MySQL Host ใน cPanel
 
+**"Current Host" คืออะไร?**
+- **Current Host** = MySQL server hostname/IP ที่ใช้สำหรับเชื่อมต่อ database
+- มักจะเป็น `localhost` สำหรับ database ใน server เดียวกัน
+- หรืออาจเป็น IP address/domain สำหรับ remote database connection
+
+**วิธีหา Current Host:**
+
 1. เข้า **cPanel** → **MySQL Databases**
-2. ดูที่ **"Current Host"** หรือ **"Remote MySQL"**
+2. ดูที่ส่วน **"Current Host"** หรือ **"Remote MySQL"** (มักจะแสดงในหน้านี้)
 3. บันทึกค่า:
    - **Host**: มักจะเป็น `localhost` หรือ hostname เฉพาะ
    - **Socket Path**: มักจะเป็น `/tmp/mysql.sock` หรือ `/var/lib/mysql/mysql.sock`
+
+**หมายเหตุ**: 
+- ถ้าใช้ **local database** (database ใน server เดียวกัน) → Host มักเป็น `localhost`
+- ถ้าใช้ **remote database** (database ใน server อื่น) → Host จะเป็น IP หรือ domain
+- สำหรับ **shared hosting** มักใช้ `localhost` + **socket file** แทน TCP connection
 
 ### ขั้นตอนที่ 2: ตั้งค่า Environment Variables
 
@@ -221,9 +233,21 @@ mysql -u webthdsw_tutor -p'57*0yZiKMmDyThXx' -h localhost webthdsw_tutordb
 ## 🔍 วิธีหาค่า MySQL Host/Socket ใน cPanel
 
 ### วิธีที่ 1: ดูใน MySQL Databases
+
+**"Current Host" คืออะไร:**
+- **Current Host** = MySQL server ที่ใช้สำหรับเชื่อมต่อ database
+- สำหรับ **local database** (database ใน server เดียวกัน) มักเป็น `localhost`
+- สำหรับ **remote database** (database ใน server อื่น) จะเป็น IP หรือ domain
+
+**ขั้นตอน:**
 1. cPanel → **MySQL Databases**
-2. ดูที่ **"Current Host"** หรือ **"Remote MySQL"**
-3. บันทึกค่า host
+2. ดูที่ส่วน **"Current Host"** (มักแสดงในหน้านี้ หรือในส่วน **"Current Databases"**)
+3. ถ้าไม่พบ ให้ดูที่ **"Remote MySQL"** หรือ **"Database Host"**
+4. บันทึกค่า host (มักเป็น `localhost`)
+
+**หมายเหตุ**: 
+- ใน shared hosting, Host มักเป็น `localhost` แต่ต้องใช้ **socket file** แทน TCP connection
+- Socket file path มักเป็น `/tmp/mysql.sock` หรือ `/var/lib/mysql/mysql.sock`
 
 ### วิธีที่ 2: ใช้ PHP Script
 
