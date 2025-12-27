@@ -21,7 +21,6 @@ import 'fs';
 import 'path';
 import 'querystring';
 import 'timers';
-import 'cookie';
 import 'ws';
 import 'cors';
 import '@socket.io/component-emitter';

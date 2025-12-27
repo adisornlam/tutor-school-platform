@@ -119,6 +119,7 @@ export default defineNuxtConfig({
         'mime-types', // dependency of accepts
         'mime-db', // dependency of mime-types
         'h3',
+        'cookie', // dependency of h3
         'ofetch',
         // Utility packages
         'defu',
