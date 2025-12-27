@@ -121,6 +121,7 @@ export default defineNuxtConfig({
         'mime-db', // dependency of mime-types
         'h3',
         'cookie', // dependency of h3
+        'cors', // CORS handling (used by socket.io or h3)
         'ofetch',
         // Utility packages
         'defu',

@@ -41,7 +41,6 @@
     "aws-ssl-profiles": "1.1.2",
     "bcryptjs": "2.4.3",
     "buffer-equal-constant-time": "1.0.1",
-    "cors": "2.8.5",
     "date-fns": "3.6.0",
     "denque": "2.1.0",
     "devalue": "5.6.1",
