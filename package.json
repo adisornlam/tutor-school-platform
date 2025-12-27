@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nuxt dev",
-    "build": "nuxt build && node scripts/post-build.mjs",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 nuxt build && node scripts/post-build.mjs",
     "build:deploy": "bun run build && bash scripts/prepare-deploy.sh",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

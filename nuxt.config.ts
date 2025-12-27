@@ -102,15 +102,28 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true
     },
-    // Inline dynamic imports to bundle all dependencies (fixes ERR_MODULE_NOT_FOUND on server without node_modules)
-    // This ensures all dependencies (like socket.io, engine.io) are bundled into the output instead of requiring node_modules
+    // Inline only critical dependencies that are needed on server without node_modules
+    // This avoids memory issues while still bundling essential packages
     externals: {
       inline: [
         '#shared',
+        // Socket.IO and related packages
         'socket.io',
         'socket.io-client',
         'engine.io',
-        'engine.io-client'
+        'engine.io-client',
+        // Core HTTP packages that may not be available
+        'accepts',
+        'h3',
+        'ofetch',
+        // Utility packages
+        'defu',
+        'scule',
+        'ufo',
+        'pathe'
+        // Note: utf-8-validate and bufferutil are stubbed via rollupConfig plugin
+        // They are optional dependencies that ws will fallback to pure JS if not available
+        // Note: We don't inline large packages like mysql2, ioredis, etc. as they should be available on server
       ]
     },
     // Note: timezone is set via runtimeConfig or environment variables
@@ -120,6 +133,8 @@ export default defineNuxtConfig({
       '#server': resolve(__dirname, 'server')
     },
     // Configure Rollup to properly resolve shared imports
+    // Note: We don't use inlineDynamicImports here to avoid memory issues
+    // Only critical packages are inlined via externals.inline
     rollupConfig: {
       plugins: [
         {
@@ -132,6 +147,27 @@ export default defineNuxtConfig({
               if (existsSync(fixedPath)) {
                 return fixedPath
               }
+            }
+            return null
+          }
+        },
+        {
+          name: 'stub-optional-dependencies',
+          resolveId(source) {
+            // Stub optional dependencies that may not be installed
+            // These are optional performance enhancements for ws package
+            // ws will fallback to pure JavaScript implementation if not available
+            if (source === 'utf-8-validate' || source === 'bufferutil') {
+              // Return a virtual module ID
+              return '\0' + source
+            }
+            return null
+          },
+          load(id) {
+            // Return empty module for stubbed optional dependencies
+            // ws package will handle the fallback gracefully
+            if (id === '\0utf-8-validate' || id === '\0bufferutil') {
+              return 'export default {};'
             }
             return null
           }
