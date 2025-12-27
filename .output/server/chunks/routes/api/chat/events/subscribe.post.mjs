@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/chat/events/subscribe.post');import { d as defineEventHandler, r as readBody, c as createError, C as verifyRoomAccess } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, c as createError, C as verifyRoomAccess } from '../../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../../_/auth.middleware.mjs';
 import { a as subscribeToRoom, d as userConnections, b as sendSSE } from '../../../../_/sse.mjs';
 import 'node:http';
@@ -18,8 +18,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -63,5 +71,5 @@ const subscribe_post = defineEventHandler(async (event) => {
   };
 });
 
-export { subscribe_post as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/chat/events/subscribe.post');
+export { subscribe_post as default };
 //# sourceMappingURL=subscribe.post.mjs.map

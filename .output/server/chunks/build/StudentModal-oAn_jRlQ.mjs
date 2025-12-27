@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/StudentModal-oAn_jRlQ');import { defineComponent, reactive, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
+import { defineComponent, reactive, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderAttr, ssrIncludeBooleanAttr } from 'vue/server-renderer';
 import { u as useAuth } from './server.mjs';
 
@@ -76,5 +76,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const __nuxt_component_1 = Object.assign(_sfc_main, { __name: "StudentModal" });
 
-export { __nuxt_component_1 as _ };;globalThis.__timing__.logEnd('Load chunks/build/StudentModal-oAn_jRlQ');
+export { __nuxt_component_1 as _ };
 //# sourceMappingURL=StudentModal-oAn_jRlQ.mjs.map

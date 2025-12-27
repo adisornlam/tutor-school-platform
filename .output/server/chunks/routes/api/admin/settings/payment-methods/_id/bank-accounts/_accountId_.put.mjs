@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/admin/settings/payment-methods/_id/bank-accounts/_accountId_.put');import { d as defineEventHandler, g as getUserRoles, c as createError, b as getRouterParam, r as readBody, q as query, e as execute } from '../../../../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, g as getUserRoles, c as createError, b as getRouterParam, r as readBody, q as query, e as execute } from '../../../../../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../../../../../_/auth.middleware.mjs';
 import 'node:http';
 import 'node:https';
@@ -17,8 +17,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -129,5 +137,5 @@ const _accountId__put = defineEventHandler(async (event) => {
   }
 });
 
-export { _accountId__put as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/admin/settings/payment-methods/_id/bank-accounts/_accountId_.put');
+export { _accountId__put as default };
 //# sourceMappingURL=_accountId_.put.mjs.map

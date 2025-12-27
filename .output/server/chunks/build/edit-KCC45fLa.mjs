@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/edit-KCC45fLa');import { defineComponent, computed, ref, reactive, unref, useSSRContext } from 'vue';
+import { defineComponent, computed, ref, reactive, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderAttr, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderList, ssrRenderComponent } from 'vue/server-renderer';
 import { R as RichTextEditor } from './RichTextEditor-BKbhyB-N.mjs';
 import { a as useRoute, b as useRouter, u as useAuth } from './server.mjs';
@@ -25,8 +25,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -158,5 +166,5 @@ _sfc_main.setup = (props, ctx) => {
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 
-export { _sfc_main as default };;globalThis.__timing__.logEnd('Load chunks/build/edit-KCC45fLa');
+export { _sfc_main as default };
 //# sourceMappingURL=edit-KCC45fLa.mjs.map

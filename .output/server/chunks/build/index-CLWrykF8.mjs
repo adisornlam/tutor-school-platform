@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/index-CLWrykF8');import { defineComponent, ref, mergeProps, unref, useSSRContext } from 'vue';
+import { defineComponent, ref, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderList } from 'vue/server-renderer';
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale';
@@ -22,8 +22,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -95,5 +103,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-fe7937e4"]]);
 
-export { index as default };;globalThis.__timing__.logEnd('Load chunks/build/index-CLWrykF8');
+export { index as default };
 //# sourceMappingURL=index-CLWrykF8.mjs.map

@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/CourseCard-Glyxgknx');import { _ as __nuxt_component_0$1 } from './nuxt-link-CODr8WH9.mjs';
+import { _ as __nuxt_component_0$1 } from './nuxt-link-CODr8WH9.mjs';
 import { defineComponent, mergeProps, withCtx, createVNode, createBlock, createCommentVNode, openBlock, toDisplayString, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrRenderAttr, ssrInterpolate } from 'vue/server-renderer';
 
@@ -139,5 +139,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const __nuxt_component_0 = Object.assign(_sfc_main, { __name: "CourseCard" });
 
-export { __nuxt_component_0 as _ };;globalThis.__timing__.logEnd('Load chunks/build/CourseCard-Glyxgknx');
+export { __nuxt_component_0 as _ };
 //# sourceMappingURL=CourseCard-Glyxgknx.mjs.map

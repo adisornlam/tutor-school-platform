@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/EnrollmentModal-DJ0T9o-E');import { defineComponent, reactive, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
+import { defineComponent, reactive, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderAttr, ssrRenderList, ssrRenderClass, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderComponent, ssrRenderStyle } from 'vue/server-renderer';
 import { A as AddressSelect } from './AddressSelect-2oQii9w-.mjs';
 import { u as useAuth, c as useRuntimeConfig } from './server.mjs';
@@ -393,5 +393,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const EnrollmentModal = Object.assign(_sfc_main, { __name: "EnrollmentModal" });
 
-export { EnrollmentModal as E };;globalThis.__timing__.logEnd('Load chunks/build/EnrollmentModal-DJ0T9o-E');
+export { EnrollmentModal as E };
 //# sourceMappingURL=EnrollmentModal-DJ0T9o-E.mjs.map

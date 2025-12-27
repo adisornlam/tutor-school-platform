@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/admin/users/_id/status.patch');import { d as defineEventHandler, g as getUserRoles, c as createError, b as getRouterParam, r as readBody, s as UserStatus, m as findUserById, e as execute, f as getUserWithRoles } from '../../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, g as getUserRoles, c as createError, b as getRouterParam, r as readBody, s as UserStatus, m as findUserById, e as execute, f as getUserWithRoles } from '../../../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../../../_/auth.middleware.mjs';
 import 'node:http';
 import 'node:https';
@@ -17,8 +17,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -79,5 +87,5 @@ const status_patch = defineEventHandler(async (event) => {
   };
 });
 
-export { status_patch as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/admin/users/_id/status.patch');
+export { status_patch as default };
 //# sourceMappingURL=status.patch.mjs.map

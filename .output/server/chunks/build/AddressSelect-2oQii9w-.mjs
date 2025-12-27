@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/AddressSelect-2oQii9w-');import { defineComponent, ref, watch, computed, unref, useSSRContext } from 'vue';
+import { defineComponent, ref, watch, computed, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderSlot, ssrRenderAttr, ssrInterpolate, ssrIncludeBooleanAttr, ssrRenderList } from 'vue/server-renderer';
 import { u as useAuth, c as useRuntimeConfig } from './server.mjs';
 
@@ -103,5 +103,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const AddressSelect = Object.assign(_sfc_main, { __name: "AddressSelect" });
 
-export { AddressSelect as A };;globalThis.__timing__.logEnd('Load chunks/build/AddressSelect-2oQii9w-');
+export { AddressSelect as A };
 //# sourceMappingURL=AddressSelect-2oQii9w-.mjs.map

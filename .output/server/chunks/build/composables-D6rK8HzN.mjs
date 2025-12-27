@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/composables-D6rK8HzN');import { hasInjectionContext, inject } from 'vue';
+import { hasInjectionContext, inject } from 'vue';
 import { d as useNuxtApp } from './server.mjs';
 import { u as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
 
@@ -19,5 +19,5 @@ function useHead(input, options = {}) {
   return useHead$1(input, { head, ...options });
 }
 
-export { useHead as u };;globalThis.__timing__.logEnd('Load chunks/build/composables-D6rK8HzN');
+export { useHead as u };
 //# sourceMappingURL=composables-D6rK8HzN.mjs.map

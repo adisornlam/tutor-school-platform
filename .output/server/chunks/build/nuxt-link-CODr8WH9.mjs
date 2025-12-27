@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/nuxt-link-CODr8WH9');import { defineComponent, shallowRef, h, resolveComponent, computed } from 'vue';
+import { defineComponent, shallowRef, h, resolveComponent, computed } from 'vue';
 import { a4 as parseQuery, O as hasProtocol, Q as joinURL, a5 as withTrailingSlash, a6 as withoutTrailingSlash } from '../nitro/nitro.mjs';
 import { b as useRouter, d as useNuxtApp, r as resolveRouteObject, c as useRuntimeConfig, n as navigateTo, e as nuxtLinkDefaults } from './server.mjs';
 
@@ -282,5 +282,5 @@ function applyTrailingSlashBehavior(to, trailingSlash) {
   return normalizeFn(to, true);
 }
 
-export { __nuxt_component_0 as _ };;globalThis.__timing__.logEnd('Load chunks/build/nuxt-link-CODr8WH9');
+export { __nuxt_component_0 as _ };
 //# sourceMappingURL=nuxt-link-CODr8WH9.mjs.map

@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/PaymentMethodDetailModal-BI2Ymto6');import { defineComponent, ref, computed, mergeProps, unref, useSSRContext } from 'vue';
+import { defineComponent, ref, computed, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderList, ssrRenderClass, ssrRenderComponent } from 'vue/server-renderer';
 import _sfc_main$1 from './PaymentMethodBasicInfo-DluNVwrX.mjs';
 import _sfc_main$2 from './BankAccountsSection-DvbJydEj.mjs';
@@ -22,8 +22,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -112,5 +120,5 @@ _sfc_main.setup = (props, ctx) => {
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 
-export { _sfc_main as default };;globalThis.__timing__.logEnd('Load chunks/build/PaymentMethodDetailModal-BI2Ymto6');
+export { _sfc_main as default };
 //# sourceMappingURL=PaymentMethodDetailModal-BI2Ymto6.mjs.map

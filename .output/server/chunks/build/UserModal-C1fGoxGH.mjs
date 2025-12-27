@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/UserModal-C1fGoxGH');import { defineComponent, reactive, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
+import { defineComponent, reactive, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderAttr, ssrIncludeBooleanAttr, ssrRenderList, ssrRenderClass, ssrLooseContain } from 'vue/server-renderer';
 import { U as UserRole } from '../nitro/nitro.mjs';
 import { u as useAuth } from './server.mjs';
@@ -99,5 +99,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const __nuxt_component_0 = Object.assign(_sfc_main, { __name: "UserModal" });
 
-export { __nuxt_component_0 as _ };;globalThis.__timing__.logEnd('Load chunks/build/UserModal-C1fGoxGH');
+export { __nuxt_component_0 as _ };
 //# sourceMappingURL=UserModal-C1fGoxGH.mjs.map

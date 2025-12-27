@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/login-DqqBgQn6');import { defineComponent, useSSRContext } from 'vue';
+import { defineComponent, useSSRContext } from 'vue';
 import { ssrRenderAttrs } from 'vue/server-renderer';
 
 const _sfc_main = /* @__PURE__ */ defineComponent({
@@ -17,5 +17,5 @@ _sfc_main.setup = (props, ctx) => {
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 
-export { _sfc_main as default };;globalThis.__timing__.logEnd('Load chunks/build/login-DqqBgQn6');
+export { _sfc_main as default };
 //# sourceMappingURL=login-DqqBgQn6.mjs.map

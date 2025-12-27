@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/my-courses-B84-7wEG');import { _ as __nuxt_component_0 } from './nuxt-link-CODr8WH9.mjs';
+import { _ as __nuxt_component_0 } from './nuxt-link-CODr8WH9.mjs';
 import { defineComponent, ref, computed, unref, withCtx, createTextVNode, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderList, ssrRenderClass, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderAttr, ssrRenderComponent } from 'vue/server-renderer';
 import { format } from 'date-fns';
@@ -22,8 +22,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -200,5 +208,5 @@ _sfc_main.setup = (props, ctx) => {
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 
-export { _sfc_main as default };;globalThis.__timing__.logEnd('Load chunks/build/my-courses-B84-7wEG');
+export { _sfc_main as default };
 //# sourceMappingURL=my-courses-B84-7wEG.mjs.map

@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/_/sse');const userConnections = /* @__PURE__ */ new Map();
+const userConnections = /* @__PURE__ */ new Map();
 const roomSubscriptions = /* @__PURE__ */ new Map();
 async function sendSSE(event, eventName, data) {
   try {
@@ -49,5 +49,5 @@ function unsubscribeFromRoom(roomId, userId) {
   }
 }
 
-export { subscribeToRoom as a, sendSSE as b, unsubscribeFromRoom as c, userConnections as d, subscribeUser as s, unsubscribeUser as u };;globalThis.__timing__.logEnd('Load chunks/_/sse');
+export { subscribeToRoom as a, sendSSE as b, unsubscribeFromRoom as c, userConnections as d, subscribeUser as s, unsubscribeUser as u };
 //# sourceMappingURL=sse.mjs.map

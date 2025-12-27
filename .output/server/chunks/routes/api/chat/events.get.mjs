@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/chat/events.get');import { d as defineEventHandler, a as getQuery, c as createError, A as setHeader, B as getUserChatRooms, C as verifyRoomAccess } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as getQuery, c as createError, A as setHeader, B as getUserChatRooms, C as verifyRoomAccess } from '../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../_/auth.middleware.mjs';
 import { s as subscribeUser, a as subscribeToRoom, b as sendSSE, u as unsubscribeUser, c as unsubscribeFromRoom } from '../../../_/sse.mjs';
 import 'node:http';
@@ -18,8 +18,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -123,5 +131,5 @@ const events_get = defineEventHandler(async (event) => {
   });
 });
 
-export { events_get as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/chat/events.get');
+export { events_get as default };
 //# sourceMappingURL=events.get.mjs.map

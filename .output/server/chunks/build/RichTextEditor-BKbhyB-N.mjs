@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/RichTextEditor-BKbhyB-N');import { defineComponent, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
+import { defineComponent, ref, watch, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderClass, ssrRenderComponent, ssrRenderAttr, ssrIncludeBooleanAttr } from 'vue/server-renderer';
 import { useEditor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
@@ -125,5 +125,5 @@ _sfc_main.setup = (props, ctx) => {
 };
 const RichTextEditor = Object.assign(_sfc_main, { __name: "RichTextEditor" });
 
-export { RichTextEditor as R };;globalThis.__timing__.logEnd('Load chunks/build/RichTextEditor-BKbhyB-N');
+export { RichTextEditor as R };
 //# sourceMappingURL=RichTextEditor-BKbhyB-N.mjs.map

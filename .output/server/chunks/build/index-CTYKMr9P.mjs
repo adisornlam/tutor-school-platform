@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/index-CTYKMr9P');import { defineComponent, ref, computed, watch, mergeProps, unref, readonly, nextTick, useSSRContext } from 'vue';
+import { defineComponent, ref, computed, watch, mergeProps, unref, readonly, nextTick, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrRenderClass, ssrRenderAttr, ssrInterpolate, ssrRenderStyle, ssrIncludeBooleanAttr } from 'vue/server-renderer';
 import { parseISO, formatDistanceToNow, isSameDay, format } from 'date-fns';
 import { th } from 'date-fns/locale';
@@ -21,8 +21,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -1999,5 +2007,5 @@ _sfc_main.setup = (props, ctx) => {
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 
-export { _sfc_main as default };;globalThis.__timing__.logEnd('Load chunks/build/index-CTYKMr9P');
+export { _sfc_main as default };
 //# sourceMappingURL=index-CTYKMr9P.mjs.map

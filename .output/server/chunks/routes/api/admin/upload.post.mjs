@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/admin/upload.post');import { d as defineEventHandler, a as getQuery, c as createError, n as readMultipartFormData } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as getQuery, c as createError, n as readMultipartFormData } from '../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../_/auth.middleware.mjs';
 import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
@@ -20,8 +20,14 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'accepts';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -138,5 +144,5 @@ const upload_post = defineEventHandler(async (event) => {
   }
 });
 
-export { upload_post as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/admin/upload.post');
+export { upload_post as default };
 //# sourceMappingURL=upload.post.mjs.map

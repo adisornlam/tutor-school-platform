@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/testimonials.get');import { d as defineEventHandler, a as getQuery, q as query, c as createError } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as getQuery, q as query, c as createError } from '../../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -16,8 +16,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -55,5 +63,5 @@ const testimonials_get = defineEventHandler(async (event) => {
   }
 });
 
-export { testimonials_get as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/testimonials.get');
+export { testimonials_get as default };
 //# sourceMappingURL=testimonials.get.mjs.map

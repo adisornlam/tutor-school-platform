@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/useUnreadMessages-hQ6KJWBd');import { u as useAuth, c as useRuntimeConfig } from './server.mjs';
+import { u as useAuth, c as useRuntimeConfig } from './server.mjs';
 import { ref, watch, readonly } from 'vue';
 
 const useUnreadMessages = () => {
@@ -58,5 +58,5 @@ const useUnreadMessages = () => {
   };
 };
 
-export { useUnreadMessages as u };;globalThis.__timing__.logEnd('Load chunks/build/useUnreadMessages-hQ6KJWBd');
+export { useUnreadMessages as u };
 //# sourceMappingURL=useUnreadMessages-hQ6KJWBd.mjs.map

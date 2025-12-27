@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/routes/api/auth/oauth/_provider/callback.post');import { d as defineEventHandler, b as getRouterParam, r as readBody, c as createError, w as useRuntimeConfig, p as findUserByEmail, x as createUser, U as UserRole, e as execute, f as getUserWithRoles, y as generateAccessToken, z as generateRefreshToken, u as setCookie } from '../../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, b as getRouterParam, r as readBody, c as createError, w as useRuntimeConfig, p as findUserByEmail, x as createUser, U as UserRole, e as execute, f as getUserWithRoles, y as generateAccessToken, z as generateRefreshToken, u as setCookie } from '../../../../../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -16,8 +16,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -200,5 +208,5 @@ const callback_post = defineEventHandler(async (event) => {
   }
 });
 
-export { callback_post as default };;globalThis.__timing__.logEnd('Load chunks/routes/api/auth/oauth/_provider/callback.post');
+export { callback_post as default };
 //# sourceMappingURL=callback.post.mjs.map

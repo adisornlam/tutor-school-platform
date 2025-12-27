@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/index-BjLz_g6-');import { _ as __nuxt_component_0 } from './CourseCard-Glyxgknx.mjs';
+import { _ as __nuxt_component_0 } from './CourseCard-Glyxgknx.mjs';
 import { defineComponent, ref, reactive, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderAttr, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderList, ssrInterpolate, ssrRenderComponent } from 'vue/server-renderer';
 import { u as useHead } from './composables-D6rK8HzN.mjs';
@@ -22,8 +22,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -126,5 +134,5 @@ _sfc_main.setup = (props, ctx) => {
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 
-export { _sfc_main as default };;globalThis.__timing__.logEnd('Load chunks/build/index-BjLz_g6-');
+export { _sfc_main as default };
 //# sourceMappingURL=index-BjLz_g6-.mjs.map

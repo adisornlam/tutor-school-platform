@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/_/auth.middleware');import { k as getCookie, l as getHeader, c as createError, v as verifyAccessToken } from '../nitro/nitro.mjs';
+import { k as getCookie, l as getHeader, c as createError, v as verifyAccessToken } from '../nitro/nitro.mjs';
 
 async function requireAuth(event) {
   var _a;
@@ -21,5 +21,5 @@ async function requireAuth(event) {
   }
 }
 
-export { requireAuth as r };;globalThis.__timing__.logEnd('Load chunks/_/auth.middleware');
+export { requireAuth as r };
 //# sourceMappingURL=auth.middleware.mjs.map

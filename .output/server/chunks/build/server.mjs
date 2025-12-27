@@ -1,4 +1,4 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};globalThis.__timing__.logStart('Load chunks/build/server');import { hasInjectionContext, inject, readonly, toRef, isRef, computed, getCurrentInstance, ref, defineComponent, createElementBlock, shallowRef, provide, cloneVNode, h, defineAsyncComponent, unref, shallowReactive, Suspense, Fragment, useSSRContext, createApp, watch, createVNode, resolveDynamicComponent, withCtx, mergeProps, onErrorCaptured, onServerPrefetch, reactive, effectScope, isReadonly, isShallow, isReactive, toRaw, nextTick, getCurrentScope, markRaw } from 'vue';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, inject, readonly, toRef, isRef, computed, getCurrentInstance, ref, defineComponent, createElementBlock, shallowRef, provide, cloneVNode, h, defineAsyncComponent, unref, shallowReactive, Suspense, Fragment, useSSRContext, createApp, watch, createVNode, resolveDynamicComponent, withCtx, mergeProps, onErrorCaptured, onServerPrefetch, reactive, effectScope, isReadonly, isShallow, isReactive, toRaw, nextTick, getCurrentScope, markRaw } from 'vue';
 import { c as createError$1, O as hasProtocol, P as isScriptProtocol, Q as joinURL, R as withQuery, S as sanitizeStatusCode, T as getContext, M as destr, V as klona, W as parse, X as getRequestHeader, Y as isEqual, u as setCookie, k as getCookie, Z as deleteCookie, $ as $fetch$1, _ as createHooks, a0 as executeAsync, a1 as toRouteMatcher, a2 as createRouter$1, a3 as defu } from '../nitro/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
 import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
@@ -21,8 +21,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -2106,5 +2114,5 @@ let entry;
 }
 const entry_default = (ssrContext) => entry(ssrContext);
 
-export { _export_sfc as _, useRoute as a, useRouter as b, useRuntimeConfig as c, useNuxtApp as d, entry_default as default, nuxtLinkDefaults as e, useConfirm as f, defineNuxtRouteMiddleware as g, createError as h, useState as i, navigateTo as n, resolveRouteObject as r, useAuth as u };;globalThis.__timing__.logEnd('Load chunks/build/server');
+export { _export_sfc as _, useRoute as a, useRouter as b, useRuntimeConfig as c, useNuxtApp as d, entry_default as default, nuxtLinkDefaults as e, useConfirm as f, defineNuxtRouteMiddleware as g, createError as h, useState as i, navigateTo as n, resolveRouteObject as r, useAuth as u };
 //# sourceMappingURL=server.mjs.map

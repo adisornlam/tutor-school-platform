@@ -5,13 +5,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   
-  // Enable WebSockets for Socket.IO
-  nitro: {
-    experimental: {
-      websocket: true
-    }
-  },
-  
   // Alias configuration for server and shared files
   alias: {
     '#server': resolve(__dirname, 'server'),
@@ -62,7 +55,7 @@ export default defineNuxtConfig({
         differentDomains: false,
         multiDomainLocales: [],
         skipSettingLocaleOnNavigate: false,
-        rootRedirect: null,
+        // rootRedirect: undefined, // Commented out to avoid type error
         routesNameSeparator: '___',
         defaultLocaleRouteNameSuffix: 'default',
         defaultDirection: 'ltr',
@@ -106,31 +99,25 @@ export default defineNuxtConfig({
 
   // Nitro configuration
   nitro: {
-    port: 4000,
     experimental: {
       websocket: true
     },
-    // Timezone
-    timing: {
-      timezone: 'Asia/Bangkok'
+    // Inline dynamic imports to bundle all dependencies (fixes ERR_MODULE_NOT_FOUND on server without node_modules)
+    // This ensures all dependencies (like socket.io, engine.io) are bundled into the output instead of requiring node_modules
+    externals: {
+      inline: [
+        '#shared',
+        'socket.io',
+        'socket.io-client',
+        'engine.io',
+        'engine.io-client'
+      ]
     },
+    // Note: timezone is set via runtimeConfig or environment variables
     // Alias for Nitro build - resolve at build time
     alias: {
       '#shared': resolve(__dirname, 'shared'),
       '#server': resolve(__dirname, 'server')
-    },
-    // Inline shared directory to fix build resolution
-    externals: {
-      inline: ['#shared']
-    },
-    // Use Vite resolve for proper alias resolution
-    vite: {
-      resolve: {
-        alias: {
-          '#shared': resolve(__dirname, 'shared'),
-          '#server': resolve(__dirname, 'server')
-        }
-      }
     },
     // Configure Rollup to properly resolve shared imports
     rollupConfig: {
@@ -153,8 +140,9 @@ export default defineNuxtConfig({
     },
     // Copy shared directory to output before Nitro build
     hooks: {
-      'nitro:build:before': async (nitro) => {
+      'build:before': async (nitro: any) => {
         const { existsSync, mkdirSync } = await import('fs')
+        // @ts-ignore - fs-extra types may not be available
         const { copy } = await import('fs-extra')
         const sharedSrc = resolve(__dirname, 'shared')
         const sharedDest = resolve(__dirname, '.output', 'shared')

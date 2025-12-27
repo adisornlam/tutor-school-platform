@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/build/admin-CTEb7jtN');import { a0 as executeAsync } from '../nitro/nitro.mjs';
+import { a0 as executeAsync } from '../nitro/nitro.mjs';
 import { g as defineNuxtRouteMiddleware, u as useAuth, n as navigateTo, h as createError } from './server.mjs';
 import 'node:http';
 import 'node:https';
@@ -17,8 +17,16 @@ import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'engine.io';
-import 'socket.io';
+import 'fs';
+import 'accepts';
+import 'path';
+import 'querystring';
+import 'base64id';
+import 'timers';
+import 'cookie';
+import 'ws';
+import 'cors';
+import '@socket.io/component-emitter';
 import 'jsonwebtoken';
 import 'bcryptjs';
 import 'mysql2/promise';
@@ -61,5 +69,5 @@ const admin = defineNuxtRouteMiddleware(async (to, from) => {
   }
 });
 
-export { admin as default };;globalThis.__timing__.logEnd('Load chunks/build/admin-CTEb7jtN');
+export { admin as default };
 //# sourceMappingURL=admin-CTEb7jtN.mjs.map
