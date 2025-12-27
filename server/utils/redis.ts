@@ -4,14 +4,13 @@ let redisClient: Redis | null = null
 let redisSubscriber: Redis | null = null
 
 export function getRedisClient(): Redis {
-  const config = useRuntimeConfig()
-  
+  // ✅ ใช้ process.env โดยตรงเพื่อให้อ่านค่า environment variables ตอน runtime
   if (!redisClient) {
     redisClient = new Redis({
-      host: config.redisHost,
-      port: config.redisPort,
-      password: config.redisPassword || undefined,
-      db: config.redisDb,
+      host: process.env.REDIS_HOST || '127.0.0.1',
+      port: parseInt(process.env.REDIS_PORT || '46961'),
+      password: process.env.REDIS_PASSWORD || 'nd3Y4TDNrDLfCTs6iM2',
+      db: parseInt(process.env.REDIS_DB || '0'),
       retryStrategy: (times) => {
         const delay = Math.min(times * 50, 2000)
         return delay
@@ -32,14 +31,13 @@ export function getRedisClient(): Redis {
 }
 
 export function getRedisSubscriber(): Redis {
-  const config = useRuntimeConfig()
-  
+  // ✅ ใช้ process.env โดยตรงเพื่อให้อ่านค่า environment variables ตอน runtime
   if (!redisSubscriber) {
     redisSubscriber = new Redis({
-      host: config.redisHost,
-      port: config.redisPort,
-      password: config.redisPassword || undefined,
-      db: config.redisDb,
+      host: process.env.REDIS_HOST || '127.0.0.1',
+      port: parseInt(process.env.REDIS_PORT || '46961'),
+      password: process.env.REDIS_PASSWORD || 'nd3Y4TDNrDLfCTs6iM2',
+      db: parseInt(process.env.REDIS_DB || '0'),
       retryStrategy: (times) => {
         const delay = Math.min(times * 50, 2000)
         return delay

@@ -3,18 +3,17 @@ import mysql from 'mysql2/promise'
 let pool: mysql.Pool | null = null
 
 export function getDatabase() {
-  const config = useRuntimeConfig()
-  
+  // ✅ ใช้ process.env โดยตรงเพื่อให้อ่านค่า environment variables ตอน runtime
+  // ไม่ใช้ useRuntimeConfig() เพราะอาจจะ bundle ค่า default ตอน build
   if (!pool) {
     const connectionConfig: any = {
-      database: config.dbName,
-      user: config.dbUser,
-      password: config.dbPassword,
+      database: process.env.DB_NAME || 'webthdsw_tutordb',
+      user: process.env.DB_USER || 'webthdsw_tutor',
+      password: process.env.DB_PASSWORD || '57*0yZiKMmDyThXx',
       waitForConnections: true,
       connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT || '50'), // ✅ Increased from 10 to 50 for better concurrency
       queueLimit: 0,
-      acquireTimeout: 60000, // ✅ 60 seconds timeout
-      timeout: 60000, // ✅ 60 seconds query timeout
+      // Note: acquireTimeout and timeout are not valid mysql2 options, removed to avoid warnings
       timezone: '+07:00', // Asia/Bangkok
       dateStrings: false,
       enableKeepAlive: true, // ✅ Keep connections alive
@@ -25,11 +24,15 @@ export function getDatabase() {
     if (process.env.DB_SOCKET) {
       connectionConfig.socketPath = process.env.DB_SOCKET
       console.log('[Database] ✅ Using socket connection:', process.env.DB_SOCKET)
+      console.log('[Database] ✅ Database:', connectionConfig.database)
+      console.log('[Database] ✅ User:', connectionConfig.user)
     } else {
       // ใช้ TCP connection
-      connectionConfig.host = config.dbHost || 'localhost'
-      connectionConfig.port = config.dbPort || 3307
+      connectionConfig.host = process.env.DB_HOST || 'localhost'
+      connectionConfig.port = parseInt(process.env.DB_PORT || '3306')
       console.log('[Database] ✅ Using TCP connection:', `${connectionConfig.host}:${connectionConfig.port}`)
+      console.log('[Database] ✅ Database:', connectionConfig.database)
+      console.log('[Database] ✅ User:', connectionConfig.user)
     }
     
     pool = mysql.createPool(connectionConfig)

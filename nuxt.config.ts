@@ -28,17 +28,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Private (server-only)
     dbHost: process.env.DB_HOST || 'localhost',
-    dbPort: parseInt(process.env.DB_PORT || '3307'),
-    dbName: process.env.DB_NAME || 'tutordb',
-    dbUser: process.env.DB_USER || 'root',
-    dbPassword: process.env.DB_PASSWORD || '',
+    dbPort: parseInt(process.env.DB_PORT || '3306'),
+    dbName: process.env.DB_NAME || 'webthdsw_tutordb',
+    dbUser: process.env.DB_USER || 'webthdsw_tutor',
+    dbPassword: process.env.DB_PASSWORD || '57*0yZiKMmDyThXx',
     jwtSecret: process.env.JWT_SECRET || 'your-secret-key-change-in-production',
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key-change-in-production',
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
     jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
-    redisHost: process.env.REDIS_HOST || 'localhost',
-    redisPort: parseInt(process.env.REDIS_PORT || '6379'),
-    redisPassword: process.env.REDIS_PASSWORD || '',
+    redisHost: process.env.REDIS_HOST || '127.0.0.1',
+    redisPort: parseInt(process.env.REDIS_PORT || '46961'),
+    redisPassword: process.env.REDIS_PASSWORD || 'nd3Y4TDNrDLfCTs6iM2',
     redisDb: parseInt(process.env.REDIS_DB || '0'),
     
     // Public (exposed to client)
