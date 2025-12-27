@@ -176,6 +176,7 @@ export default defineNuxtConfig({
         'vue-bundle-renderer/runtime', // Vue bundle renderer runtime
         'vue-router', // Vue Router
         // Unhead packages (used by Nuxt)
+        'unhead', // Unhead core
         'unhead/server',
         'unhead/utils',
         // TipTap packages (used in RichTextEditor)
