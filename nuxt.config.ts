@@ -102,8 +102,8 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true
     },
-    // Inline only critical dependencies that are needed on server without node_modules
-    // This avoids memory issues while still bundling essential packages
+    // Inline all dependencies that are needed on server without node_modules
+    // Since server has no node_modules, we need to bundle everything
     externals: {
       inline: [
         '#shared',
@@ -134,6 +134,24 @@ export default defineNuxtConfig({
         'safe-buffer', // dependency of jws/jsonwebtoken
         'ms', // dependency of jsonwebtoken
         'bcryptjs', // password hashing (used in server/services/auth.service.ts)
+        // Database packages
+        'mysql2', // MySQL client (used in server/utils/db.ts)
+        'mysql2/promise', // MySQL promise wrapper
+        // Dependencies of mysql2
+        'sqlstring', // SQL string formatting
+        'named-placeholders', // Named placeholders for SQL
+        'iconv-lite', // Character encoding conversion
+        'long', // Long integer support
+        'denque', // Double-ended queue
+        'bluebird', // Promise library
+        'generate-function', // Function generation
+        'seq-queue', // Sequential queue
+        'lru.min', // LRU cache
+        'aws-ssl-profiles', // AWS SSL profiles
+        // Additional dependencies
+        'is-property', // Property checking
+        'safer-buffer', // dependency of iconv-lite
+        'string_decoder', // dependency of iconv-lite
         // Additional dependencies found in build
         'semver', // version comparison (used by various packages)
         'helmet', // security headers (used by various packages)
@@ -161,10 +179,12 @@ export default defineNuxtConfig({
       '#shared': resolve(__dirname, 'shared'),
       '#server': resolve(__dirname, 'server')
     },
-    // Configure Rollup to properly resolve shared imports
-    // Note: We don't use inlineDynamicImports here to avoid memory issues
-    // Only critical packages are inlined via externals.inline
+    // Configure Rollup to properly resolve shared imports and inline dynamic imports
+    // Since server has no node_modules, we need to inline all dynamic imports
     rollupConfig: {
+      output: {
+        inlineDynamicImports: true
+      },
       plugins: [
         {
           name: 'resolve-shared-relative',
@@ -197,6 +217,24 @@ export default defineNuxtConfig({
             // ws package will handle the fallback gracefully
             if (id === '\0utf-8-validate' || id === '\0bufferutil') {
               return 'export default {};'
+            }
+            return null
+          }
+        },
+        {
+          name: 'resolve-subpath-imports',
+          resolveId(source, importer) {
+            // Handle subpath imports like mysql2/promise
+            if (source === 'mysql2/promise') {
+              // Resolve to the actual file path
+              const { existsSync } = require('fs')
+              const { join } = require('path')
+              const promisePath = join(process.cwd(), 'node_modules', 'mysql2', 'promise.js')
+              if (existsSync(promisePath)) {
+                return promisePath
+              }
+              // If not found, let Rollup handle it (it should be inlined via externals.inline)
+              return null
             }
             return null
           }
