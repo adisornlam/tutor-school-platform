@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, c as createError, x as createUser, f as getUserWithRoles, y as generateAccessToken, z as generateRefreshToken, u as setCookie } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, c as createError, y as createUser, f as getUserWithRoles, z as generateAccessToken, A as generateRefreshToken, w as setCookie } from '../../../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -21,7 +21,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 
@@ -33,7 +32,7 @@ const register_post = defineEventHandler(async (event) => {
       message: "Username, password, first name, and last name are required"
     });
   }
-  const { findUserByIdentifier } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ab; });
+  const { findUserByIdentifier } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ac; });
   const existingUser = await findUserByIdentifier(body.username);
   if (existingUser) {
     throw createError({
@@ -42,7 +41,7 @@ const register_post = defineEventHandler(async (event) => {
     });
   }
   if (body.email) {
-    const { findUserByEmail } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ab; });
+    const { findUserByEmail } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ac; });
     const existingEmailUser = await findUserByEmail(body.email);
     if (existingEmailUser) {
       throw createError({
@@ -53,7 +52,7 @@ const register_post = defineEventHandler(async (event) => {
   }
   const user = await createUser(body);
   if (body.role) {
-    const { queryOne, execute: execute2 } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.a9; });
+    const { queryOne, execute: execute2 } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.aa; });
     const roleRecord = await queryOne(
       "SELECT id FROM roles WHERE name = ?",
       [body.role]
@@ -78,7 +77,7 @@ const register_post = defineEventHandler(async (event) => {
   }
   const accessToken = generateAccessToken(userWithRoles);
   const refreshToken = generateRefreshToken(user.id);
-  const { execute } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.a9; });
+  const { execute } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.aa; });
   const expiresAt = /* @__PURE__ */ new Date();
   expiresAt.setDate(expiresAt.getDate() + 7);
   await execute(

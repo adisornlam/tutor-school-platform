@@ -1,6 +1,5 @@
-import { d as defineEventHandler, g as getUserRoles, c as createError, r as readBody, o as findUserByIdentifier, p as findUserByEmail, q as query, e as execute } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, g as getUserRoles, c as createError, r as readBody, o as findUserByIdentifier, p as findUserByEmail, q as query, s as bcrypt, e as execute } from '../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../_/auth.middleware.mjs';
-import bcrypt from 'bcryptjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -95,7 +94,7 @@ const users_post = defineEventHandler(async (event) => {
       [userId, role.id]
     );
   }
-  const { getUserWithRoles } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ab; });
+  const { getUserWithRoles } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ac; });
   const user = await getUserWithRoles(userId);
   if (!user) {
     throw createError({

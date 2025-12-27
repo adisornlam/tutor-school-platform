@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, c as createError, C as verifyRoomAccess } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, c as createError, D as verifyRoomAccess } from '../../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../../_/auth.middleware.mjs';
 import { a as subscribeToRoom, d as userConnections, b as sendSSE } from '../../../../_/sse.mjs';
 import 'node:http';
@@ -23,7 +23,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 

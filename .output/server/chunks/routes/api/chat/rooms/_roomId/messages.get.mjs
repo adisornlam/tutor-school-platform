@@ -1,4 +1,4 @@
-import { d as defineEventHandler, b as getRouterParam, a as getQuery, c as createError, C as verifyRoomAccess, E as getChatMessages } from '../../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, b as getRouterParam, a as getQuery, c as createError, D as verifyRoomAccess, F as getChatMessages } from '../../../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../../../_/auth.middleware.mjs';
 import 'node:http';
 import 'node:https';
@@ -22,7 +22,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 

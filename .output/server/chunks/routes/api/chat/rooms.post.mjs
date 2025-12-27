@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, f as getUserWithRoles, U as UserRole, c as createError, D as createChatRoom } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, f as getUserWithRoles, U as UserRole, c as createError, E as createChatRoom } from '../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../_/auth.middleware.mjs';
 import 'node:http';
 import 'node:https';
@@ -22,7 +22,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 

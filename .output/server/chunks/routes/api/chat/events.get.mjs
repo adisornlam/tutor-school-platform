@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as getQuery, c as createError, A as setHeader, B as getUserChatRooms, C as verifyRoomAccess } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as getQuery, c as createError, B as setHeader, C as getUserChatRooms, D as verifyRoomAccess } from '../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../_/auth.middleware.mjs';
 import { s as subscribeUser, a as subscribeToRoom, b as sendSSE, u as unsubscribeUser, c as unsubscribeFromRoom } from '../../../_/sse.mjs';
 import 'node:http';
@@ -23,7 +23,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 
@@ -32,8 +31,8 @@ const events_get = defineEventHandler(async (event) => {
   let userId;
   if (query.token) {
     try {
-      const { verifyAccessToken } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.a8; });
-      const { getUserWithRoles } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ab; });
+      const { verifyAccessToken } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.a9; });
+      const { getUserWithRoles } = await import('../../../nitro/nitro.mjs').then(function (n) { return n.ac; });
       const payload = verifyAccessToken(query.token);
       const user = await getUserWithRoles(payload.userId);
       if (!user) {

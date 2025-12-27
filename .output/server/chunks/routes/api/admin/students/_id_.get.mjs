@@ -22,7 +22,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 
@@ -48,7 +47,7 @@ const _id__get = defineEventHandler(async (event) => {
   const isBranchAdmin = roles.includes("branch_admin");
   const isTutor = roles.includes("tutor");
   if (isBranchAdmin && !isSystemAdmin && !isAdmin) {
-    const { query: query2 } = await import('../../../../nitro/nitro.mjs').then(function (n) { return n.a9; });
+    const { query: query2 } = await import('../../../../nitro/nitro.mjs').then(function (n) { return n.aa; });
     const branchAdmins = await query2(
       "SELECT branch_id FROM branch_admins WHERE user_id = ?",
       [auth.userId]
@@ -69,7 +68,7 @@ const _id__get = defineEventHandler(async (event) => {
     }
   }
   if (isTutor && !isSystemAdmin && !isBranchAdmin) {
-    const { query: query2 } = await import('../../../../nitro/nitro.mjs').then(function (n) { return n.a9; });
+    const { query: query2 } = await import('../../../../nitro/nitro.mjs').then(function (n) { return n.aa; });
     const tutors = await query2(
       "SELECT id FROM tutors WHERE user_id = ?",
       [auth.userId]

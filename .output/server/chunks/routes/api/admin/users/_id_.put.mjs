@@ -1,6 +1,5 @@
-import { d as defineEventHandler, g as getUserRoles, c as createError, b as getRouterParam, r as readBody, o as findUserByIdentifier, p as findUserByEmail, e as execute, q as query, f as getUserWithRoles } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, g as getUserRoles, c as createError, b as getRouterParam, r as readBody, o as findUserByIdentifier, p as findUserByEmail, s as bcrypt, e as execute, q as query, f as getUserWithRoles } from '../../../../nitro/nitro.mjs';
 import { r as requireAuth } from '../../../../_/auth.middleware.mjs';
-import bcrypt from 'bcryptjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -44,7 +43,7 @@ const _id__put = defineEventHandler(async (event) => {
     });
   }
   const body = await readBody(event);
-  const { findUserById } = await import('../../../../nitro/nitro.mjs').then(function (n) { return n.ab; });
+  const { findUserById } = await import('../../../../nitro/nitro.mjs').then(function (n) { return n.ac; });
   const existingUser = await findUserById(userId);
   if (!existingUser) {
     throw createError({

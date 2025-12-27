@@ -133,6 +133,7 @@ export default defineNuxtConfig({
         'buffer-equal-constant-time', // dependency of jwa
         'safe-buffer', // dependency of jws/jsonwebtoken
         'ms', // dependency of jsonwebtoken
+        'bcryptjs', // password hashing (used in server/services/auth.service.ts)
         // Additional dependencies found in build
         'semver', // version comparison (used by various packages)
         'helmet', // security headers (used by various packages)

@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, c as createError, t as login, u as setCookie } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, c as createError, u as login, w as setCookie } from '../../../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -21,7 +21,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 

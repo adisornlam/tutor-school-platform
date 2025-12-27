@@ -1,4 +1,4 @@
-import { d as defineEventHandler, b as getRouterParam, r as readBody, c as createError, w as useRuntimeConfig, p as findUserByEmail, x as createUser, U as UserRole, e as execute, f as getUserWithRoles, y as generateAccessToken, z as generateRefreshToken, u as setCookie } from '../../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, b as getRouterParam, r as readBody, c as createError, x as useRuntimeConfig, p as findUserByEmail, y as createUser, U as UserRole, e as execute, f as getUserWithRoles, z as generateAccessToken, A as generateRefreshToken, w as setCookie } from '../../../../../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:crypto';
@@ -21,7 +21,6 @@ import 'path';
 import 'querystring';
 import 'timers';
 import 'util';
-import 'bcryptjs';
 import 'mysql2/promise';
 import 'node:url';
 
