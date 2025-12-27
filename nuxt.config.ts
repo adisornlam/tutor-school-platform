@@ -164,6 +164,20 @@ export default defineNuxtConfig({
         'lodash.once',
         // Vue packages
         '@vue/shared', // Vue shared utilities
+        '@vue/reactivity', // Vue reactivity system
+        '@vue/compiler-dom', // Vue compiler for DOM
+        '@vue/compiler-ssr', // Vue compiler for SSR
+        '@vue/runtime-core', // Vue runtime core
+        '@vue/runtime-dom', // Vue runtime for DOM
+        '@vue/server-renderer', // Vue server renderer
+        'vue', // Vue core
+        'vue/server-renderer', // Vue server renderer (alias)
+        'vue-bundle-renderer', // Vue bundle renderer (used by Nuxt)
+        'vue-bundle-renderer/runtime', // Vue bundle renderer runtime
+        'vue-router', // Vue Router
+        // Unhead packages (used by Nuxt)
+        'unhead/server',
+        'unhead/utils',
         // TipTap packages (used in RichTextEditor)
         '@tiptap/vue-3',
         '@tiptap/core',
@@ -201,6 +215,13 @@ export default defineNuxtConfig({
         // Date utilities
         'date-fns',
         'date-fns/locale',
+        'date-fns/locale/eo', // Esperanto locale
+        // Link utilities
+        'linkifyjs', // Link detection and parsing
+        // Build utilities
+        'entities/decode', // HTML entity decoding
+        'estree-walker', // ESTree AST walker
+        'source-map-js', // Source map support
         // Serialization
         'devalue',
         // Utility packages
