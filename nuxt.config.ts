@@ -118,6 +118,7 @@ export default defineNuxtConfig({
         'engine.io-client',
         'ws', // WebSocket library used by engine.io
         'base64id', // dependency of socket.io/engine.io
+        'debug', // debug utility used by socket.io
         // Core HTTP packages that may not be available
         'accepts',
         'negotiator', // dependency of accepts
@@ -371,7 +372,7 @@ export default defineNuxtConfig({
         } catch (error) {
           console.warn('⚠️ Could not copy shared directory:', error)
         }
-      }
+      },
     }
   },
 
