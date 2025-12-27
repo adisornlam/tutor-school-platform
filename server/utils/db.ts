@@ -6,9 +6,7 @@ export function getDatabase() {
   const config = useRuntimeConfig()
   
   if (!pool) {
-    pool = mysql.createPool({
-      host: config.dbHost,
-      port: config.dbPort,
+    const connectionConfig: any = {
       database: config.dbName,
       user: config.dbUser,
       password: config.dbPassword,
@@ -21,7 +19,20 @@ export function getDatabase() {
       dateStrings: false,
       enableKeepAlive: true, // ✅ Keep connections alive
       keepAliveInitialDelay: 0
-    })
+    }
+    
+    // ใช้ Socket file ถ้ามี (สำหรับ cPanel/shared hosting)
+    if (process.env.DB_SOCKET) {
+      connectionConfig.socketPath = process.env.DB_SOCKET
+      console.log('[Database] ✅ Using socket connection:', process.env.DB_SOCKET)
+    } else {
+      // ใช้ TCP connection
+      connectionConfig.host = config.dbHost || 'localhost'
+      connectionConfig.port = config.dbPort || 3306
+      console.log('[Database] ✅ Using TCP connection:', `${connectionConfig.host}:${connectionConfig.port}`)
+    }
+    
+    pool = mysql.createPool(connectionConfig)
   }
   
   return pool
