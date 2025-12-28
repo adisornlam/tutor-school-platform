@@ -50,23 +50,37 @@ export async function query<T = any>(
     const connection = await db.getConnection()
     
     try {
-      // Use Function.prototype.call() to ensure proper 'this' binding
-      // This fixes bundling issues where method binding might be lost
-      const queryMethod = connection.query
+      // Try multiple approaches to handle bundling issues
+      let queryResult: any
       
-      if (typeof queryMethod !== 'function') {
-        throw new Error('connection.query is not a function')
+      // Approach 1: Try using bind() first
+      if (typeof connection.query === 'function') {
+        const boundQuery = connection.query.bind(connection)
+        queryResult = await boundQuery(sql, params || [])
       }
-      
-      // Use call() to bind 'this' context explicitly
-      const queryResult = await queryMethod.call(connection, sql, params || [])
+      // Approach 2: Try using call()
+      else if (connection.query && typeof connection.query.call === 'function') {
+        queryResult = await connection.query.call(connection, sql, params || [])
+      }
+      // Approach 3: Try using Reflect.apply()
+      else if (typeof connection.query === 'function') {
+        queryResult = await Reflect.apply(connection.query, connection, [sql, params || []])
+      }
+      // Approach 4: Try direct call (last resort)
+      else {
+        queryResult = await (connection as any).query(sql, params || [])
+      }
       
       // Handle result - query() returns [rows, fields]
       let rows: any[]
-      if (Array.isArray(queryResult) && queryResult.length >= 2) {
-        rows = queryResult[0] as any[]
-      } else if (Array.isArray(queryResult) && queryResult.length === 1) {
-        rows = queryResult[0] as any[]
+      if (Array.isArray(queryResult)) {
+        if (queryResult.length >= 2) {
+          rows = queryResult[0] as any[]
+        } else if (queryResult.length === 1) {
+          rows = queryResult[0] as any[]
+        } else {
+          rows = []
+        }
       } else {
         rows = queryResult as any[]
       }
@@ -82,7 +96,9 @@ export async function query<T = any>(
       message: error.message,
       code: error.code,
       sqlState: error.sqlState,
-      sqlMessage: error.sqlMessage
+      sqlMessage: error.sqlMessage,
+      errorType: typeof error,
+      errorKeys: Object.keys(error || {})
     })
     throw error
   }
@@ -104,22 +120,37 @@ export async function execute(
   const connection = await db.getConnection()
   
   try {
-    // Use Function.prototype.call() to ensure proper 'this' binding
-    const queryMethod = connection.query
+    // Try multiple approaches to handle bundling issues
+    let queryResult: any
     
-    if (typeof queryMethod !== 'function') {
-      throw new Error('connection.query is not a function')
+    // Approach 1: Try using bind() first
+    if (typeof connection.query === 'function') {
+      const boundQuery = connection.query.bind(connection)
+      queryResult = await boundQuery(sql, params || [])
     }
-    
-    // Use call() to bind 'this' context explicitly
-    const queryResult = await queryMethod.call(connection, sql, params || [])
+    // Approach 2: Try using call()
+    else if (connection.query && typeof connection.query.call === 'function') {
+      queryResult = await connection.query.call(connection, sql, params || [])
+    }
+    // Approach 3: Try using Reflect.apply()
+    else if (typeof connection.query === 'function') {
+      queryResult = await Reflect.apply(connection.query, connection, [sql, params || []])
+    }
+    // Approach 4: Try direct call (last resort)
+    else {
+      queryResult = await (connection as any).query(sql, params || [])
+    }
     
     // Handle result - query() returns [result, fields]
     let result: any
-    if (Array.isArray(queryResult) && queryResult.length >= 2) {
-      result = queryResult[0]
-    } else if (Array.isArray(queryResult) && queryResult.length === 1) {
-      result = queryResult[0]
+    if (Array.isArray(queryResult)) {
+      if (queryResult.length >= 2) {
+        result = queryResult[0]
+      } else if (queryResult.length === 1) {
+        result = queryResult[0]
+      } else {
+        result = null
+      }
     } else {
       result = queryResult
     }

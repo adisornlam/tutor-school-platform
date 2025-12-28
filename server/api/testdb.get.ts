@@ -353,43 +353,48 @@ export default defineEventHandler(async (event) => {
             }
           }
           
-          // Try using query() instead of execute() - query() is more reliable
+          // Try using query() with multiple approaches to handle bundling issues
           try {
-            // Use query() which returns [rows, fields]
-            // But in bundle, it might return differently, so we need to handle it carefully
             let queryResult: any
             
-            // Try to call query() and catch any errors
-            try {
-              queryResult = await connection.query('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
-            } catch (queryCallError: any) {
-              // If query() itself fails, try using execute() as fallback
-              queryResult = await connection.execute('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            // Approach 1: Try using bind()
+            if (typeof connection.query === 'function') {
+              const boundQuery = connection.query.bind(connection)
+              queryResult = await boundQuery('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            }
+            // Approach 2: Try using call()
+            else if (connection.query && typeof connection.query.call === 'function') {
+              queryResult = await connection.query.call(connection, 'SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            }
+            // Approach 3: Try using Reflect.apply()
+            else if (typeof connection.query === 'function') {
+              queryResult = await Reflect.apply(connection.query, connection, ['SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`'])
+            }
+            // Approach 4: Try direct call
+            else {
+              queryResult = await (connection as any).query('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
             }
             
-            // Handle both array destructuring and direct result
+            // Handle result
             let rows: any[]
             if (Array.isArray(queryResult)) {
               if (queryResult.length >= 2) {
-                // [rows, fields] format
                 rows = queryResult[0] as any[]
               } else if (queryResult.length === 1) {
-                // Single array element
                 rows = queryResult[0] as any[]
               } else {
-                // Empty array
                 rows = []
               }
             } else {
-              // Direct result (shouldn't happen but handle it)
               rows = queryResult as any[]
             }
             
             const result = Array.isArray(rows) && rows.length > 0 ? rows[0] : null
             
-            await connection.end()
-            
+            // Don't end connection here - end it in finally block
             if (result) {
+              // End connection after getting result
+              await connection.end().catch(() => {})
               return {
                 success: true,
                 message: `Direct connection successful via ${connectionMethod}`,
