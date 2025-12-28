@@ -45,9 +45,28 @@ export async function query<T = any>(
   sql: string,
   params?: any[]
 ): Promise<T[]> {
+  let connection: mysql.PoolConnection | null = null
   try {
     const db = getDatabase()
-    const connection = await db.getConnection()
+    connection = await db.getConnection()
+    
+    // Check if connection is still open
+    if (!connection || (connection as any).state === 'closed' || (connection as any)._socket?.destroyed) {
+      throw new Error('Connection is closed or invalid')
+    }
+    
+    // Ping connection first to ensure it's alive
+    try {
+      await connection.ping()
+    } catch (pingError: any) {
+      // If ping fails, release and get a new connection
+      if (connection) {
+        connection.release()
+        connection = null
+      }
+      connection = await db.getConnection()
+      await connection.ping()
+    }
     
     try {
       // Try multiple approaches to handle bundling issues
@@ -110,9 +129,16 @@ export async function query<T = any>(
       
       return rows as T[]
     } finally {
-      connection.release()
+      // Only release if connection is still valid
+      if (connection && (connection as any).state !== 'closed') {
+        connection.release()
+      }
     }
   } catch (error: any) {
+    // Release connection in case of error
+    if (connection && (connection as any).state !== 'closed') {
+      connection.release()
+    }
     console.error('[Database] Query error:', {
       sql,
       params,
@@ -139,10 +165,29 @@ export async function execute(
   sql: string,
   params?: any[]
 ): Promise<mysql.ResultSetHeader> {
-  const db = getDatabase()
-  const connection = await db.getConnection()
-  
+  let connection: mysql.PoolConnection | null = null
   try {
+    const db = getDatabase()
+    connection = await db.getConnection()
+    
+    // Check if connection is still open
+    if (!connection || (connection as any).state === 'closed' || (connection as any)._socket?.destroyed) {
+      throw new Error('Connection is closed or invalid')
+    }
+    
+    // Ping connection first to ensure it's alive
+    try {
+      await connection.ping()
+    } catch (pingError: any) {
+      // If ping fails, release and get a new connection
+      if (connection) {
+        connection.release()
+        connection = null
+      }
+      connection = await db.getConnection()
+      await connection.ping()
+    }
+    
     // Try multiple approaches to handle bundling issues
     let queryResult: any
     let lastError: any = null
@@ -202,8 +247,17 @@ export async function execute(
     }
     
     return result as mysql.ResultSetHeader
+  } catch (error: any) {
+    // Release connection in case of error
+    if (connection && (connection as any).state !== 'closed') {
+      connection.release()
+    }
+    throw error
   } finally {
-    connection.release()
+    // Only release if connection is still valid
+    if (connection && (connection as any).state !== 'closed') {
+      connection.release()
+    }
   }
 }
 
