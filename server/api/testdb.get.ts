@@ -1,5 +1,6 @@
 import { query } from '../utils/db'
 import { getRedisClient } from '../utils/redis'
+import mysql from 'mysql2/promise'
 
 interface TestResult {
   success: boolean
@@ -236,10 +237,8 @@ export default defineEventHandler(async (event) => {
       name: 'Direct Connection Test (Hardcoded)',
       description: 'ทดสอบการเชื่อมต่อ database โดยกำหนดค่าตรงๆ (ไม่ใช้ environment variables)',
       test: async () => {
+        let connection: mysql.Connection | null = null
         try {
-          // Import mysql2 directly for this test
-          const mysql = await import('mysql2/promise')
-          
           // Hardcoded connection config (based on cPanel info)
           const connectionConfig = {
             host: 'localhost',
@@ -252,7 +251,6 @@ export default defineEventHandler(async (event) => {
           }
           
           // Try socket connection first (cPanel often uses socket)
-          let connection: mysql.Connection | null = null
           let connectionMethod = 'TCP'
           let socketError: any = null
           
@@ -298,9 +296,24 @@ export default defineEventHandler(async (event) => {
             }
           }
           
+          // Test connection with ping first
           try {
-            // Test query
-            const [rows] = await connection.execute('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            await connection.ping()
+          } catch (pingError: any) {
+            if (connection) {
+              await connection.end().catch(() => {})
+            }
+            return {
+              success: false,
+              message: 'Connection ping failed',
+              error: pingError.message,
+              code: pingError.code
+            }
+          }
+          
+          // Try using query() instead of execute() - query() is more reliable
+          try {
+            const [rows] = await connection.query('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
             
             const result = Array.isArray(rows) && rows.length > 0 ? rows[0] : null
             
@@ -338,15 +351,27 @@ export default defineEventHandler(async (event) => {
               success: false,
               message: 'Query execution failed',
               error: queryError.message,
-              code: queryError.code
+              code: queryError.code,
+              details: {
+                error_type: typeof queryError,
+                error_keys: Object.keys(queryError || {}),
+                connection_method: connectionMethod
+              }
             }
           }
         } catch (error: any) {
+          if (connection) {
+            await connection.end().catch(() => {})
+          }
           return {
             success: false,
             message: 'Direct connection test failed',
             error: error.message,
-            code: error.code
+            code: error.code,
+            details: {
+              error_type: typeof error,
+              error_keys: Object.keys(error || {})
+            }
           }
         }
       }
