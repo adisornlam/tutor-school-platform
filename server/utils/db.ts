@@ -52,23 +52,46 @@ export async function query<T = any>(
     try {
       // Try multiple approaches to handle bundling issues
       let queryResult: any
+      let lastError: any = null
       
-      // Approach 1: Try using bind() first
-      if (typeof connection.query === 'function') {
-        const boundQuery = connection.query.bind(connection)
-        queryResult = await boundQuery(sql, params || [])
-      }
-      // Approach 2: Try using call()
-      else if (connection.query && typeof connection.query.call === 'function') {
-        queryResult = await connection.query.call(connection, sql, params || [])
-      }
-      // Approach 3: Try using Reflect.apply()
-      else if (typeof connection.query === 'function') {
-        queryResult = await Reflect.apply(connection.query, connection, [sql, params || []])
-      }
-      // Approach 4: Try direct call (last resort)
-      else {
-        queryResult = await (connection as any).query(sql, params || [])
+      // Approach 1: Try using bind() first (most reliable)
+      try {
+        if (typeof connection.query === 'function') {
+          const boundQuery = connection.query.bind(connection)
+          queryResult = await boundQuery(sql, params || [])
+        } else {
+          throw new Error('connection.query is not a function')
+        }
+      } catch (err1: any) {
+        lastError = err1
+        // Approach 2: Try using call()
+        try {
+          if (connection.query && typeof connection.query.call === 'function') {
+            queryResult = await connection.query.call(connection, sql, params || [])
+          } else {
+            throw new Error('connection.query.call is not a function')
+          }
+        } catch (err2: any) {
+          lastError = err2
+          // Approach 3: Try using Reflect.apply()
+          try {
+            if (typeof connection.query === 'function') {
+              queryResult = await Reflect.apply(connection.query, connection, [sql, params || []])
+            } else {
+              throw new Error('connection.query is not a function for Reflect.apply')
+            }
+          } catch (err3: any) {
+            lastError = err3
+            // Approach 4: Try direct call (last resort)
+            try {
+              queryResult = await (connection as any).query(sql, params || [])
+            } catch (err4: any) {
+              lastError = err4
+              // If all approaches fail, throw the last error
+              throw new Error(`All query approaches failed. Last error: ${lastError.message}`)
+            }
+          }
+        }
       }
       
       // Handle result - query() returns [rows, fields]
@@ -122,23 +145,46 @@ export async function execute(
   try {
     // Try multiple approaches to handle bundling issues
     let queryResult: any
+    let lastError: any = null
     
-    // Approach 1: Try using bind() first
-    if (typeof connection.query === 'function') {
-      const boundQuery = connection.query.bind(connection)
-      queryResult = await boundQuery(sql, params || [])
-    }
-    // Approach 2: Try using call()
-    else if (connection.query && typeof connection.query.call === 'function') {
-      queryResult = await connection.query.call(connection, sql, params || [])
-    }
-    // Approach 3: Try using Reflect.apply()
-    else if (typeof connection.query === 'function') {
-      queryResult = await Reflect.apply(connection.query, connection, [sql, params || []])
-    }
-    // Approach 4: Try direct call (last resort)
-    else {
-      queryResult = await (connection as any).query(sql, params || [])
+    // Approach 1: Try using bind() first (most reliable)
+    try {
+      if (typeof connection.query === 'function') {
+        const boundQuery = connection.query.bind(connection)
+        queryResult = await boundQuery(sql, params || [])
+      } else {
+        throw new Error('connection.query is not a function')
+      }
+    } catch (err1: any) {
+      lastError = err1
+      // Approach 2: Try using call()
+      try {
+        if (connection.query && typeof connection.query.call === 'function') {
+          queryResult = await connection.query.call(connection, sql, params || [])
+        } else {
+          throw new Error('connection.query.call is not a function')
+        }
+      } catch (err2: any) {
+        lastError = err2
+        // Approach 3: Try using Reflect.apply()
+        try {
+          if (typeof connection.query === 'function') {
+            queryResult = await Reflect.apply(connection.query, connection, [sql, params || []])
+          } else {
+            throw new Error('connection.query is not a function for Reflect.apply')
+          }
+        } catch (err3: any) {
+          lastError = err3
+          // Approach 4: Try direct call (last resort)
+          try {
+            queryResult = await (connection as any).query(sql, params || [])
+          } catch (err4: any) {
+            lastError = err4
+            // If all approaches fail, throw the last error
+            throw new Error(`All query approaches failed. Last error: ${lastError.message}`)
+          }
+        }
+      }
     }
     
     // Handle result - query() returns [result, fields]

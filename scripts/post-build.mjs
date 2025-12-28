@@ -450,8 +450,38 @@ try {
     })
     content = filteredLines.join('\n')
     
+    // Fix mysql2 connection.query method binding issues
+    // Pattern: const [rows] = await connection.query(sql, params)
+    // Replace with: const [rows] = await connection.query.bind(connection)(sql, params)
+    // But only if it's causing issues - try to find and fix query method calls
+    
+    // Pattern 1: Fix queryMethod.call() issues
+    // Replace: queryMethod.call(connection, sql, params)
+    // With: (connection.query || connection.query.bind(connection))(sql, params)
+    content = content.replace(
+      /const queryMethod = connection\.query;[\s\S]*?const queryResult = await queryMethod\.call\(connection, ([^,]+), ([^)]+)\)/g,
+      (match, sql, params) => {
+        return `const queryResult = await (connection.query || connection.query.bind(connection))(${sql}, ${params})`
+      }
+    )
+    
+    // Pattern 2: Fix direct connection.query() calls that might fail
+    // Replace: await connection.query(sql, params)
+    // With: await (connection.query.bind(connection))(sql, params)
+    // But only if it's in a try-catch that might fail
+    content = content.replace(
+      /await connection\.query\(([^,]+), ([^)]+)\)/g,
+      (match, sql, params) => {
+        // Check if this is already wrapped in bind/call
+        if (match.includes('.bind(') || match.includes('.call(')) {
+          return match
+        }
+        return `await (connection.query.bind(connection))(${sql}, ${params})`
+      }
+    )
+    
     writeFileSync(indexPath, content, 'utf8')
-    console.log('✅ Fixed EventEmitter, debug, util, stream, buffer, and ws imports in bundle')
+    console.log('✅ Fixed EventEmitter, debug, util, stream, buffer, ws, and mysql2 query method binding in bundle')
   }
 } catch (error) {
   console.warn('⚠️ Could not fix imports:', error)
