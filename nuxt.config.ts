@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   // Runtime config
   runtimeConfig: {
     // Private (server-only)
-    dbHost: process.env.DB_HOST || 's1301.sgp1.mysecurecloudhost.com',
+    dbHost: process.env.DB_HOST || '192.250.235.23',
     dbPort: parseInt(process.env.DB_PORT || '3306'),
     dbName: process.env.DB_NAME || 'webthdsw_tutordb',
     dbUser: process.env.DB_USER || 'webthdsw_tutor',

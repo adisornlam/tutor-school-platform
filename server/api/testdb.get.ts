@@ -241,7 +241,7 @@ export default defineEventHandler(async (event) => {
         try {
           // Hardcoded connection config (based on cPanel info)
                const connectionConfig = {
-                 host: 's1301.sgp1.mysecurecloudhost.com',
+                 host: '192.250.235.23',
                  port: 3306,
                  user: 'webthdsw_tutor',
                  password: '57*0yZiKMmDyThXx',
