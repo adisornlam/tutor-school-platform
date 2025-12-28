@@ -47,9 +47,15 @@ export async function query<T = any>(
 ): Promise<T[]> {
   try {
     const db = getDatabase()
-    // Use query() instead of execute() - query() is more reliable in bundled code
-    const [rows] = await db.query(sql, params || [])
-    return rows as T[]
+    // Try using getConnection() and connection.query() directly
+    // This might work better in bundled code than pool.query()
+    const connection = await db.getConnection()
+    try {
+      const [rows] = await connection.query(sql, params || [])
+      return rows as T[]
+    } finally {
+      connection.release()
+    }
   } catch (error: any) {
     console.error('[Database] Query error:', {
       sql,
@@ -76,9 +82,14 @@ export async function execute(
   params?: any[]
 ): Promise<mysql.ResultSetHeader> {
   const db = getDatabase()
-  // Use query() instead of execute() - query() is more reliable in bundled code
-  const [result] = await db.query(sql, params || [])
-  return result as mysql.ResultSetHeader
+  // Try using getConnection() and connection.query() directly
+  const connection = await db.getConnection()
+  try {
+    const [result] = await connection.query(sql, params || [])
+    return result as mysql.ResultSetHeader
+  } finally {
+    connection.release()
+  }
 }
 
 // Transaction helper
