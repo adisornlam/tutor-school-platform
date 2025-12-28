@@ -1,0 +1,1 @@
+import{ac as u,l as d,ad as n,A as f}from"./B_rLn4hw.js";import{getRedirectPathByRole as l}from"./BZUAIYhA.js";import"./LiZfZJ8V.js";const y=u(async(a,m)=>{let e,t;const{isAuthenticated:r,fetchUser:s,user:i}=d();if(r.value||([e,t]=n(()=>s()),await e,t()),r.value){const o=a.query.redirect,c=l(i.value,o);return f(c)}});export{y as default};

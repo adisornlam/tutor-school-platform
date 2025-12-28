@@ -1,0 +1,1 @@
+import{ac as u,l as n,ad as r,A as i}from"./B_rLn4hw.js";const d=u(async(o,c)=>{let e,t;const{isAuthenticated:a,fetchUser:s}=n();if(a.value||([e,t]=r(()=>s()),await e,t()),!a.value)return i(`/auth/login?redirect=${encodeURIComponent(o.fullPath)}`)});export{d as default};

@@ -102,6 +102,11 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true
     },
+    // Route rules for API endpoints
+    routeRules: {
+      '/api/testdb': { cors: true, headers: { 'Cache-Control': 'no-cache' } },
+      '/testdb': { redirect: '/api/testdb' } // Redirect /testdb to /api/testdb
+    },
     // Inline all dependencies that are needed on server without node_modules
     // Since server has no node_modules, we need to bundle everything
     externals: {
