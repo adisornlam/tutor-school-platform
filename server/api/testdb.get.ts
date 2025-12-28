@@ -231,6 +231,125 @@ export default defineEventHandler(async (event) => {
           }
         }
       }
+    },
+    {
+      name: 'Direct Connection Test (Hardcoded)',
+      description: 'ทดสอบการเชื่อมต่อ database โดยกำหนดค่าตรงๆ (ไม่ใช้ environment variables)',
+      test: async () => {
+        try {
+          // Import mysql2 directly for this test
+          const mysql = await import('mysql2/promise')
+          
+          // Hardcoded connection config (based on cPanel info)
+          const connectionConfig = {
+            host: 'localhost',
+            port: 3306,
+            user: 'webthdsw_tutor',
+            password: '57*0yZiKMmDyThXx',
+            database: 'webthdsw_tutordb',
+            timezone: '+07:00',
+            dateStrings: false
+          }
+          
+          // Try socket connection first (cPanel often uses socket)
+          let connection: mysql.Connection | null = null
+          let connectionMethod = 'TCP'
+          let socketError: any = null
+          
+          // Try common socket paths
+          const socketPaths = [
+            '/tmp/mysql.sock',
+            '/var/lib/mysql/mysql.sock',
+            '/var/run/mysqld/mysqld.sock',
+            '/tmp/mysql/mysql.sock'
+          ]
+          
+          for (const socketPath of socketPaths) {
+            try {
+              connection = await mysql.createConnection({
+                ...connectionConfig,
+                socketPath: socketPath
+              })
+              connectionMethod = `Socket (${socketPath})`
+              break
+            } catch (err: any) {
+              socketError = err
+              continue
+            }
+          }
+          
+          // If socket fails, try TCP
+          if (!connection) {
+            try {
+              connection = await mysql.createConnection(connectionConfig)
+              connectionMethod = 'TCP (localhost:3306)'
+            } catch (tcpError: any) {
+              return {
+                success: false,
+                message: 'Failed to connect via both socket and TCP',
+                error: `Socket attempts failed, TCP error: ${tcpError.message}`,
+                code: tcpError.code || 'ECONNREFUSED',
+                details: {
+                  socket_paths_tried: socketPaths,
+                  socket_error: socketError?.message,
+                  tcp_error: tcpError.message
+                }
+              }
+            }
+          }
+          
+          try {
+            // Test query
+            const [rows] = await connection.execute('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            
+            const result = Array.isArray(rows) && rows.length > 0 ? rows[0] : null
+            
+            await connection.end()
+            
+            if (result) {
+              return {
+                success: true,
+                message: `Direct connection successful via ${connectionMethod}`,
+                details: {
+                  connection_method: connectionMethod,
+                  test: result.test,
+                  current_time: result.current_time,
+                  current_database: result.current_database,
+                  config_used: {
+                    host: connectionConfig.host,
+                    port: connectionConfig.port,
+                    user: connectionConfig.user,
+                    database: connectionConfig.database
+                  }
+                }
+              }
+            }
+            
+            return {
+              success: false,
+              message: 'Query returned no results',
+              error: 'No data returned'
+            }
+          } catch (queryError: any) {
+            if (connection) {
+              await connection.end().catch(() => {})
+            }
+            return {
+              success: false,
+              message: 'Query execution failed',
+              error: queryError.message,
+              code: queryError.code
+            }
+          }
+        } catch (error: any) {
+          return {
+            success: false,
+            message: 'Direct connection test failed',
+            error: error.message,
+            code: error.code
+          }
+        }
+      }
     }
   ]
 
