@@ -240,15 +240,15 @@ export default defineEventHandler(async (event) => {
         let connection: mysql.Connection | null = null
         try {
           // Hardcoded connection config (based on cPanel info)
-          const connectionConfig = {
-            host: 'localhost',
-            port: 3306,
-            user: 'webthdsw_tutor',
-            password: '57*0yZiKMmDyThXx',
-            database: 'webthdsw_tutordb',
-            timezone: '+07:00',
-            dateStrings: false
-          }
+               const connectionConfig = {
+                 host: 's1301.sgp1.mysecurecloudhost.com',
+                 port: 3306,
+                 user: 'webthdsw_tutor',
+                 password: '57*0yZiKMmDyThXx',
+                 database: 'webthdsw_tutordb',
+                 timezone: '+07:00',
+                 dateStrings: false
+               }
           
           // Try socket connection first (cPanel often uses socket)
           let connectionMethod = 'TCP'
@@ -280,7 +280,7 @@ export default defineEventHandler(async (event) => {
           if (!connection) {
             try {
               connection = await mysql.createConnection(connectionConfig)
-              connectionMethod = 'TCP (localhost:3306)'
+              connectionMethod = `TCP (${connectionConfig.host}:${connectionConfig.port})`
             } catch (tcpError: any) {
               return {
                 success: false,
@@ -313,7 +313,35 @@ export default defineEventHandler(async (event) => {
           
           // Try using query() instead of execute() - query() is more reliable
           try {
-            const [rows] = await connection.query('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            // Use query() which returns [rows, fields]
+            // But in bundle, it might return differently, so we need to handle it carefully
+            let queryResult: any
+            
+            // Try to call query() and catch any errors
+            try {
+              queryResult = await connection.query('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            } catch (queryCallError: any) {
+              // If query() itself fails, try using execute() as fallback
+              queryResult = await connection.execute('SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`')
+            }
+            
+            // Handle both array destructuring and direct result
+            let rows: any[]
+            if (Array.isArray(queryResult)) {
+              if (queryResult.length >= 2) {
+                // [rows, fields] format
+                rows = queryResult[0] as any[]
+              } else if (queryResult.length === 1) {
+                // Single array element
+                rows = queryResult[0] as any[]
+              } else {
+                // Empty array
+                rows = []
+              }
+            } else {
+              // Direct result (shouldn't happen but handle it)
+              rows = queryResult as any[]
+            }
             
             const result = Array.isArray(rows) && rows.length > 0 ? rows[0] : null
             

@@ -28,7 +28,7 @@ export function getDatabase() {
       console.log('[Database] ✅ User:', connectionConfig.user)
     } else {
       // ใช้ TCP connection
-      connectionConfig.host = process.env.DB_HOST || 'localhost'
+      connectionConfig.host = process.env.DB_HOST || 's1301.sgp1.mysecurecloudhost.com'
       connectionConfig.port = parseInt(process.env.DB_PORT || '3306')
       console.log('[Database] ✅ Using TCP connection:', `${connectionConfig.host}:${connectionConfig.port}`)
       console.log('[Database] ✅ Database:', connectionConfig.database)
