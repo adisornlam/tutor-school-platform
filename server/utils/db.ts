@@ -47,11 +47,30 @@ export async function query<T = any>(
 ): Promise<T[]> {
   try {
     const db = getDatabase()
-    // Try using getConnection() and connection.query() directly
-    // This might work better in bundled code than pool.query()
     const connection = await db.getConnection()
+    
     try {
-      const [rows] = await connection.query(sql, params || [])
+      // Use Function.prototype.call() to ensure proper 'this' binding
+      // This fixes bundling issues where method binding might be lost
+      const queryMethod = connection.query
+      
+      if (typeof queryMethod !== 'function') {
+        throw new Error('connection.query is not a function')
+      }
+      
+      // Use call() to bind 'this' context explicitly
+      const queryResult = await queryMethod.call(connection, sql, params || [])
+      
+      // Handle result - query() returns [rows, fields]
+      let rows: any[]
+      if (Array.isArray(queryResult) && queryResult.length >= 2) {
+        rows = queryResult[0] as any[]
+      } else if (Array.isArray(queryResult) && queryResult.length === 1) {
+        rows = queryResult[0] as any[]
+      } else {
+        rows = queryResult as any[]
+      }
+      
       return rows as T[]
     } finally {
       connection.release()
@@ -82,10 +101,29 @@ export async function execute(
   params?: any[]
 ): Promise<mysql.ResultSetHeader> {
   const db = getDatabase()
-  // Try using getConnection() and connection.query() directly
   const connection = await db.getConnection()
+  
   try {
-    const [result] = await connection.query(sql, params || [])
+    // Use Function.prototype.call() to ensure proper 'this' binding
+    const queryMethod = connection.query
+    
+    if (typeof queryMethod !== 'function') {
+      throw new Error('connection.query is not a function')
+    }
+    
+    // Use call() to bind 'this' context explicitly
+    const queryResult = await queryMethod.call(connection, sql, params || [])
+    
+    // Handle result - query() returns [result, fields]
+    let result: any
+    if (Array.isArray(queryResult) && queryResult.length >= 2) {
+      result = queryResult[0]
+    } else if (Array.isArray(queryResult) && queryResult.length === 1) {
+      result = queryResult[0]
+    } else {
+      result = queryResult
+    }
+    
     return result as mysql.ResultSetHeader
   } finally {
     connection.release()
