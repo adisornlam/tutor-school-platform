@@ -70,8 +70,8 @@ export default defineEventHandler(async (event) => {
       description: 'ทดสอบการเชื่อมต่อ database พื้นฐาน',
       test: async () => {
         try {
-          const [rows] = await query<{ test: number; current_time: string; current_database: string }>(
-            'SELECT 1 as test, NOW() as current_time, DATABASE() as current_database'
+          const rows = await query<{ test: number; current_time: string; current_database: string }>(
+            'SELECT 1 as test, NOW() as `current_time`, DATABASE() as `current_database`'
           )
           
           if (rows && Array.isArray(rows) && rows.length > 0) {
@@ -101,7 +101,7 @@ export default defineEventHandler(async (event) => {
       description: 'ตรวจสอบเวอร์ชัน MySQL',
       test: async () => {
         try {
-          const [rows] = await query<{ version: string }>('SELECT VERSION() as version')
+          const rows = await query<{ version: string }>('SELECT VERSION() as version')
           if (rows && Array.isArray(rows) && rows.length > 0) {
             return {
               success: true,
@@ -124,7 +124,7 @@ export default defineEventHandler(async (event) => {
       description: 'นับจำนวนตารางใน database',
       test: async () => {
         try {
-          const [rows] = await query<{ count: number }>(
+          const rows = await query<{ count: number }>(
             'SELECT COUNT(*) as count FROM information_schema.tables WHERE table_schema = DATABASE()'
           )
           if (rows && Array.isArray(rows) && rows.length > 0) {
@@ -149,7 +149,7 @@ export default defineEventHandler(async (event) => {
       description: 'ทดสอบการเข้าถึงตาราง users',
       test: async () => {
         try {
-          const [rows] = await query<{ count: number }>('SELECT COUNT(*) as count FROM users LIMIT 1')
+          const rows = await query<{ count: number }>('SELECT COUNT(*) as count FROM users LIMIT 1')
           if (rows && Array.isArray(rows) && rows.length > 0) {
             return {
               success: true,
@@ -181,7 +181,7 @@ export default defineEventHandler(async (event) => {
       description: 'ทดสอบการเข้าถึงตาราง courses',
       test: async () => {
         try {
-          const [rows] = await query<{ count: number }>('SELECT COUNT(*) as count FROM courses LIMIT 1')
+          const rows = await query<{ count: number }>('SELECT COUNT(*) as count FROM courses LIMIT 1')
           if (rows && Array.isArray(rows) && rows.length > 0) {
             return {
               success: true,
@@ -214,8 +214,8 @@ export default defineEventHandler(async (event) => {
       test: async () => {
         try {
           // Safe read-only test
-          const [rows] = await query('SELECT 1 as write_test')
-          if (rows && rows.length > 0) {
+          const rows = await query<{ write_test: number }>('SELECT 1 as write_test')
+          if (rows && Array.isArray(rows) && rows.length > 0) {
             return {
               success: true,
               message: 'Database write capability test passed (read-only test)',
