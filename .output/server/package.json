@@ -4,13 +4,6 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@ioredis/commands": "1.4.0",
-    "cluster-key-slot": "1.1.2",
-    "lodash.defaults": "4.2.0",
-    "lodash.isarguments": "3.1.0",
-    "redis-errors": "1.2.0",
-    "redis-parser": "3.0.0",
-    "standard-as-callback": "2.1.0",
     "xmlhttprequest-ssl": "2.1.2"
   }
 }

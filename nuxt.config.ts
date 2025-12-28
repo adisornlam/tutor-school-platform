@@ -143,6 +143,13 @@ export default defineNuxtConfig({
         'mysql2/promise', // MySQL promise wrapper
         // Redis packages
         'ioredis', // Redis client (used in server/utils/redis.ts)
+        '@ioredis/commands', // dependency of ioredis
+        'cluster-key-slot', // dependency of ioredis
+        'lodash.defaults', // dependency of ioredis
+        'lodash.isarguments', // dependency of ioredis
+        'redis-errors', // dependency of ioredis
+        'redis-parser', // dependency of ioredis
+        'standard-as-callback', // dependency of ioredis
         // Dependencies of mysql2
         'sqlstring', // SQL string formatting
         'named-placeholders', // Named placeholders for SQL

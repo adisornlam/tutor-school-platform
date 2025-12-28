@@ -48,12 +48,20 @@ try {
     // Replace with: import { EventEmitter as EventEmitter$a } from 'node:events';
     
     // First, find all EventEmitter assignments and collect variable names
-    const eventEmitterPattern = /const (EventEmitter\$[a-z0-9]+) = (require\$\$0\$[0-9]+);/g
-    const eventEmitterMatches = [...content.matchAll(eventEmitterPattern)]
+    // Pattern 1: const EventEmitter$a = require$$0$7;
+    const eventEmitterPattern1 = /const (EventEmitter\$[a-z0-9]+) = (require\$\$0\$[0-9]+);/g
+    const eventEmitterMatches1 = [...content.matchAll(eventEmitterPattern1)]
+    
+    // Pattern 2: const EventEmitter$a = require$$0$b; (namespace import)
+    const eventEmitterPattern2 = /const (EventEmitter\$[a-z0-9]+) = (require\$\$0\$[a-z0-9]+);/g
+    const eventEmitterMatches2 = [...content.matchAll(eventEmitterPattern2)]
+    
+    // Combine all matches
+    const allEventEmitterMatches = [...eventEmitterMatches1, ...eventEmitterMatches2]
     
     // Collect all EventEmitter variable names and their require variables
     const eventEmitterVars = new Map()
-    for (const match of eventEmitterMatches) {
+    for (const match of allEventEmitterMatches) {
       eventEmitterVars.set(match[1], match[2])
     }
     
@@ -98,57 +106,120 @@ try {
       /import (require\$\$0\$[0-9]+__default) from 'events';/g,
       "import { EventEmitter as $1 } from 'node:events';"
     )
+    
+    // Fix: const EventEmitter = require$$0$3__default;
+    // Replace with: const EventEmitter = EventEmitter$b; (using the imported one)
+    const defaultEventEmitterPattern = /const EventEmitter = (require\$\$0\$[0-9]+__default);/g
+    const defaultEventEmitterMatches = [...content.matchAll(defaultEventEmitterPattern)]
+    
+    if (defaultEventEmitterMatches.length > 0) {
+      // Find the first imported EventEmitter variable
+      const importedEventEmitterMatch = content.match(/import \{ EventEmitter as (EventEmitter\$[a-z0-9]+) \} from 'node:events';/)
+      if (importedEventEmitterMatch) {
+        const importedVarName = importedEventEmitterMatch[1]
+        for (const match of defaultEventEmitterMatches) {
+          const escapedRequireVar = match[1].replace(/\$/g, '\\$')
+          content = content.replace(
+            new RegExp(`const EventEmitter = ${escapedRequireVar};`, 'g'),
+            `const EventEmitter = ${importedVarName};`
+          )
+        }
+      }
+    }
     content = content.replace(
       /import \* as (require\$\$0\$[0-9]+\$[0-9]+) from 'events';/g,
       "import * as $1 from 'node:events';"
     )
     
-    // Fix debug module issue - replace getDefaultExportFromNamespaceIfNotNamed with direct import
-    // Pattern: const require$$13 = getDefaultExportFromNamespaceIfNotNamed(debug$i);
-    // Replace with: import debugModule from 'debug'; const require$$13 = debugModule;
-    const debugPattern = /const (require\$\$[0-9]+) = \/\*@__PURE__\*\/getDefaultExportFromNamespaceIfNotNamed\(debug\$[a-z0-9]+\);/g
-    const debugMatches = [...content.matchAll(debugPattern)]
+    // Fix debug module issue
+    // Find the bundled debug module variable - look for debug$n = Object.assign(createDebug, {
+    const bundledDebugVarMatch = content.match(/const (debug\$[a-z0-9]+) = Object\.assign\(createDebug, \{/)
+    let bundledDebugVar = bundledDebugVarMatch ? bundledDebugVarMatch[1] : null
     
-    if (debugMatches.length > 0) {
-      // Find all debug require variables
+    // If not found, try to find any debug$ variable
+    if (!bundledDebugVar) {
+      const debugModuleVarPattern = /const (debug\$[a-z0-9]+)\s*=/g
+      const debugModuleVarMatches = [...content.matchAll(debugModuleVarPattern)]
+      if (debugModuleVarMatches.length > 0) {
+        // Use the first bundled debug module (usually debug$h or debug$n)
+        bundledDebugVar = debugModuleVarMatches[0][1]
+      }
+    }
+    
+    if (bundledDebugVar) {
+      // Find and replace ALL const debugModule = require$$...; declarations
+      // Pattern 1: const debugModule = require$$0$a; (with $a suffix)
+      const debugModulePattern1 = /const debugModule = (require\$\$[0-9]+\$[a-z0-9]+);/g
+      const debugModuleMatches1 = [...content.matchAll(debugModulePattern1)]
+      
+      // Pattern 2: const debugModule = require$$0; (without suffix)
+      const debugModulePattern2 = /const debugModule = (require\$\$[0-9]+);/g
+      const debugModuleMatches2 = [...content.matchAll(debugModulePattern2)]
+      
+      // Combine all matches
+      const allDebugModuleMatches = [...debugModuleMatches1, ...debugModuleMatches2]
+      
+      for (const match of allDebugModuleMatches) {
+        const requireVar = match[1]
+        // Replace with bundled debug module
+        const escapedRequireVar = requireVar.replace(/\$/g, '\\$')
+        content = content.replace(
+          new RegExp(`const debugModule = ${escapedRequireVar};`, 'g'),
+          `const debugModule = ${bundledDebugVar};`
+        )
+      }
+      
+      // Also replace patterns like: const require$$13 = getDefaultExportFromNamespaceIfNotNamed(debug$i);
+      const debugPattern = /const (require\$\$[0-9]+) = \/\*@__PURE__\*\/getDefaultExportFromNamespaceIfNotNamed\(debug\$[a-z0-9]+\);/g
+      const debugMatches = [...content.matchAll(debugPattern)]
+      
+      for (const match of debugMatches) {
+        const requireVar = match[1]
+        const escapedRequireVar = requireVar.replace(/\$/g, '\\$')
+        content = content.replace(
+          new RegExp(`const ${escapedRequireVar} = /\\*@__PURE__\\*/getDefaultExportFromNamespaceIfNotNamed\\(debug\\$[a-z0-9]+\\);`, 'g'),
+          `const ${requireVar} = ${bundledDebugVar};`
+        )
+      }
+      
+      // Find all debug require variables for later use
       const debugRequires = new Map()
       for (const match of debugMatches) {
         debugRequires.set(match[1], match[0])
       }
       
-      // debug should be bundled via externals.inline
-      // Find the bundled debug module variable - look for debug$h or similar
-      const debugModuleVarPattern = /const (debug\$[a-z0-9]+)\s*=/g
-      const debugModuleVarMatches = [...content.matchAll(debugModuleVarPattern)]
-      
-      let bundledDebugVar = null
-      if (debugModuleVarMatches.length > 0) {
-        // Use the first bundled debug module (usually debug$h)
-        bundledDebugVar = debugModuleVarMatches[0][1]
-      }
-      
-      // Also find and replace const debugModule = require$$13; declarations
-      const debugModulePattern = /const debugModule = (require\$\$[0-9]+);/g
-      const debugModuleMatches = [...content.matchAll(debugModulePattern)]
-      for (const match of debugModuleMatches) {
-        const requireVar = match[1]
-        // Check if this requireVar is one we're replacing
-        if (debugRequires.has(requireVar) && bundledDebugVar) {
-          // Replace with bundled debug module
-          content = content.replace(
-            new RegExp(`const debugModule = ${requireVar.replace(/\$/g, '\\$')};`, 'g'),
-            `const debugModule = ${bundledDebugVar};`
-          )
-        } else {
-          // Remove the const debugModule declaration if not in our list
-          content = content.replace(
-            new RegExp(`const debugModule = ${requireVar.replace(/\$/g, '\\$')};\\n?`, 'g'),
-            ''
-          )
-        }
-      }
-      
       if (bundledDebugVar) {
+        // Replace patterns like: (0, debug_1$4.default)("socket.io:socket")
+        // with: debug$n("socket.io:socket")
+        content = content.replace(
+          /\(0, (debug_[0-9]+\$?[a-z0-9]*)\.default\)\("([^"]+)"\)/g,
+          `${bundledDebugVar}("$2")`
+        )
+        
+        // Replace patterns like: const debug$b = (0, debug_1$4.default)("socket.io:socket");
+        // with: const debug$b = debug$n("socket.io:socket");
+        content = content.replace(
+          /const (debug\$[a-z0-9]+) = \(0, (debug_[0-9]+\$?[a-z0-9]*)\.default\)\("([^"]+)"\);/g,
+          `const $1 = ${bundledDebugVar}("$3");`
+        )
+        
+        // Replace patterns like: const debug = (0, debug_1.default)("socket.io:namespace");
+        // with: const debug = debug$n("socket.io:namespace");
+        content = content.replace(
+          /const (debug) = \(0, (debug_[0-9]+\$?[a-z0-9]*)\.default\)\("([^"]+)"\);/g,
+          `const $1 = ${bundledDebugVar}("$3");`
+        )
+        
+        // Also replace all .default accesses on debug variables
+        // Pattern: debug_1$4.default or debug_1.default -> debug$n
+        const debugDefaultPattern = /(debug_[0-9]+\$?[a-z0-9]*)\.default/g
+        content = content.replace(debugDefaultPattern, bundledDebugVar)
+        
+        // Replace (0, debug_1$4) or (0, debug_1) pattern with just debug$n
+        content = content.replace(
+          /\(0, (debug_[0-9]+\$?[a-z0-9]*)\)/g,
+          bundledDebugVar
+        )
         // Replace old assignments with assignments to bundled debug module
         for (const [requireVar, fullMatch] of debugRequires) {
           // Replace the assignment
