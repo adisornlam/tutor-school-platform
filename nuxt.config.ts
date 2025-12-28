@@ -141,6 +141,8 @@ export default defineNuxtConfig({
         // Database packages
         'mysql2', // MySQL client (used in server/utils/db.ts)
         'mysql2/promise', // MySQL promise wrapper
+        // Redis packages
+        'ioredis', // Redis client (used in server/utils/redis.ts)
         // Dependencies of mysql2
         'sqlstring', // SQL string formatting
         'named-placeholders', // Named placeholders for SQL
