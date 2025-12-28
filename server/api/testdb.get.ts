@@ -67,8 +67,44 @@ export default defineEventHandler(async (event) => {
   // ============================================
   const dbTestCases: TestCase[] = [
     {
-      name: 'Database Connection',
-      description: 'ทดสอบการเชื่อมต่อ database พื้นฐาน',
+      name: 'Simple Connection Test (Ping)',
+      description: 'ทดสอบการเชื่อมต่อ database แบบง่ายๆ ด้วย ping (ไม่ต้อง query)',
+      test: async () => {
+        try {
+          const { getDatabase } = await import('../utils/db')
+          const db = getDatabase()
+          const connection = await db.getConnection()
+          
+          try {
+            // Simple ping test - ไม่ต้อง query
+            await connection.ping()
+            
+            return {
+              success: true,
+              message: 'Database connection successful (ping test)',
+              details: {
+                method: 'ping',
+                connection_type: 'pool connection'
+              },
+              category: 'Database'
+            }
+          } finally {
+            connection.release()
+          }
+        } catch (error: any) {
+          return {
+            success: false,
+            message: 'Database ping failed',
+            error: error.message,
+            code: error.code,
+            category: 'Database'
+          }
+        }
+      }
+    },
+    {
+      name: 'Database Connection (Query)',
+      description: 'ทดสอบการเชื่อมต่อ database และ query ข้อมูล',
       test: async () => {
         try {
           const rows = await query<{ test: number; current_time: string; current_database: string }>(
@@ -78,21 +114,27 @@ export default defineEventHandler(async (event) => {
           if (rows && Array.isArray(rows) && rows.length > 0) {
             return {
               success: true,
-              message: 'Database connection successful',
+              message: 'Database connection and query successful',
               details: {
                 test: rows[0].test,
                 current_time: rows[0].current_time,
                 current_database: rows[0].current_database
-              }
+              },
+              category: 'Database'
             }
           }
-          return { success: false, message: 'Query returned no results' }
+          return { 
+            success: false, 
+            message: 'Query returned no results',
+            category: 'Database'
+          }
         } catch (error: any) {
           return {
             success: false,
             message: 'Database connection failed',
             error: error.message,
-            code: error.code
+            code: error.code,
+            category: 'Database'
           }
         }
       }
